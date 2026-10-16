@@ -1,1 +1,99 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Working Hours Calculator | OpsCalc Tools</title><meta name="description" content="Calculate net working hours after unpaid breaks."><link rel="stylesheet" href="/assets/style.css"></head><body><header><nav><a class="brand" href="/">OpsCalc Tools</a><div><a href="/">Home</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></div></nav></header><main class="wrap"><p class="eyebrow">Free calculator</p><h1>Working Hours Calculator</h1><p>Calculate net working hours after unpaid breaks.</p><section class="panel"><form id="calc"><div class="form-grid"><div><label for="v0">Start time (24-hour decimal)</label><input id="v0" type="number" step="any" min="0" required placeholder="Enter a number"></div><div><label for="v1">End time (24-hour decimal)</label><input id="v1" type="number" step="any" min="0" required placeholder="Enter a number"></div><div><label for="v2">Break duration (minutes)</label><input id="v2" type="number" step="any" min="0" required placeholder="Enter a number"></div></div><p><button class="button" type="submit">Calculate</button></p></form><div id="result" class="result" role="status" aria-live="polite">Enter your values above.</div><p class="hint">No information is sent to a server. Calculations run in your browser.</p></section><section class="panel section-title"><h2>How it works</h2><p>Net hours = elapsed shift time − unpaid break. Enter time as a decimal: 9.5 means 09:30. This version supports shifts shorter than 24 hours, including overnight shifts.</p><h2>Worked example</h2><p>Starting at 9:00 and finishing at 17:30 with a 30-minute break gives 8 working hours. Enter 17.5 for 17:30.</p><h2>Important limitations</h2><p>Results depend on your input assumptions. Check your units and validate important business decisions against actual operating data.</p></section><p><a href="/">← All calculators</a></p></main><footer><div>© 2026 OpsCalc Tools · Independent free calculators</div><div><a href="/privacy-policy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a></div></footer><script>document.getElementById('calc').addEventListener('submit',function(e){e.preventDefault();const v=[0,1,2].map(i=>Number(document.getElementById('v'+i).value));const [a,b,c]=v;const box=document.getElementById('result');if(v.some((n,i)=>!Number.isFinite(n)||document.getElementById('v'+i).value==='')||false&&(v.some(n=>n>100))||false&&b===0||true&&(a>=24||b>=24||((b-a+24)%24)<=c/60)){box.textContent='Please check your inputs and use valid values.';return;}let answer=((b-a+24)%24)-c/60;box.textContent='Net working hours: '+answer.toLocaleString('en-US',{maximumFractionDigits:2});});</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Working Hours Calculator – Shift Hours Minus Breaks</title>
+<meta name="description" content="Calculate net working hours from start and end times minus unpaid breaks, including overnight shifts, in hours/minutes and decimal hours.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/working-hours">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Working Hours Calculator – Shift Hours Minus Breaks">
+<meta property="og:description" content="Calculate net working hours from start and end times minus unpaid breaks, including overnight shifts, in hours/minutes and decimal hours.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/working-hours">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Working Hours Calculator","url":"https://opscalc-tools.pages.dev/calculators/working-hours","description":"Calculate net working hours from start and end times minus unpaid breaks, including overnight shifts, in hours/minutes and decimal hours.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Time & Workforce","item":"https://opscalc-tools.pages.dev/#workforce"},{"@type":"ListItem","position":3,"name":"Working Hours Calculator","item":"https://opscalc-tools.pages.dev/calculators/working-hours"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#workforce">Time &amp; Workforce</a></li><li aria-current="page">Working Hours Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Time &amp; Workforce</p><h1>Working Hours Calculator</h1><p class="lead">Enter a shift’s start and end times and the unpaid break to get the net hours worked, in hours and minutes and in decimal hours for payroll or capacity planning. Overnight shifts are handled automatically. Add days per week for a weekly total.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="working-hours" novalidate>
+<div class="form-grid">
+<div class="field" id="f-start">
+<label for="start">Start time</label>
+<input id="start" name="start" type="time" required aria-describedby="err-start">
+
+<p class="field-error" id="err-start" aria-live="polite"></p>
+</div>
+<div class="field" id="f-end">
+<label for="end">End time</label>
+<input id="end" name="end" type="time" required aria-describedby="err-end">
+
+<p class="field-error" id="err-end" aria-live="polite"></p>
+</div>
+<div class="field" id="f-brk">
+<label for="brk">Unpaid break <span class="sr-only">(min)</span></label>
+<div class="input-unit"><input id="brk" name="brk" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-brk" placeholder="e.g. 45"><span class="unit" aria-hidden="true">min</span></div>
+
+<p class="field-error" id="err-brk" aria-live="polite"></p>
+</div>
+<div class="field" id="f-days">
+<label for="days">Days per week (optional) <span class="sr-only">(days)</span></label>
+<div class="input-unit"><input id="days" name="days" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-days" placeholder="e.g. 5"><span class="unit" aria-hidden="true">days</span></div>
+
+<p class="field-error" id="err-days" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Shift span = End time − Start time (add 24 h if the shift ends the next day)</code><code>Net working time = Shift span − Unpaid break</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Start / end time</td><td>Clock times in 24-hour format</td><td>HH:MM</td></tr><tr><td>Unpaid break</td><td>Meal or rest breaks not counted as working time</td><td>min</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>An operator starts at 07:30, finishes at 16:15 and takes a 45-minute unpaid lunch break, five days a week.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Start time</th><td>07:30</td></tr><tr><th scope="row">End time</th><td>16:15</td></tr><tr><th scope="row">Unpaid break</th><td>45 min</td></tr><tr><th scope="row">Days per week (optional)</th><td>5 days</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Net working time</th><td><strong>8 h 00 min</strong></td></tr><tr><th scope="row">Net working time (decimal)</th><td><strong>8 h</strong></td></tr><tr><th scope="row">Shift span</th><td><strong>8 h 45 min</strong></td></tr><tr><th scope="row">Weekly hours</th><td><strong>40 h</strong></td></tr></tbody></table></div>
+
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Decimal hours vs. hours and minutes</h2>
+<p>Payroll and planning systems usually need decimal hours: 7 h 45 min is 7.75 h, not 7.45. Divide the minutes by 60 to convert. This calculator shows both forms.</p>
+<h2>Good to know</h2>
+<ul><li>Rules on paid and unpaid breaks, maximum hours and overtime differ by country and by collective agreement. Check the rules that apply to you.</li><li>For capacity planning, subtract paid breaks and meetings too. That gives the available time used in the <a href="/calculators/takt-time">takt time calculator</a>.</li></ul>
+<h2>Converting minutes to decimal hours</h2>
+<div class="table-scroll"><table class="data"><caption>Common conversions</caption><thead><tr><th scope="col">Minutes</th><th scope="col">Decimal hours</th></tr></thead><tbody><tr><td>6 min</td><td>0.10 h</td></tr><tr><td>15 min</td><td>0.25 h</td></tr><tr><td>20 min</td><td>0.33 h</td></tr><tr><td>30 min</td><td>0.50 h</td></tr><tr><td>40 min</td><td>0.67 h</td></tr><tr><td>45 min</td><td>0.75 h</td></tr></tbody></table></div><p>To convert decimal hours back to minutes, multiply the decimal part by 60: 0.6 h × 60 = 36 minutes.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>How does the calculator handle night shifts?</summary><p>If the end time is earlier than the start time, it assumes the shift ends the next day and adds 24 hours.</p></details><details><summary>How do I total hours for a rotating shift pattern?</summary><p>Calculate the net hours of each shift type once, multiply by the number of each shift worked in the cycle, and divide by the cycle length in weeks for an average weekly figure. For example, a 4-on/4-off pattern of 12-hour shifts with 1 hour of unpaid break gives 11 h × 4 shifts every 8 days, which averages 38.5 hours per week.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/labor-productivity">Labor Productivity Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li><li><a href="/calculators/production-rate">Production Rate Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

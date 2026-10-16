@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Capacity Utilization &amp; Efficiency Calculator | OpsCalc Tools</title>
+<meta name="description" content="Calculate capacity utilization (actual vs design capacity) and efficiency (actual vs effective capacity) for a plant, line or machine.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/capacity-utilization">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Capacity Utilization &amp; Efficiency Calculator | OpsCalc Tools">
+<meta property="og:description" content="Calculate capacity utilization (actual vs design capacity) and efficiency (actual vs effective capacity) for a plant, line or machine.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/capacity-utilization">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Capacity Utilization Calculator","url":"https://opscalc-tools.pages.dev/calculators/capacity-utilization","description":"Calculate capacity utilization (actual vs design capacity) and efficiency (actual vs effective capacity) for a plant, line or machine.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Production & Lean","item":"https://opscalc-tools.pages.dev/#production"},{"@type":"ListItem","position":3,"name":"Capacity Utilization Calculator","item":"https://opscalc-tools.pages.dev/calculators/capacity-utilization"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#production">Production &amp; Lean</a></li><li aria-current="page">Capacity Utilization Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Production &amp; Lean</p><h1>Capacity Utilization Calculator</h1><p class="lead">Capacity utilization compares what you produced with what the asset is designed to produce. Adding effective capacity, the output achievable after planned allowances, gives efficiency, the share of realistic capacity you actually achieved.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="capacity-utilization" novalidate>
+<div class="form-grid">
+<div class="field" id="f-actual">
+<label for="actual">Actual output <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="actual" name="actual" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-actual" required placeholder="e.g. 7,200"><span class="unit" aria-hidden="true">units</span></div>
+
+<p class="field-error" id="err-actual" aria-live="polite"></p>
+</div>
+<div class="field" id="f-design">
+<label for="design">Design capacity (same period) <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="design" name="design" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-design err-design" required placeholder="e.g. 10,000"><span class="unit" aria-hidden="true">units</span></div>
+<p class="field-help" id="help-design">Maximum output under ideal conditions.</p>
+<p class="field-error" id="err-design" aria-live="polite"></p>
+</div>
+<div class="field" id="f-effective">
+<label for="effective">Effective capacity (optional) <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="effective" name="effective" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-effective err-effective" placeholder="e.g. 8,500"><span class="unit" aria-hidden="true">units</span></div>
+<p class="field-help" id="help-effective">Design capacity minus planned allowances (maintenance, changeovers, product mix).</p>
+<p class="field-error" id="err-effective" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Utilization = Actual output ÷ Design capacity</code><code>Efficiency = Actual output ÷ Effective capacity</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Design capacity</td><td>Maximum output under ideal conditions for the period</td><td>units</td></tr><tr><td>Effective capacity</td><td>Design capacity minus planned allowances: maintenance, changeovers, product mix</td><td>units</td></tr><tr><td>Actual output</td><td>Output achieved in the same period</td><td>units</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A plant rated at 10,000 tonnes per month has an effective capacity of 8,500 tonnes after planned shutdowns, and produced 7,200 tonnes.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Actual output</th><td>7,200 units</td></tr><tr><th scope="row">Design capacity (same period)</th><td>10,000 units</td></tr><tr><th scope="row">Effective capacity (optional)</th><td>8,500 units</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Capacity utilization</th><td><strong>72%</strong></td></tr><tr><th scope="row">Unused design capacity</th><td><strong>2,800 units</strong></td></tr><tr><th scope="row">Efficiency (actual ÷ effective)</th><td><strong>84.7%</strong></td></tr></tbody></table></div>
+
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Utilization vs. efficiency</h2>
+<p>Low utilization can mean weak demand, planned constraints or operating losses. Efficiency separates them. If efficiency is high but utilization is low, the limit is planning (allowances, scheduling, demand). If both are low, look at operating losses: breakdowns, slow running, quality.</p>
+<h2>Points of caution</h2>
+<ul><li>Use the same period and units for all three figures.</li><li>Design capacity for mixed products depends on mix. State the reference product.</li><li>Running near 100% utilization lengthens queues and lead times sharply when demand varies.</li></ul>
+<h2>Worked interpretation</h2>
+<p>In the example, utilization is 72% and efficiency is 84.7%. So 1,500 tonnes per month of the gap between design and actual is lost to planned allowances (design minus effective capacity), and 1,300 tonnes to operating losses (effective minus actual). The first is a planning and maintenance-strategy question. The second is a shop-floor question that OEE and loss analysis can break down further.</p>
+<h2>Utilization and lead time</h2>
+<p>Queueing theory shows that waiting time rises sharply as utilization approaches 100% when arrivals and processing times vary. A resource at 95% utilization can have several times the queue of one at 80%. For bottleneck equipment this is a reason to protect capacity. For non-bottlenecks it is a reason not to chase high utilization for its own sake.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Is capacity utilization the same as OEE?</summary><p>No. Utilization compares output with a capacity rating. OEE breaks down the losses within planned production time into availability, performance and quality.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/production-rate">Production Rate Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li><li><a href="/calculators/belt-conveyor-capacity">Belt Conveyor Capacity Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

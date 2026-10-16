@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Three-Phase Power Calculator – kW, kVA &amp; kvar | OpsCalc Tools</title>
+<meta name="description" content="Calculate active (kW), apparent (kVA) and reactive (kvar) power from voltage, current and power factor for three-phase or single-phase loads.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/electrical-power">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Three-Phase Power Calculator – kW, kVA &amp; kvar | OpsCalc Tools">
+<meta property="og:description" content="Calculate active (kW), apparent (kVA) and reactive (kvar) power from voltage, current and power factor for three-phase or single-phase loads.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/electrical-power">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Electrical Power Calculator (kW, kVA, kvar)","url":"https://opscalc-tools.pages.dev/calculators/electrical-power","description":"Calculate active (kW), apparent (kVA) and reactive (kvar) power from voltage, current and power factor for three-phase or single-phase loads.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Energy & Electrical","item":"https://opscalc-tools.pages.dev/#energy"},{"@type":"ListItem","position":3,"name":"Electrical Power Calculator (kW, kVA, kvar)","item":"https://opscalc-tools.pages.dev/calculators/electrical-power"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#energy">Energy &amp; Electrical</a></li><li aria-current="page">Electrical Power Calculator (kW, kVA, kvar)</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Energy &amp; Electrical</p><h1>Electrical Power Calculator (kW, kVA, kvar)</h1><p class="lead">Convert measured voltage, current and power factor into active, apparent and reactive power for three-phase or single-phase loads. Add motor efficiency to estimate shaft output. This is useful for checking a motor’s real load against its nameplate.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="electrical-power" novalidate>
+<div class="form-grid">
+<div class="field" id="f-phase">
+<label for="phase">Supply</label>
+<select id="phase" name="phase" aria-describedby="err-phase"><option value="3" selected>Three-phase (line-to-line voltage)</option><option value="1">Single-phase</option></select>
+
+<p class="field-error" id="err-phase" aria-live="polite"></p>
+</div>
+<div class="field" id="f-volts">
+<label for="volts">Voltage <span class="sr-only">(V)</span></label>
+<div class="input-unit"><input id="volts" name="volts" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-volts" required placeholder="e.g. 400"><span class="unit" aria-hidden="true">V</span></div>
+
+<p class="field-error" id="err-volts" aria-live="polite"></p>
+</div>
+<div class="field" id="f-amps">
+<label for="amps">Current <span class="sr-only">(A)</span></label>
+<div class="input-unit"><input id="amps" name="amps" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-amps" required placeholder="e.g. 135"><span class="unit" aria-hidden="true">A</span></div>
+
+<p class="field-error" id="err-amps" aria-live="polite"></p>
+</div>
+<div class="field" id="f-pf">
+<label for="pf">Power factor <span class="sr-only">(cos φ)</span></label>
+<div class="input-unit"><input id="pf" name="pf" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-pf" required placeholder="e.g. 0.86"><span class="unit" aria-hidden="true">cos φ</span></div>
+
+<p class="field-error" id="err-pf" aria-live="polite"></p>
+</div>
+<div class="field" id="f-eff">
+<label for="eff">Efficiency (optional) <span class="sr-only">(%)</span></label>
+<div class="input-unit"><input id="eff" name="eff" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-eff err-eff" placeholder="e.g. 94.5"><span class="unit" aria-hidden="true">%</span></div>
+<p class="field-help" id="help-eff">Motor efficiency, to estimate shaft output.</p>
+<p class="field-error" id="err-eff" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Three-phase apparent power S = √3 × V × I</code><code>Single-phase apparent power S = V × I</code><code>Active power P = S × PF</code><code>Reactive power Q = √(S² − P²)</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>V</td><td>Line-to-line voltage (three-phase) or supply voltage (single-phase)</td><td>V</td></tr><tr><td>I</td><td>Line current</td><td>A</td></tr><tr><td>PF</td><td>Power factor (cos φ for sinusoidal loads)</td><td>—</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A clamp meter reads 135 A on a 400 V three-phase motor supply, with a power factor of 0.86. The motor efficiency is 94.5%.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Supply</th><td>Three-phase (line-to-line voltage)</td></tr><tr><th scope="row">Voltage</th><td>400 V</td></tr><tr><th scope="row">Current</th><td>135 A</td></tr><tr><th scope="row">Power factor</th><td>0.86 cos φ</td></tr><tr><th scope="row">Efficiency (optional)</th><td>94.5 %</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Active power (input)</th><td><strong>80.44 kW</strong></td></tr><tr><th scope="row">Apparent power</th><td><strong>93.53 kVA</strong></td></tr><tr><th scope="row">Reactive power</th><td><strong>47.73 kvar</strong></td></tr><tr><th scope="row">Estimated shaft output</th><td><strong>76.01 kW</strong></td></tr></tbody></table></div>
+
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Practical notes</h2>
+<ul><li>Measure current on all three phases and use the average. Unbalance above a few percent is a problem in its own right.</li><li>With variable-speed drives, harmonics make the true power factor lower than cos φ. A power analyser gives more reliable kW.</li><li>Comparing estimated shaft output with nameplate kW shows the motor’s load. A motor that runs well below rating most of the time may be oversized.</li></ul>
+<h2>Estimating motor load from current</h2>
+<p>Measured kW divided by the motor’s rated input kW (rated output ÷ rated efficiency) gives a load estimate. For example, if the motor measured above is rated 90 kW with 95% efficiency, its rated input is about 94.7 kW, so 80.4 kW measured means about 85% load. Current alone is a poor load indicator at light load, because the magnetising current stays almost constant while power factor drops.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Why multiply by √3 for three-phase?</summary><p>With line-to-line voltage V and line current I in a balanced three-phase system, total apparent power is √3 × V × I. It is the sum of the three phase powers expressed in line quantities.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/power-factor-correction">Power Factor Correction Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/motor-efficiency-savings">Motor Efficiency Upgrade Savings Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

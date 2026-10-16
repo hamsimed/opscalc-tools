@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Availability Calculator – From MTBF/MTTR or Uptime</title>
+<meta name="description" content="Calculate equipment availability from MTBF and MTTR (inherent availability) or from measured uptime and downtime, with equivalent downtime per year.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/availability">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Availability Calculator – From MTBF/MTTR or Uptime">
+<meta property="og:description" content="Calculate equipment availability from MTBF and MTTR (inherent availability) or from measured uptime and downtime, with equivalent downtime per year.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/availability">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Equipment Availability Calculator","url":"https://opscalc-tools.pages.dev/calculators/availability","description":"Calculate equipment availability from MTBF and MTTR (inherent availability) or from measured uptime and downtime, with equivalent downtime per year.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Maintenance & Reliability","item":"https://opscalc-tools.pages.dev/#maintenance"},{"@type":"ListItem","position":3,"name":"Equipment Availability Calculator","item":"https://opscalc-tools.pages.dev/calculators/availability"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#maintenance">Maintenance &amp; Reliability</a></li><li aria-current="page">Equipment Availability Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Maintenance &amp; Reliability</p><h1>Equipment Availability Calculator</h1><p class="lead">Availability is the share of time equipment can perform its function. Calculate it from reliability figures (MTBF and MTTR) or directly from measured uptime and downtime. The result also shows how much downtime that availability means over a year of continuous operation.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="availability" novalidate>
+<div class="form-grid">
+<div class="field" id="f-mode">
+<label for="mode">Input method</label>
+<select id="mode" name="mode" aria-describedby="err-mode"><option value="mtbf" selected>From MTBF and MTTR</option><option value="time">From uptime and downtime</option></select>
+
+<p class="field-error" id="err-mode" aria-live="polite"></p>
+</div>
+<div class="field" id="f-mtbf" data-showif="mode" hidden>
+<label for="mtbf">MTBF <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="mtbf" name="mtbf" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-mtbf" required placeholder="e.g. 240"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-mtbf" aria-live="polite"></p>
+</div>
+<div class="field" id="f-mttr" data-showif="mode" hidden>
+<label for="mttr">MTTR <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="mttr" name="mttr" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-mttr" required placeholder="e.g. 3"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-mttr" aria-live="polite"></p>
+</div>
+<div class="field" id="f-up" data-showif="mode" hidden>
+<label for="up">Uptime <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="up" name="up" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-up" required placeholder="e.g. 700"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-up" aria-live="polite"></p>
+</div>
+<div class="field" id="f-down" data-showif="mode" hidden>
+<label for="down">Downtime <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="down" name="down" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-down" required placeholder="e.g. 20"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-down" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Inherent availability = MTBF ÷ (MTBF + MTTR)</code><code>Achieved availability = Uptime ÷ (Uptime + Downtime)</code><code>Equivalent downtime per year = (1 − Availability) × 8,760 h</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>MTBF</td><td>Mean time between failures</td><td>h</td></tr><tr><td>MTTR</td><td>Mean time to repair</td><td>h</td></tr><tr><td>Uptime / Downtime</td><td>Measured hours in a defined period</td><td>h</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A pump has an MTBF of 240 hours and an MTTR of 3 hours.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Input method</th><td>From MTBF and MTTR</td></tr><tr><th scope="row">MTBF</th><td>240 h</td></tr><tr><th scope="row">MTTR</th><td>3 h</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Availability</th><td><strong>98.77%</strong></td></tr><tr><th scope="row">Equivalent downtime per year (24/7)</th><td><strong>108.1 h</strong></td></tr><tr><th scope="row">Equivalent downtime per 30 days (24/7)</th><td><strong>8.9 h</strong></td></tr></tbody></table></div>
+<p class="hint">MTBF/MTTR gives inherent availability: corrective repair only, excluding preventive maintenance and logistics delays.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Which availability are you measuring?</h2>
+<ul><li><strong>Inherent availability</strong> (from MTBF/MTTR): corrective repair time only. It reflects design and maintainability.</li><li><strong>Achieved availability</strong>: adds preventive maintenance time.</li><li><strong>Operational availability</strong>: includes every delay: waiting for parts, people and permits. It is what production experiences.</li></ul><p>Always state which one you report. Production and maintenance teams often argue because they use different definitions.</p>
+<h2>Availability in series systems</h2>
+<p>When equipment runs in series with no buffers (such as a chain of conveyors), system availability is roughly the product of individual availabilities. Ten units at 99% each give about 90.4% for the chain. This is why buffers, redundancy and bottleneck focus matter in linked systems.</p>
+<h2>How availability targets translate into hours</h2>
+<div class="table-scroll"><table class="data"><caption>Downtime allowed per year of continuous (8,760 h) operation</caption><thead><tr><th scope="col">Availability</th><th scope="col">Downtime per year</th></tr></thead><tbody><tr><td>90%</td><td>876 h</td></tr><tr><td>95%</td><td>438 h</td></tr><tr><td>98%</td><td>175 h</td></tr><tr><td>99%</td><td>88 h</td></tr><tr><td>99.5%</td><td>44 h</td></tr></tbody></table></div><p>Moving from 98% to 99% halves the downtime budget. That usually needs a change in maintenance strategy (condition monitoring, redundancy, faster restoration), not just more effort.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Is availability in OEE the same as maintenance availability?</summary><p>Not exactly. OEE availability measures all unplanned stops against planned production time, including changeovers and material shortages, not only equipment failures.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/mttr">MTTR Calculator</a></li><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

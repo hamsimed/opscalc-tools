@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Little’s Law Calculator – Lead Time, WIP &amp; Throughput</title>
+<meta name="description" content="Estimate process lead time from work in process and throughput using Little’s Law, and calculate process cycle efficiency from value-added time.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/littles-law">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Little’s Law Calculator – Lead Time, WIP &amp; Throughput">
+<meta property="og:description" content="Estimate process lead time from work in process and throughput using Little’s Law, and calculate process cycle efficiency from value-added time.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/littles-law">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Lead Time Calculator (Little’s Law)","url":"https://opscalc-tools.pages.dev/calculators/littles-law","description":"Estimate process lead time from work in process and throughput using Little’s Law, and calculate process cycle efficiency from value-added time.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Production & Lean","item":"https://opscalc-tools.pages.dev/#production"},{"@type":"ListItem","position":3,"name":"Lead Time Calculator (Little’s Law)","item":"https://opscalc-tools.pages.dev/calculators/littles-law"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#production">Production &amp; Lean</a></li><li aria-current="page">Lead Time Calculator (Little’s Law)</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Production &amp; Lean</p><h1>Lead Time Calculator (Little’s Law)</h1><p class="lead">Little’s Law links three flow measures: work in process, throughput and lead time. If you know how much is in the system and how fast it leaves, you know how long an item waits on average. Add value-added time to calculate process cycle efficiency, a standard lean measure of waiting.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="littles-law" novalidate>
+<div class="form-grid">
+<div class="field" id="f-wip">
+<label for="wip">Work in process (WIP) <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="wip" name="wip" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-wip" required placeholder="e.g. 1,200"><span class="unit" aria-hidden="true">units</span></div>
+
+<p class="field-error" id="err-wip" aria-live="polite"></p>
+</div>
+<div class="field" id="f-throughput">
+<label for="throughput">Throughput <span class="sr-only">(units/day)</span></label>
+<div class="input-unit"><input id="throughput" name="throughput" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-throughput" required placeholder="e.g. 300"><span class="unit" aria-hidden="true">units/day</span></div>
+
+<p class="field-error" id="err-throughput" aria-live="polite"></p>
+</div>
+<div class="field" id="f-va">
+<label for="va">Value-added time per unit (optional) <span class="sr-only">(min)</span></label>
+<div class="input-unit"><input id="va" name="va" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-va" placeholder="e.g. 45"><span class="unit" aria-hidden="true">min</span></div>
+
+<p class="field-error" id="err-va" aria-live="polite"></p>
+</div>
+<div class="field" id="f-hpd">
+<label for="hpd">Working hours per day <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="hpd" name="hpd" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-hpd" placeholder="e.g. 16"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-hpd" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Lead time = WIP ÷ Throughput</code><code>Process cycle efficiency = Value-added time ÷ Lead time</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>WIP</td><td>Average number of units in the process (queues + in operation)</td><td>units</td></tr><tr><td>Throughput</td><td>Average completion rate</td><td>units/day</td></tr><tr><td>Value-added time</td><td>Time spent transforming the unit in a way the customer pays for</td><td>min</td></tr><tr><td>Working hours per day</td><td>Used to convert lead time into minutes for PCE</td><td>h</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A fabrication shop holds about 1,200 parts in process and completes 300 per day over two 8-hour shifts. Each part receives about 45 minutes of actual processing.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Work in process (WIP)</th><td>1,200 units</td></tr><tr><th scope="row">Throughput</th><td>300 units/day</td></tr><tr><th scope="row">Value-added time per unit (optional)</th><td>45 min</td></tr><tr><th scope="row">Working hours per day</th><td>16 h</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Lead time</th><td><strong>4 days</strong></td></tr><tr><th scope="row">Lead time (working hours)</th><td><strong>64 h</strong></td></tr><tr><th scope="row">Process cycle efficiency</th><td><strong>1.17%</strong></td></tr></tbody></table></div>
+<p class="hint">Process cycle efficiency compares value-added time to total lead time. Low values point to waiting and queues, not slow operations.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Why it matters</h2>
+<p>Little’s Law holds for any stable system over a long enough period, whatever the arrival or service distribution. It means the fastest way to cut lead time is often to cut WIP, not to speed up machines. Releasing less work into the system shortens queues while throughput stays the same.</p><p>Low process cycle efficiency is normal in batch environments. It shows that most of the lead time is waiting. That waiting is where value-stream mapping and pull systems help.</p>
+<h2>Conditions for accurate use</h2>
+<ul><li>Use long-run averages. The relationship holds on average, not item by item.</li><li>The system should be roughly stable: WIP neither growing nor shrinking over the period.</li><li>Measure WIP and throughput at the same process boundary.</li></ul>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Can I solve for WIP or throughput instead?</summary><p>Yes. Rearranged: WIP = Throughput × Lead time, and Throughput = WIP ÷ Lead time. This calculator solves for lead time, which is the most common use.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/takt-time">Takt Time Calculator</a></li><li><a href="/calculators/cycle-time">Cycle Time Calculator</a></li><li><a href="/calculators/inventory-turnover">Inventory Turnover Calculator</a></li><li><a href="/calculators/capacity-utilization">Capacity Utilization Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Payback Period Calculator – Years to Recover Investment</title>
+<meta name="description" content="Calculate simple payback period in years and months from initial investment and annual net cash inflow, and check it against useful life.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/payback-period">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Payback Period Calculator – Years to Recover Investment">
+<meta property="og:description" content="Calculate simple payback period in years and months from initial investment and annual net cash inflow, and check it against useful life.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/payback-period">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Payback Period Calculator","url":"https://opscalc-tools.pages.dev/calculators/payback-period","description":"Calculate simple payback period in years and months from initial investment and annual net cash inflow, and check it against useful life.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Business Finance","item":"https://opscalc-tools.pages.dev/#finance"},{"@type":"ListItem","position":3,"name":"Payback Period Calculator","item":"https://opscalc-tools.pages.dev/calculators/payback-period"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#finance">Business Finance</a></li><li aria-current="page">Payback Period Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Business Finance</p><h1>Payback Period Calculator</h1><p class="lead">The payback period is the time an investment takes to recover its cost from the cash it generates. It is the first screen most operations improvement projects go through. Enter the investment and annual net inflow, and optionally the asset’s useful life.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="payback-period" novalidate>
+<div class="form-grid">
+<div class="field" id="f-inv">
+<label for="inv">Initial investment</label>
+<div class="input-unit"><input id="inv" name="inv" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-inv" required placeholder="e.g. 85,000"></div>
+
+<p class="field-error" id="err-inv" aria-live="polite"></p>
+</div>
+<div class="field" id="f-cf">
+<label for="cf">Annual net cash inflow <span class="sr-only">(per year)</span></label>
+<div class="input-unit"><input id="cf" name="cf" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-cf err-cf" required placeholder="e.g. 31,000"><span class="unit" aria-hidden="true">per year</span></div>
+<p class="field-help" id="help-cf">Savings or extra profit per year after operating costs.</p>
+<p class="field-error" id="err-cf" aria-live="polite"></p>
+</div>
+<div class="field" id="f-life">
+<label for="life">Useful life (optional) <span class="sr-only">(years)</span></label>
+<div class="input-unit"><input id="life" name="life" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-life" placeholder="e.g. 8"><span class="unit" aria-hidden="true">years</span></div>
+
+<p class="field-error" id="err-life" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Payback period = Initial investment ÷ Annual net cash inflow</code><code>Undiscounted net gain = Annual inflow × Useful life − Investment</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Initial investment</td><td>Up-front cost including installation</td><td>currency</td></tr><tr><td>Annual net cash inflow</td><td>Yearly savings or extra profit after operating costs</td><td>currency/year</td></tr><tr><td>Useful life</td><td>Expected service life</td><td>years</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A variable-speed drive retrofit on a fan costs 85,000 installed and saves 31,000 a year in energy. Its useful life is about 8 years.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Initial investment</th><td>85,000</td></tr><tr><th scope="row">Annual net cash inflow</th><td>31,000 per year</td></tr><tr><th scope="row">Useful life (optional)</th><td>8 years</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Payback period</th><td><strong>2.74 years</strong></td></tr><tr><th scope="row">Payback period</th><td><strong>2 years 8.9 months</strong></td></tr><tr><th scope="row">Undiscounted net gain over life</th><td><strong>163,000</strong></td></tr></tbody></table></div>
+<p class="hint">The investment pays back within its useful life. Simple payback ignores the time value of money and cash flows after payback.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Strengths and weaknesses</h2>
+<p>Payback is easy to explain and favours fast, low-risk returns, which is useful when cash or certainty is limited. It ignores the time value of money and everything that happens after payback. A project with a slightly longer payback but a much longer life can be worth more. Use payback as a screen and net present value for the final decision.</p>
+<h2>Uneven cash flows</h2>
+<p>If savings vary year to year (ramp-up, degradation), add cumulative cash flows year by year until they exceed the investment. This calculator assumes a constant annual inflow.</p>
+<h2>Worked interpretation</h2>
+<p>In the example, 85,000 is recovered in about 2.7 years from 31,000 of annual savings. Over an 8-year life, the undiscounted net gain is 163,000. Discounting at, say, 10% a year would reduce that figure. The project still clearly pays back within its life, so payback alone is enough to pass a screening step, and a net present value calculation can follow for the final decision.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>What is a good payback period?</summary><p>It depends on company policy and risk. Thresholds of 1 to 3 years are common for operational improvements, while infrastructure is often judged on longer horizons. Use your organisation’s own hurdle.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/roi">ROI Calculator</a></li><li><a href="/calculators/break-even">Break-Even Calculator</a></li><li><a href="/calculators/motor-efficiency-savings">Motor Efficiency Upgrade Savings Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Break-Even Calculator – Units, Revenue &amp; Margin | OpsCalc Tools</title>
+<meta name="description" content="Calculate break-even volume and revenue from fixed costs, selling price and variable cost per unit, plus the volume needed for a target profit.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/break-even">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Break-Even Calculator – Units, Revenue &amp; Margin | OpsCalc Tools">
+<meta property="og:description" content="Calculate break-even volume and revenue from fixed costs, selling price and variable cost per unit, plus the volume needed for a target profit.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/break-even">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Break-Even Calculator","url":"https://opscalc-tools.pages.dev/calculators/break-even","description":"Calculate break-even volume and revenue from fixed costs, selling price and variable cost per unit, plus the volume needed for a target profit.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Business Finance","item":"https://opscalc-tools.pages.dev/#finance"},{"@type":"ListItem","position":3,"name":"Break-Even Calculator","item":"https://opscalc-tools.pages.dev/calculators/break-even"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#finance">Business Finance</a></li><li aria-current="page">Break-Even Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Business Finance</p><h1>Break-Even Calculator</h1><p class="lead">Break-even is the sales volume at which total contribution margin covers fixed costs: no profit, no loss. Enter fixed costs, price and variable cost per unit. Add a target profit to see the volume needed to reach it.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="break-even" novalidate>
+<div class="form-grid">
+<div class="field" id="f-fixed">
+<label for="fixed">Fixed costs (period)</label>
+<div class="input-unit"><input id="fixed" name="fixed" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-fixed" required placeholder="e.g. 120,000"></div>
+
+<p class="field-error" id="err-fixed" aria-live="polite"></p>
+</div>
+<div class="field" id="f-price">
+<label for="price">Selling price per unit</label>
+<div class="input-unit"><input id="price" name="price" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-price" required placeholder="e.g. 45"></div>
+
+<p class="field-error" id="err-price" aria-live="polite"></p>
+</div>
+<div class="field" id="f-vc">
+<label for="vc">Variable cost per unit</label>
+<div class="input-unit"><input id="vc" name="vc" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-vc" required placeholder="e.g. 27"></div>
+
+<p class="field-error" id="err-vc" aria-live="polite"></p>
+</div>
+<div class="field" id="f-profit">
+<label for="profit">Target profit (optional)</label>
+<div class="input-unit"><input id="profit" name="profit" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-profit" placeholder="e.g. 30,000"></div>
+
+<p class="field-error" id="err-profit" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Contribution margin = Price − Variable cost per unit</code><code>Break-even units = Fixed costs ÷ Contribution margin</code><code>Units for target profit = (Fixed costs + Target profit) ÷ Contribution margin</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Fixed costs</td><td>Costs that do not vary with volume in the period (rent, salaries, depreciation)</td><td>currency</td></tr><tr><td>Price</td><td>Net selling price per unit</td><td>currency</td></tr><tr><td>Variable cost</td><td>Materials, energy, direct consumables per unit</td><td>currency</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A small production unit has 120,000 of fixed costs per year, sells at 45 per unit and has variable costs of 27 per unit. The owners want a profit of 30,000.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Fixed costs (period)</th><td>120,000</td></tr><tr><th scope="row">Selling price per unit</th><td>45</td></tr><tr><th scope="row">Variable cost per unit</th><td>27</td></tr><tr><th scope="row">Target profit (optional)</th><td>30,000</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Break-even volume</th><td><strong>6,667 units</strong></td></tr><tr><th scope="row">Break-even revenue</th><td><strong>300,000</strong></td></tr><tr><th scope="row">Contribution margin per unit</th><td><strong>18</strong></td></tr><tr><th scope="row">Contribution margin ratio</th><td><strong>40%</strong></td></tr><tr><th scope="row">Volume for target profit</th><td><strong>8,334 units</strong></td></tr></tbody></table></div>
+<p class="hint">Volumes are rounded up to whole units.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Using break-even analysis</h2>
+<ul><li>Margin of safety = (expected volume − break-even volume) ÷ expected volume. It shows how far sales can fall before losses begin.</li><li>Raising price or cutting variable cost increases contribution margin and lowers break-even. Cutting fixed costs lowers it directly.</li><li>For several products, use a weighted average contribution margin based on the sales mix.</li></ul>
+<h2>Worked interpretation</h2>
+<p>In the example, each unit contributes 18 towards fixed costs (45 − 27), a contribution margin ratio of 40%. Covering 120,000 of fixed costs takes 6,667 units, or 300,000 of revenue. Every unit sold above that adds 18 of profit, so reaching a 30,000 profit needs 1,667 more units.</p><p>Sensitivity check: a price cut of 3 per unit lowers the margin to 15 and raises break-even to 8,000 units, 20% more volume for a 6.7% price change. Price and variable cost changes affect break-even much more strongly than they first appear.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Is direct labour fixed or variable?</summary><p>It depends on how labour is managed. If headcount is fixed over the period, treat labour as fixed. If hours flex with volume (temporary staff, overtime), treat that part as variable.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/roi">ROI Calculator</a></li><li><a href="/calculators/payback-period">Payback Period Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

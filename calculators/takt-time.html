@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Takt Time Calculator – Pace of Production to Demand</title>
+<meta name="description" content="Calculate takt time from shift length, breaks, shifts per day and customer demand, and check whether your bottleneck cycle time can keep up.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/takt-time">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Takt Time Calculator – Pace of Production to Demand">
+<meta property="og:description" content="Calculate takt time from shift length, breaks, shifts per day and customer demand, and check whether your bottleneck cycle time can keep up.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/takt-time">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Takt Time Calculator","url":"https://opscalc-tools.pages.dev/calculators/takt-time","description":"Calculate takt time from shift length, breaks, shifts per day and customer demand, and check whether your bottleneck cycle time can keep up.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Production & Lean","item":"https://opscalc-tools.pages.dev/#production"},{"@type":"ListItem","position":3,"name":"Takt Time Calculator","item":"https://opscalc-tools.pages.dev/calculators/takt-time"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#production">Production &amp; Lean</a></li><li aria-current="page">Takt Time Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Production &amp; Lean</p><h1>Takt Time Calculator</h1><p class="lead">Takt time is the pace at which you must complete one unit to meet customer demand exactly. It comes from demand and available time, not from machine capability. Enter your shift pattern and daily demand, and optionally your bottleneck cycle time, to see whether the line can keep up.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="takt-time" novalidate>
+<div class="form-grid">
+<div class="field" id="f-shift">
+<label for="shift">Shift length <span class="sr-only">(min)</span></label>
+<div class="input-unit"><input id="shift" name="shift" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-shift" required placeholder="e.g. 480"><span class="unit" aria-hidden="true">min</span></div>
+
+<p class="field-error" id="err-shift" aria-live="polite"></p>
+</div>
+<div class="field" id="f-breaks">
+<label for="breaks">Planned breaks per shift <span class="sr-only">(min)</span></label>
+<div class="input-unit"><input id="breaks" name="breaks" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-breaks err-breaks" required placeholder="e.g. 60"><span class="unit" aria-hidden="true">min</span></div>
+<p class="field-help" id="help-breaks">Breaks, meetings, planned cleaning — time the line does not run.</p>
+<p class="field-error" id="err-breaks" aria-live="polite"></p>
+</div>
+<div class="field" id="f-shifts">
+<label for="shifts">Shifts per day</label>
+<div class="input-unit"><input id="shifts" name="shifts" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-shifts" required placeholder="e.g. 2"></div>
+
+<p class="field-error" id="err-shifts" aria-live="polite"></p>
+</div>
+<div class="field" id="f-demand">
+<label for="demand">Customer demand per day <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="demand" name="demand" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-demand" required placeholder="e.g. 840"><span class="unit" aria-hidden="true">units</span></div>
+
+<p class="field-error" id="err-demand" aria-live="polite"></p>
+</div>
+<div class="field" id="f-cycle">
+<label for="cycle">Current bottleneck cycle time (optional) <span class="sr-only">(s/unit)</span></label>
+<div class="input-unit"><input id="cycle" name="cycle" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-cycle" placeholder="e.g. 55"><span class="unit" aria-hidden="true">s/unit</span></div>
+
+<p class="field-error" id="err-cycle" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Available time = (Shift length − Planned breaks) × Shifts per day</code><code>Takt time = Available time ÷ Customer demand</code><code>Bottleneck load = Bottleneck cycle time ÷ Takt time</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Shift length</td><td>Paid or scheduled duration of one shift</td><td>min</td></tr><tr><td>Planned breaks</td><td>Breaks, team meetings, planned cleaning when the line is not expected to run</td><td>min</td></tr><tr><td>Customer demand</td><td>Units the customer requires per day, after levelling</td><td>units/day</td></tr><tr><td>Bottleneck cycle time</td><td>Cycle time of the slowest station</td><td>s/unit</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>An assembly cell works two 8-hour shifts with 60 minutes of planned breaks per shift. Customers order 840 units per day, and the slowest station takes 55 seconds per unit.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Shift length</th><td>480 min</td></tr><tr><th scope="row">Planned breaks per shift</th><td>60 min</td></tr><tr><th scope="row">Shifts per day</th><td>2</td></tr><tr><th scope="row">Customer demand per day</th><td>840 units</td></tr><tr><th scope="row">Current bottleneck cycle time (optional)</th><td>55 s/unit</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Takt time</th><td><strong>60 s/unit</strong></td></tr><tr><th scope="row">Takt time</th><td><strong>1 min/unit</strong></td></tr><tr><th scope="row">Available time per day</th><td><strong>840 min</strong></td></tr><tr><th scope="row">Bottleneck load vs. takt</th><td><strong>91.7%</strong></td></tr></tbody></table></div>
+<p class="hint">The bottleneck runs above 90% of takt: little margin for stoppages. Most lines need a buffer for availability losses.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Interpreting takt time</h2>
+<p>Takt time sets the rhythm for line balancing. If any station’s cycle time is above takt, that station limits output and demand cannot be met without overtime or more capacity. If every station is well below takt, the line is over-resourced for current demand.</p><p>Do not design to 100% of takt. Real lines lose time to stops, quality issues and changeovers. Many lean practitioners plan a "planned cycle time" below takt to keep a margin for these losses. The size of that margin depends on your own availability and quality history.</p>
+<h2>Takt time vs. cycle time vs. lead time</h2>
+<ul><li><strong>Takt time</strong>: the required pace, set by demand.</li><li><strong>Cycle time</strong>: the actual pace at which a station or line completes units.</li><li><strong>Lead time</strong>: total elapsed time for one unit to pass through the whole process, including waiting. See the <a href="/calculators/littles-law">Little’s Law calculator</a>.</li></ul>
+<h2>Common mistakes</h2>
+<ul><li>Subtracting unplanned downtime from available time. Takt should reflect planned time; losses belong in OEE.</li><li>Using unlevelled daily orders. Takt is most useful with averaged (levelled) demand over a planning horizon.</li><li>Mixing units: keep demand and time in the same period (per day, per shift).</li></ul>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Does takt time change when demand changes?</summary><p>Yes. Takt time is recalculated whenever demand or available time changes, typically at each planning cycle. Frequent changes are a reason to level demand.</p></details><details><summary>How do I estimate the number of operators needed?</summary><p>A common first estimate is total manual work content per unit divided by takt time, rounded up. Then balance the work across stations so none exceeds takt.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/cycle-time">Cycle Time Calculator</a></li><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/production-rate">Production Rate Calculator</a></li><li><a href="/calculators/littles-law">Lead Time Calculator (Little’s Law)</a></li><li><a href="/calculators/capacity-utilization">Capacity Utilization Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

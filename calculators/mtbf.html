@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MTBF Calculator – Mean Time Between Failures | OpsCalc Tools</title>
+<meta name="description" content="Calculate mean time between failures (MTBF), failure rate and reliability over a mission time for repairable equipment.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/mtbf">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="MTBF Calculator – Mean Time Between Failures | OpsCalc Tools">
+<meta property="og:description" content="Calculate mean time between failures (MTBF), failure rate and reliability over a mission time for repairable equipment.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/mtbf">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"MTBF Calculator","url":"https://opscalc-tools.pages.dev/calculators/mtbf","description":"Calculate mean time between failures (MTBF), failure rate and reliability over a mission time for repairable equipment.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Maintenance & Reliability","item":"https://opscalc-tools.pages.dev/#maintenance"},{"@type":"ListItem","position":3,"name":"MTBF Calculator","item":"https://opscalc-tools.pages.dev/calculators/mtbf"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#maintenance">Maintenance &amp; Reliability</a></li><li aria-current="page">MTBF Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Maintenance &amp; Reliability</p><h1>MTBF Calculator</h1><p class="lead">Mean time between failures (MTBF) is the average operating time between failures of repairable equipment. The calculator also gives the failure rate and, with a mission time, the probability of running that long without failure under a constant-failure-rate assumption.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="mtbf" novalidate>
+<div class="form-grid">
+<div class="field" id="f-uptime">
+<label for="uptime">Total operating time <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="uptime" name="uptime" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-uptime err-uptime" required placeholder="e.g. 2,160"><span class="unit" aria-hidden="true">h</span></div>
+<p class="field-help" id="help-uptime">Running time only — exclude repair time and idle time.</p>
+<p class="field-error" id="err-uptime" aria-live="polite"></p>
+</div>
+<div class="field" id="f-failures">
+<label for="failures">Number of failures</label>
+<div class="input-unit"><input id="failures" name="failures" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-failures" required placeholder="e.g. 9"></div>
+
+<p class="field-error" id="err-failures" aria-live="polite"></p>
+</div>
+<div class="field" id="f-mission">
+<label for="mission">Mission time for reliability (optional) <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="mission" name="mission" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-mission" placeholder="e.g. 100"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-mission" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>MTBF = Total operating time ÷ Number of failures</code><code>Failure rate λ = 1 ÷ MTBF</code><code>Reliability R(t) = e^(−t ÷ MTBF)</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Total operating time</td><td>Running time of the equipment in the period, excluding repair and idle time</td><td>h</td></tr><tr><td>Number of failures</td><td>Failures needing corrective action that stopped or degraded the function</td><td>count</td></tr><tr><td>Mission time t</td><td>Duration for which you want the probability of no failure</td><td>h</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A crusher ran 2,160 hours over a quarter and had 9 failures that needed corrective maintenance. The team wants to know the chance of completing a 100-hour campaign without a failure.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Total operating time</th><td>2,160 h</td></tr><tr><th scope="row">Number of failures</th><td>9</td></tr><tr><th scope="row">Mission time for reliability (optional)</th><td>100 h</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">MTBF</th><td><strong>240 h</strong></td></tr><tr><th scope="row">Failure rate (λ)</th><td><strong>0.004167 failures/h</strong></td></tr><tr><th scope="row">Expected failures per 1,000 h</th><td><strong>4.17</strong></td></tr><tr><th scope="row">Reliability over mission time</th><td><strong>65.92%</strong></td></tr></tbody></table></div>
+<p class="hint">Reliability assumes a constant failure rate (exponential model). It does not hold for wear-out failures.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Getting a trustworthy MTBF</h2>
+<ul><li><strong>Define "failure".</strong> Agree which events count (functional failures only, or every corrective work order) and apply it consistently.</li><li><strong>Use operating time</strong>, not calendar time, for continuously wearing equipment. For standby equipment, use calendar time and say so.</li><li><strong>Watch sample size.</strong> With few failures, MTBF is uncertain. A single extra failure can change it a lot.</li></ul>
+<h2>Limits of the reliability estimate</h2>
+<p>The exponential formula assumes failures happen at a constant rate: random, with no wear-out. Bearings, belts, liners and other wear components usually have rising failure rates. For those, a Weibull analysis of time-to-failure data is more realistic, and preventive replacement intervals should come from it.</p>
+<h2>Standards</h2>
+<p>IEC 60050-192 (International Electrotechnical Vocabulary, dependability) and EN 13306 (maintenance terminology) give formal definitions of failure, MTBF and related terms. They are useful reference points when aligning maintenance KPIs between sites.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>What is the difference between MTBF and MTTF?</summary><p>MTBF applies to repairable items that return to service after a failure. MTTF (mean time to failure) applies to non-repairable items that are replaced.</p></details><details><summary>Does MTBF include repair time?</summary><p>Not in the operating-time definition used here. Some organisations use calendar time between failures. That figure includes repair time and should be labelled differently.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/mttr">MTTR Calculator</a></li><li><a href="/calculators/availability">Equipment Availability Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li><li><a href="/calculators/oee">OEE Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

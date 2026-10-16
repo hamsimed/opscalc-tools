@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specific Energy Consumption Calculator (kWh/t, EnPI)</title>
+<meta name="description" content="Calculate specific energy consumption (SEC) in kWh per tonne or per unit, and compare it with a baseline to estimate energy saved or over-consumed.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/specific-energy-consumption">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Specific Energy Consumption Calculator (kWh/t, EnPI)">
+<meta property="og:description" content="Calculate specific energy consumption (SEC) in kWh per tonne or per unit, and compare it with a baseline to estimate energy saved or over-consumed.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/specific-energy-consumption">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Specific Energy Consumption Calculator","url":"https://opscalc-tools.pages.dev/calculators/specific-energy-consumption","description":"Calculate specific energy consumption (SEC) in kWh per tonne or per unit, and compare it with a baseline to estimate energy saved or over-consumed.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Energy & Electrical","item":"https://opscalc-tools.pages.dev/#energy"},{"@type":"ListItem","position":3,"name":"Specific Energy Consumption Calculator","item":"https://opscalc-tools.pages.dev/calculators/specific-energy-consumption"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#energy">Energy &amp; Electrical</a></li><li aria-current="page">Specific Energy Consumption Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Energy &amp; Electrical</p><h1>Specific Energy Consumption Calculator</h1><p class="lead">Specific energy consumption (SEC) is energy used per unit of output, such as kWh per tonne. It is one of the most widely used energy performance indicators (EnPIs). Compare a period with a baseline to see whether energy performance has improved and by how much.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="specific-energy-consumption" novalidate>
+<div class="form-grid">
+<div class="field" id="f-energy">
+<label for="energy">Energy consumed <span class="sr-only">(kWh)</span></label>
+<div class="input-unit"><input id="energy" name="energy" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-energy" required placeholder="e.g. 1,840,000"><span class="unit" aria-hidden="true">kWh</span></div>
+
+<p class="field-error" id="err-energy" aria-live="polite"></p>
+</div>
+<div class="field" id="f-output">
+<label for="output">Production output <span class="sr-only">(t (or units))</span></label>
+<div class="input-unit"><input id="output" name="output" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-output" required placeholder="e.g. 920,000"><span class="unit" aria-hidden="true">t (or units)</span></div>
+
+<p class="field-error" id="err-output" aria-live="polite"></p>
+</div>
+<div class="field" id="f-baseline">
+<label for="baseline">Baseline SEC (optional) <span class="sr-only">(kWh/t)</span></label>
+<div class="input-unit"><input id="baseline" name="baseline" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-baseline" placeholder="e.g. 2.15"><span class="unit" aria-hidden="true">kWh/t</span></div>
+
+<p class="field-error" id="err-baseline" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>SEC = Energy consumed ÷ Production output</code><code>Change vs. baseline = SEC ÷ Baseline SEC − 1</code><code>Energy saved = (Baseline SEC − SEC) × Production output</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Energy consumed</td><td>Metered energy for the boundary (site, process, line)</td><td>kWh</td></tr><tr><td>Production output</td><td>Output over the same period and boundary</td><td>t or units</td></tr><tr><td>Baseline SEC</td><td>Reference SEC from a baseline period</td><td>kWh/t</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A bulk-material handling system used 1,840,000 kWh to move 920,000 tonnes in a quarter. The baseline year averaged 2.15 kWh/t.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Energy consumed</th><td>1,840,000 kWh</td></tr><tr><th scope="row">Production output</th><td>920,000 t (or units)</td></tr><tr><th scope="row">Baseline SEC (optional)</th><td>2.15 kWh/t</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Specific energy consumption</th><td><strong>2 kWh/t</strong></td></tr><tr><th scope="row">Energy per 1,000 t</th><td><strong>2,000 kWh</strong></td></tr><tr><th scope="row">Change vs. baseline</th><td><strong>-7%</strong></td></tr><tr><th scope="row">Energy saved vs. baseline</th><td><strong>138,000 kWh</strong></td></tr></tbody></table></div>
+<p class="hint">A simple ratio baseline ignores fixed (load-independent) consumption. If output varied a lot, a regression baseline (E = a·output + b) is more reliable.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>When a simple ratio misleads</h2>
+<p>Most processes have a fixed energy component (lighting, auxiliaries, idling equipment) that does not change with output. When output drops, SEC rises even if nothing got worse. ISO 50006 recommends checking whether a ratio EnPI is suitable or whether a regression model (energy = a × output + b) better represents the relationship. With a model, savings are calculated against the expected energy for the actual output.</p>
+<h2>Good practice</h2>
+<ul><li>Keep the energy and output boundaries identical.</li><li>Record relevant variables (product mix, ore hardness, ambient temperature) alongside SEC.</li><li>Track SEC at the level where someone can act on it: a line or a major energy user, not just the whole site.</li></ul>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Is SEC the same as energy intensity?</summary><p>Broadly yes. Energy intensity is often used for economic output (energy per unit of revenue), while SEC usually refers to physical output.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/motor-efficiency-savings">Motor Efficiency Upgrade Savings Calculator</a></li><li><a href="/calculators/belt-conveyor-capacity">Belt Conveyor Capacity Calculator</a></li><li><a href="/calculators/power-factor-correction">Power Factor Correction Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

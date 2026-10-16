@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DPMO Calculator – Defects per Million &amp; Sigma Level</title>
+<meta name="description" content="Calculate DPMO, defects per unit (DPU), process yield and short-term sigma level from defects, units and opportunities per unit.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/dpmo">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="DPMO Calculator – Defects per Million &amp; Sigma Level">
+<meta property="og:description" content="Calculate DPMO, defects per unit (DPU), process yield and short-term sigma level from defects, units and opportunities per unit.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/dpmo">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"DPMO & Sigma Level Calculator","url":"https://opscalc-tools.pages.dev/calculators/dpmo","description":"Calculate DPMO, defects per unit (DPU), process yield and short-term sigma level from defects, units and opportunities per unit.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Quality","item":"https://opscalc-tools.pages.dev/#quality"},{"@type":"ListItem","position":3,"name":"DPMO & Sigma Level Calculator","item":"https://opscalc-tools.pages.dev/calculators/dpmo"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#quality">Quality</a></li><li aria-current="page">DPMO &amp; Sigma Level Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Quality</p><h1>DPMO &amp; Sigma Level Calculator</h1><p class="lead">Defects per million opportunities (DPMO) normalises defect counts so that simple and complex products can be compared. The calculator converts DPMO into process yield and the Six Sigma &quot;sigma level&quot;, using the conventional 1.5-sigma shift.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="dpmo" novalidate>
+<div class="form-grid">
+<div class="field" id="f-defects">
+<label for="defects">Defects found <span class="sr-only">(defects)</span></label>
+<div class="input-unit"><input id="defects" name="defects" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-defects" required placeholder="e.g. 34"><span class="unit" aria-hidden="true">defects</span></div>
+
+<p class="field-error" id="err-defects" aria-live="polite"></p>
+</div>
+<div class="field" id="f-units">
+<label for="units">Units inspected <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="units" name="units" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-units" required placeholder="e.g. 1,500"><span class="unit" aria-hidden="true">units</span></div>
+
+<p class="field-error" id="err-units" aria-live="polite"></p>
+</div>
+<div class="field" id="f-opps">
+<label for="opps">Defect opportunities per unit</label>
+<div class="input-unit"><input id="opps" name="opps" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-opps" required placeholder="e.g. 8"></div>
+
+<p class="field-error" id="err-opps" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>DPO = Defects ÷ (Units × Opportunities per unit)</code><code>DPMO = DPO × 1,000,000</code><code>DPU = Defects ÷ Units</code><code>Sigma level = Φ⁻¹(1 − DPO) + 1.5</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Defects</td><td>Total nonconformities found (one unit can have several)</td><td>count</td></tr><tr><td>Units</td><td>Units inspected</td><td>count</td></tr><tr><td>Opportunities per unit</td><td>Distinct, independently checkable ways a unit can be defective</td><td>count</td></tr><tr><td>Φ⁻¹</td><td>Inverse of the standard normal cumulative distribution</td><td>—</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>An electronics line inspected 1,500 boards with 8 critical-to-quality characteristics each and found 34 defects.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Defects found</th><td>34 defects</td></tr><tr><th scope="row">Units inspected</th><td>1,500 units</td></tr><tr><th scope="row">Defect opportunities per unit</th><td>8</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">DPMO</th><td><strong>2,833 defects per million</strong></td></tr><tr><th scope="row">Defects per unit (DPU)</th><td><strong>0.0227</strong></td></tr><tr><th scope="row">Process yield (1 − DPO)</th><td><strong>99.717%</strong></td></tr><tr><th scope="row">Sigma level (short-term, 1.5σ shift)</th><td><strong>4.27 σ</strong></td></tr></tbody></table></div>
+<p class="hint">Sigma level uses the conventional 1.5σ long-term shift. Report the convention with the number.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Defining opportunities carefully</h2>
+<p>DPMO is very sensitive to how opportunities are counted. Adding trivial "opportunities" lowers DPMO without any real improvement. Count only characteristics that are critical to the customer and actually checked. Then keep the definition fixed over time.</p>
+<h2>About the 1.5σ shift</h2>
+<p>Six Sigma tables add 1.5 to the z-value to allow for long-term process drift. That is why 3.4 DPMO is called "six sigma". The shift is a convention, not a measured property of your process. If you quote a sigma level, say whether it includes the shift.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>What DPMO corresponds to six sigma?</summary><p>By convention, 3.4 DPMO is six sigma with the 1.5σ shift included. Without the shift, 3.4 DPMO corresponds to about 4.5σ.</p></details><details><summary>Why does the calculator not show sigma when there are no defects?</summary><p>With zero observed defects, the sample cannot estimate a sigma level. You can only say the true defect rate is probably below a bound that depends on sample size.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/first-pass-yield">First Pass Yield &amp; Scrap Rate Calculator</a></li><li><a href="/calculators/oee">OEE Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

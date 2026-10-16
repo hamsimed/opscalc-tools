@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Downtime Cost Calculator – Cost of Unplanned Stops</title>
+<meta name="description" content="Estimate the cost of unplanned downtime from lost output, contribution margin, idle labour and direct repair costs. Get total cost and cost per hour.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/downtime-cost">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Downtime Cost Calculator – Cost of Unplanned Stops">
+<meta property="og:description" content="Estimate the cost of unplanned downtime from lost output, contribution margin, idle labour and direct repair costs. Get total cost and cost per hour.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/downtime-cost">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Downtime Cost Calculator","url":"https://opscalc-tools.pages.dev/calculators/downtime-cost","description":"Estimate the cost of unplanned downtime from lost output, contribution margin, idle labour and direct repair costs. Get total cost and cost per hour.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Maintenance & Reliability","item":"https://opscalc-tools.pages.dev/#maintenance"},{"@type":"ListItem","position":3,"name":"Downtime Cost Calculator","item":"https://opscalc-tools.pages.dev/calculators/downtime-cost"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#maintenance">Maintenance &amp; Reliability</a></li><li aria-current="page">Downtime Cost Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Maintenance &amp; Reliability</p><h1>Downtime Cost Calculator</h1><p class="lead">A stop costs more than its repair bill. This calculator adds up lost contribution margin, idle labour and other direct costs to give the total cost of a downtime event and a cost per hour. Use the cost per hour to rank improvement projects and justify spares.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="downtime-cost" novalidate>
+<div class="form-grid">
+<div class="field" id="f-hours">
+<label for="hours">Downtime duration <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="hours" name="hours" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-hours" required placeholder="e.g. 3.5"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-hours" aria-live="polite"></p>
+</div>
+<div class="field" id="f-rate">
+<label for="rate">Lost production rate <span class="sr-only">(units/h)</span></label>
+<div class="input-unit"><input id="rate" name="rate" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-rate" required placeholder="e.g. 120"><span class="unit" aria-hidden="true">units/h</span></div>
+
+<p class="field-error" id="err-rate" aria-live="polite"></p>
+</div>
+<div class="field" id="f-margin">
+<label for="margin">Contribution margin per unit <span class="sr-only">(per unit)</span></label>
+<div class="input-unit"><input id="margin" name="margin" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-margin err-margin" required placeholder="e.g. 18"><span class="unit" aria-hidden="true">per unit</span></div>
+<p class="field-help" id="help-margin">Selling price minus variable cost. Use 0 if the lost output can be recovered later at no extra cost.</p>
+<p class="field-error" id="err-margin" aria-live="polite"></p>
+</div>
+<div class="field" id="f-workers">
+<label for="workers">Idle workers (optional)</label>
+<div class="input-unit"><input id="workers" name="workers" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-workers" placeholder="e.g. 8"></div>
+
+<p class="field-error" id="err-workers" aria-live="polite"></p>
+</div>
+<div class="field" id="f-wage">
+<label for="wage">Loaded labor cost per hour (optional) <span class="sr-only">(per h)</span></label>
+<div class="input-unit"><input id="wage" name="wage" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-wage" placeholder="e.g. 32"><span class="unit" aria-hidden="true">per h</span></div>
+
+<p class="field-error" id="err-wage" aria-live="polite"></p>
+</div>
+<div class="field" id="f-other">
+<label for="other">Other direct costs (optional)</label>
+<div class="input-unit"><input id="other" name="other" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-other err-other" placeholder="e.g. 1,500"></div>
+<p class="field-help" id="help-other">Spare parts, contractor call-out, scrap, expediting.</p>
+<p class="field-error" id="err-other" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Lost margin = Downtime × Lost production rate × Contribution margin per unit</code><code>Idle labour = Downtime × Idle workers × Loaded hourly cost</code><code>Total cost = Lost margin + Idle labour + Other direct costs</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Lost production rate</td><td>Output the stopped asset would have produced per hour</td><td>units/h</td></tr><tr><td>Contribution margin</td><td>Selling price minus variable cost per unit</td><td>currency/unit</td></tr><tr><td>Loaded labour cost</td><td>Wage plus social charges and overheads per hour</td><td>currency/h</td></tr><tr><td>Other direct costs</td><td>Spare parts, contractors, scrap, expediting</td><td>currency</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A bottleneck filler stopped for 3.5 hours. It normally produces 120 units per hour at a contribution margin of 18 per unit. Eight operators stood idle at a loaded cost of 32 per hour, and parts plus a contractor cost 1,500.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Downtime duration</th><td>3.5 h</td></tr><tr><th scope="row">Lost production rate</th><td>120 units/h</td></tr><tr><th scope="row">Contribution margin per unit</th><td>18 per unit</td></tr><tr><th scope="row">Idle workers (optional)</th><td>8</td></tr><tr><th scope="row">Loaded labor cost per hour (optional)</th><td>32 per h</td></tr><tr><th scope="row">Other direct costs (optional)</th><td>1,500</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Total downtime cost</th><td><strong>9,956</strong></td></tr><tr><th scope="row">Cost per downtime hour</th><td><strong>2,844.57</strong></td></tr><tr><th scope="row">Lost output</th><td><strong>420 units</strong></td></tr><tr><th scope="row">Lost contribution margin</th><td><strong>7,560</strong></td></tr><tr><th scope="row">Idle labor cost</th><td><strong>896</strong></td></tr><tr><th scope="row">Other direct costs</th><td><strong>1,500</strong></td></tr></tbody></table></div>
+<p class="hint">Costs are in your own currency. Lost margin applies only if the output is truly lost (bottleneck stopped, no recovery capacity).</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>When is output really lost?</h2>
+<p>Lost margin applies only if the output cannot be recovered. A stop at a non-bottleneck with buffers or spare capacity may cost almost nothing in sales. A stop at the bottleneck of a sold-out plant loses margin for every hour. Use 0 for margin when the volume will be recovered without overtime, and count the overtime cost instead.</p>
+<h2>Using cost per hour</h2>
+<ul><li>Multiply by annual downtime hours per asset to rank where reliability work pays most.</li><li>Compare with the cost of holding a critical spare, or of a redundancy investment.</li><li>Feed the result into the <a href="/calculators/payback-period">payback calculator</a> for improvement projects.</li></ul>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Should I use selling price instead of margin?</summary><p>Not usually. When output is lost, you also avoid its variable costs (materials, energy). Contribution margin is the money actually lost.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/mttr">MTTR Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/availability">Equipment Availability Calculator</a></li><li><a href="/calculators/payback-period">Payback Period Calculator</a></li><li><a href="/calculators/oee">OEE Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Labor Productivity Calculator – Output per Labor Hour</title>
+<meta name="description" content="Calculate labor productivity as output per labor hour, labor hours per unit and output per worker, and compare with a baseline.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/labor-productivity">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Labor Productivity Calculator – Output per Labor Hour">
+<meta property="og:description" content="Calculate labor productivity as output per labor hour, labor hours per unit and output per worker, and compare with a baseline.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/labor-productivity">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Labor Productivity Calculator","url":"https://opscalc-tools.pages.dev/calculators/labor-productivity","description":"Calculate labor productivity as output per labor hour, labor hours per unit and output per worker, and compare with a baseline.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Time & Workforce","item":"https://opscalc-tools.pages.dev/#workforce"},{"@type":"ListItem","position":3,"name":"Labor Productivity Calculator","item":"https://opscalc-tools.pages.dev/calculators/labor-productivity"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#workforce">Time &amp; Workforce</a></li><li aria-current="page">Labor Productivity Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Time &amp; Workforce</p><h1>Labor Productivity Calculator</h1><p class="lead">Labor productivity measures output per hour of work. Enter output, number of workers and hours worked to get output per labor hour, labor hours per unit and output per worker. Add a baseline to see the change.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="labor-productivity" novalidate>
+<div class="form-grid">
+<div class="field" id="f-output">
+<label for="output">Output <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="output" name="output" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-output" required placeholder="e.g. 5,400"><span class="unit" aria-hidden="true">units</span></div>
+
+<p class="field-error" id="err-output" aria-live="polite"></p>
+</div>
+<div class="field" id="f-workers">
+<label for="workers">Number of workers</label>
+<div class="input-unit"><input id="workers" name="workers" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-workers" required placeholder="e.g. 12"></div>
+
+<p class="field-error" id="err-workers" aria-live="polite"></p>
+</div>
+<div class="field" id="f-hours">
+<label for="hours">Hours worked per worker <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="hours" name="hours" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-hours" required placeholder="e.g. 40"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-hours" aria-live="polite"></p>
+</div>
+<div class="field" id="f-baseline">
+<label for="baseline">Baseline productivity (optional) <span class="sr-only">(units/labor-h)</span></label>
+<div class="input-unit"><input id="baseline" name="baseline" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-baseline" placeholder="e.g. 10.5"><span class="unit" aria-hidden="true">units/labor-h</span></div>
+
+<p class="field-error" id="err-baseline" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Labor hours = Workers × Hours per worker</code><code>Labor productivity = Output ÷ Labor hours</code><code>Labor hours per unit = Labor hours ÷ Output</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Output</td><td>Good units (or another output measure such as tonnes) in the period</td><td>units</td></tr><tr><td>Workers</td><td>People whose hours are counted</td><td>count</td></tr><tr><td>Hours per worker</td><td>Hours worked by each in the period</td><td>h</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A team of 12 worked 40 hours each in a week and produced 5,400 units. Last quarter’s average was 10.5 units per labor hour.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Output</th><td>5,400 units</td></tr><tr><th scope="row">Number of workers</th><td>12</td></tr><tr><th scope="row">Hours worked per worker</th><td>40 h</td></tr><tr><th scope="row">Baseline productivity (optional)</th><td>10.5 units/labor-h</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Labor productivity</th><td><strong>11.25 units/labor-hour</strong></td></tr><tr><th scope="row">Total labor hours</th><td><strong>480 h</strong></td></tr><tr><th scope="row">Output per worker</th><td><strong>450 units</strong></td></tr><tr><th scope="row">Labor hours per unit</th><td><strong>0.0889 h/unit</strong></td></tr><tr><th scope="row">Change vs. baseline</th><td><strong>7.1%</strong></td></tr></tbody></table></div>
+
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Interpreting changes</h2>
+<p>Productivity can rise for good reasons (better methods, less rework, fewer stops) or misleading ones (product mix shifting to simpler items, deferred maintenance, hours not recorded). Check mix and quality before attributing a change to performance.</p><p>Compare like with like: direct labour only, or all labour, but the same definition each period.</p>
+<h2>Choosing the right output measure</h2>
+<p>Output per labour hour works when the products are similar. With a varied mix, a simple unit count rewards making easy products. Two common fixes:</p><ul><li><strong>Standard hours earned</strong>: multiply each product’s output by its standard time, then divide by actual hours worked. The result is labour efficiency against standard.</li><li><strong>Weighted units</strong>: convert products into an equivalent reference unit, using their relative work content.</li></ul><p>For process industries, tonnes per labour hour or tonnes per employee per year are the usual measures. They only make sense when compared at similar levels of automation.</p>
+<h2>Linking productivity to improvement work</h2>
+<p>Labour productivity is an outcome. The levers sit upstream: less waiting for material, shorter changeovers, fewer quality problems, better line balance. Track one or two of these drivers next to the productivity figure, so the team can see what moved it.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Should overtime hours be included?</summary><p>Yes. All hours worked should be counted, otherwise productivity looks better than it is.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/working-hours">Working Hours Calculator</a></li><li><a href="/calculators/production-rate">Production Rate Calculator</a></li><li><a href="/calculators/oee">OEE Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

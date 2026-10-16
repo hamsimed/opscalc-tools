@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EOQ Calculator – Economic Order Quantity &amp; Total Cost</title>
+<meta name="description" content="Calculate the economic order quantity (EOQ), number of orders per year, order interval and total annual ordering and holding cost.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/eoq">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="EOQ Calculator – Economic Order Quantity &amp; Total Cost">
+<meta property="og:description" content="Calculate the economic order quantity (EOQ), number of orders per year, order interval and total annual ordering and holding cost.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/eoq">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"EOQ Calculator (Economic Order Quantity)","url":"https://opscalc-tools.pages.dev/calculators/eoq","description":"Calculate the economic order quantity (EOQ), number of orders per year, order interval and total annual ordering and holding cost.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Inventory & Logistics","item":"https://opscalc-tools.pages.dev/#inventory"},{"@type":"ListItem","position":3,"name":"EOQ Calculator (Economic Order Quantity)","item":"https://opscalc-tools.pages.dev/calculators/eoq"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#inventory">Inventory &amp; Logistics</a></li><li aria-current="page">EOQ Calculator (Economic Order Quantity)</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Inventory &amp; Logistics</p><h1>EOQ Calculator (Economic Order Quantity)</h1><p class="lead">The economic order quantity balances the cost of placing orders against the cost of holding stock. Enter annual demand, cost per order and annual holding cost per unit to get the optimal lot size and the annual costs at that quantity.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="eoq" novalidate>
+<div class="form-grid">
+<div class="field" id="f-D">
+<label for="D">Annual demand <span class="sr-only">(units/year)</span></label>
+<div class="input-unit"><input id="D" name="D" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-D" required placeholder="e.g. 12,000"><span class="unit" aria-hidden="true">units/year</span></div>
+
+<p class="field-error" id="err-D" aria-live="polite"></p>
+</div>
+<div class="field" id="f-S">
+<label for="S">Cost per order <span class="sr-only">(per order)</span></label>
+<div class="input-unit"><input id="S" name="S" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-S err-S" required placeholder="e.g. 75"><span class="unit" aria-hidden="true">per order</span></div>
+<p class="field-help" id="help-S">Purchasing, receiving and invoice-handling cost of one order.</p>
+<p class="field-error" id="err-S" aria-live="polite"></p>
+</div>
+<div class="field" id="f-H">
+<label for="H">Holding cost per unit per year <span class="sr-only">(per unit-year)</span></label>
+<div class="input-unit"><input id="H" name="H" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-H err-H" required placeholder="e.g. 2.4"><span class="unit" aria-hidden="true">per unit-year</span></div>
+<p class="field-help" id="help-H">Often 15–30% of unit cost per year (capital, storage, obsolescence).</p>
+<p class="field-error" id="err-H" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>EOQ = √(2 × D × S ÷ H)</code><code>Orders per year = D ÷ EOQ</code><code>Total cost = (D ÷ Q) × S + (Q ÷ 2) × H</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>D</td><td>Annual demand</td><td>units/year</td></tr><tr><td>S</td><td>Fixed cost per order (admin, receiving, transport fixed part)</td><td>currency/order</td></tr><tr><td>H</td><td>Holding cost per unit per year</td><td>currency/unit/year</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A distributor sells 12,000 units of an item a year. Each purchase order costs 75 to process, and holding one unit for a year costs 2.40.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Annual demand</th><td>12,000 units/year</td></tr><tr><th scope="row">Cost per order</th><td>75 per order</td></tr><tr><th scope="row">Holding cost per unit per year</th><td>2.4 per unit-year</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Economic order quantity</th><td><strong>866 units</strong></td></tr><tr><th scope="row">Orders per year</th><td><strong>13.9</strong></td></tr><tr><th scope="row">Days between orders (365-day year)</th><td><strong>26.3 days</strong></td></tr><tr><th scope="row">Annual ordering cost</th><td><strong>1,039.23</strong></td></tr><tr><th scope="row">Annual holding cost</th><td><strong>1,039.23</strong></td></tr><tr><th scope="row">Total annual cost (ordering + holding)</th><td><strong>2,078.46</strong></td></tr></tbody></table></div>
+<p class="hint">At the EOQ, ordering and holding costs are equal. The total-cost curve is flat near the optimum, so rounding to a pack or pallet size costs little.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Using EOQ in practice</h2>
+<p>The total-cost curve is flat around the optimum. Ordering 20% more or less than EOQ usually raises total cost by only a few percent. So round EOQ to practical pack, pallet or truck quantities without worrying.</p><p>EOQ assumes steady demand, a fixed cost per order and no quantity discounts. With price breaks, compare total cost (including purchase price) at each break quantity.</p>
+<h2>Estimating the holding cost</h2>
+<p>Holding cost includes cost of capital, storage space, insurance, handling, obsolescence and shrinkage. Companies often express it as a percentage of unit cost per year. Use your own finance team’s rate where possible.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Is EOQ relevant for lean / just-in-time?</summary><p>Lean reduces the cost per order (setup) instead of accepting it, which mathematically lowers EOQ. The formula shows why setup reduction allows smaller lots.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/reorder-point">Reorder Point Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/inventory-turnover">Inventory Turnover Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Belt Conveyor Capacity Calculator – Tonnes per Hour</title>
+<meta name="description" content="Calculate belt conveyor capacity in t/h from load cross-section, belt speed and bulk density, or from load per metre and belt speed.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/belt-conveyor-capacity">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Belt Conveyor Capacity Calculator – Tonnes per Hour">
+<meta property="og:description" content="Calculate belt conveyor capacity in t/h from load cross-section, belt speed and bulk density, or from load per metre and belt speed.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/belt-conveyor-capacity">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Belt Conveyor Capacity Calculator","url":"https://opscalc-tools.pages.dev/calculators/belt-conveyor-capacity","description":"Calculate belt conveyor capacity in t/h from load cross-section, belt speed and bulk density, or from load per metre and belt speed.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Inventory & Logistics","item":"https://opscalc-tools.pages.dev/#inventory"},{"@type":"ListItem","position":3,"name":"Belt Conveyor Capacity Calculator","item":"https://opscalc-tools.pages.dev/calculators/belt-conveyor-capacity"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#inventory">Inventory &amp; Logistics</a></li><li aria-current="page">Belt Conveyor Capacity Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Inventory &amp; Logistics</p><h1>Belt Conveyor Capacity Calculator</h1><p class="lead">Estimate the conveying capacity of a belt conveyor in tonnes per hour. Use the load cross-section area (from troughing geometry), bulk density and belt speed. Or, if you know the load per metre of belt, use that with belt speed.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="belt-conveyor-capacity" novalidate>
+<div class="form-grid">
+<div class="field" id="f-mode">
+<label for="mode">Calculation method</label>
+<select id="mode" name="mode" aria-describedby="err-mode"><option value="area" selected>From load cross-section area</option><option value="load">From load per metre of belt</option></select>
+
+<p class="field-error" id="err-mode" aria-live="polite"></p>
+</div>
+<div class="field" id="f-area" data-showif="mode" hidden>
+<label for="area">Load cross-section area <span class="sr-only">(m²)</span></label>
+<div class="input-unit"><input id="area" name="area" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-area err-area" required placeholder="e.g. 0.12"><span class="unit" aria-hidden="true">m²</span></div>
+<p class="field-help" id="help-area">From troughing geometry and surcharge angle (CEMA / ISO 5048 / DIN 22101 methods).</p>
+<p class="field-error" id="err-area" aria-live="polite"></p>
+</div>
+<div class="field" id="f-density" data-showif="mode" hidden>
+<label for="density">Bulk density <span class="sr-only">(t/m³)</span></label>
+<div class="input-unit"><input id="density" name="density" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-density" required placeholder="e.g. 1.4"><span class="unit" aria-hidden="true">t/m³</span></div>
+
+<p class="field-error" id="err-density" aria-live="polite"></p>
+</div>
+<div class="field" id="f-fill" data-showif="mode" hidden>
+<label for="fill">Fill factor <span class="sr-only">(%)</span></label>
+<div class="input-unit"><input id="fill" name="fill" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-fill" placeholder="e.g. 100"><span class="unit" aria-hidden="true">%</span></div>
+
+<p class="field-error" id="err-fill" aria-live="polite"></p>
+</div>
+<div class="field" id="f-q" data-showif="mode" hidden>
+<label for="q">Load per metre <span class="sr-only">(kg/m)</span></label>
+<div class="input-unit"><input id="q" name="q" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-q" required placeholder="e.g. 160"><span class="unit" aria-hidden="true">kg/m</span></div>
+
+<p class="field-error" id="err-q" aria-live="polite"></p>
+</div>
+<div class="field" id="f-speed">
+<label for="speed">Belt speed <span class="sr-only">(m/s)</span></label>
+<div class="input-unit"><input id="speed" name="speed" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-speed" required placeholder="e.g. 4.2"><span class="unit" aria-hidden="true">m/s</span></div>
+
+<p class="field-error" id="err-speed" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Volumetric capacity (m³/h) = 3,600 × A × fill × v</code><code>Mass capacity (t/h) = Volumetric capacity × ρ</code><code>Mass capacity (t/h) = 3.6 × q × v</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>A</td><td>Load cross-section area at full trough</td><td>m²</td></tr><tr><td>v</td><td>Belt speed</td><td>m/s</td></tr><tr><td>ρ</td><td>Loose bulk density of the material</td><td>t/m³</td></tr><tr><td>q</td><td>Material load per metre of belt</td><td>kg/m</td></tr><tr><td>fill</td><td>Degree of filling relative to the full cross-section</td><td>%</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>An overland conveyor has a load cross-section of 0.12 m² at full trough, runs at 4.2 m/s and carries ore with a bulk density of 1.4 t/m³.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Calculation method</th><td>From load cross-section area</td></tr><tr><th scope="row">Load cross-section area</th><td>0.12 m²</td></tr><tr><th scope="row">Bulk density</th><td>1.4 t/m³</td></tr><tr><th scope="row">Fill factor</th><td>100 %</td></tr><tr><th scope="row">Belt speed</th><td>4.2 m/s</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Conveying capacity</th><td><strong>2,540 t/h</strong></td></tr><tr><th scope="row">Capacity per 24 h</th><td><strong>60,964 t</strong></td></tr><tr><th scope="row">Volumetric capacity</th><td><strong>1,814 m³/h</strong></td></tr></tbody></table></div>
+<p class="hint">Theoretical capacity at the stated fill. Inclination, feed irregularity and material lumpiness reduce achievable capacity.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Where the cross-section comes from</h2>
+<p>The load area depends on belt width, troughing angle, idler arrangement, edge distance and the material’s surcharge angle. Standard methods (CEMA, ISO 5048, DIN 22101) give formulas and tables to calculate it. For inclined conveyors, apply the reduction factor from the same standard.</p>
+<h2>Using load per metre</h2>
+<p>Belt weighers report instantaneous t/h, and load per metre can be derived from the belt scale and speed. The relation q = Q ÷ (3.6 × v) also lets you check whether the belt is being under- or over-filled at a given throughput.</p>
+<h2>Operational notes</h2>
+<ul><li>Running consistently below design fill wastes energy per tonne. Specific energy consumption rises when belts run partly empty.</li><li>Overfilling causes spillage, which drives cleaning workload and idler failures.</li><li>In a chain of conveyors, system capacity is set by the lowest-capacity link. Check transfer points as well as belts.</li></ul>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Why multiply by 3.6 in the load-per-metre formula?</summary><p>q (kg/m) × v (m/s) gives kg/s. Multiplying by 3,600 s/h and dividing by 1,000 kg/t gives t/h, so the factor is 3.6.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/capacity-utilization">Capacity Utilization Calculator</a></li><li><a href="/calculators/specific-energy-consumption">Specific Energy Consumption Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/availability">Equipment Availability Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

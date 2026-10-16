@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ROI Calculator – Return on Investment &amp; Annualized ROI</title>
+<meta name="description" content="Calculate return on investment (ROI), net gain and annualized ROI (CAGR) from investment cost, total return and holding period.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/roi">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="ROI Calculator – Return on Investment &amp; Annualized ROI">
+<meta property="og:description" content="Calculate return on investment (ROI), net gain and annualized ROI (CAGR) from investment cost, total return and holding period.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/roi">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"ROI Calculator","url":"https://opscalc-tools.pages.dev/calculators/roi","description":"Calculate return on investment (ROI), net gain and annualized ROI (CAGR) from investment cost, total return and holding period.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Business Finance","item":"https://opscalc-tools.pages.dev/#finance"},{"@type":"ListItem","position":3,"name":"ROI Calculator","item":"https://opscalc-tools.pages.dev/calculators/roi"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#finance">Business Finance</a></li><li aria-current="page">ROI Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Business Finance</p><h1>ROI Calculator</h1><p class="lead">Return on investment compares the net gain from an investment with its cost. Enter the total cost and total return. Add the holding period to get the annualized return, so you can compare projects of different lengths fairly.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="roi" novalidate>
+<div class="form-grid">
+<div class="field" id="f-cost">
+<label for="cost">Total investment cost</label>
+<div class="input-unit"><input id="cost" name="cost" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-cost" required placeholder="e.g. 50,000"></div>
+
+<p class="field-error" id="err-cost" aria-live="polite"></p>
+</div>
+<div class="field" id="f-ret">
+<label for="ret">Total return (gross benefits)</label>
+<div class="input-unit"><input id="ret" name="ret" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-ret err-ret" required placeholder="e.g. 68,000"></div>
+<p class="field-help" id="help-ret">Total value returned over the period, before subtracting the investment.</p>
+<p class="field-error" id="err-ret" aria-live="polite"></p>
+</div>
+<div class="field" id="f-years">
+<label for="years">Holding period (optional) <span class="sr-only">(years)</span></label>
+<div class="input-unit"><input id="years" name="years" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-years" placeholder="e.g. 3"><span class="unit" aria-hidden="true">years</span></div>
+
+<p class="field-error" id="err-years" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Net gain = Total return − Investment cost</code><code>ROI = Net gain ÷ Investment cost</code><code>Annualized ROI = (Total return ÷ Investment cost)^(1 ÷ years) − 1</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Investment cost</td><td>All costs to acquire and implement</td><td>currency</td></tr><tr><td>Total return</td><td>Total benefits received over the period (savings, extra margin, resale value)</td><td>currency</td></tr><tr><td>Years</td><td>Holding or evaluation period</td><td>years</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>An automation project costs 50,000 and is expected to return 68,000 in labour and scrap savings over 3 years.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Total investment cost</th><td>50,000</td></tr><tr><th scope="row">Total return (gross benefits)</th><td>68,000</td></tr><tr><th scope="row">Holding period (optional)</th><td>3 years</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Return on investment</th><td><strong>36%</strong></td></tr><tr><th scope="row">Net gain</th><td><strong>18,000</strong></td></tr><tr><th scope="row">Annualized ROI (CAGR)</th><td><strong>10.79%</strong></td></tr></tbody></table></div>
+<p class="hint">Simple ROI ignores when cash arrives. For multi-year projects, also check payback and NPV.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Limitations of simple ROI</h2>
+<p>Simple ROI ignores <em>when</em> the returns arrive and how uncertain they are. Two projects with the same ROI can differ a lot if one pays back in year one and the other in year five. For capital decisions, also look at <a href="/calculators/payback-period">payback period</a>, net present value and risk.</p>
+<h2>Building a credible ROI for an improvement project</h2>
+<ul><li>Count only savings you can measure: reduced hours, scrap, energy (see <a href="/calculators/energy-cost">energy cost</a>) or downtime (see <a href="/calculators/downtime-cost">downtime cost</a>).</li><li>Include implementation costs: training, lost production during installation, maintenance.</li><li>State the baseline and how savings will be verified after the project.</li></ul>
+<h2>Worked interpretation</h2>
+<p>In the example, the project returns 68,000 on 50,000, a net gain of 18,000 and an ROI of 36% over three years. Annualised, that is about 10.8% per year: a better figure for comparing with a 1-year project or with the company’s cost of capital. A 36% ROI that takes three years is not the same as 36% in one year.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Can ROI be negative?</summary><p>Yes. If total return is less than cost, net gain and ROI are negative: the investment lost money.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/payback-period">Payback Period Calculator</a></li><li><a href="/calculators/break-even">Break-Even Calculator</a></li><li><a href="/calculators/motor-efficiency-savings">Motor Efficiency Upgrade Savings Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

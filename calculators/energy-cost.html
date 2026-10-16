@@ -1,1 +1,109 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Energy Cost Calculator | OpsCalc Tools</title><meta name="description" content="Estimate electricity consumption and operating cost from power, operating time, and tariff."><link rel="stylesheet" href="/assets/style.css"></head><body><header><nav><a class="brand" href="/">OpsCalc Tools</a><div><a href="/">Home</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></div></nav></header><main class="wrap"><p class="eyebrow">Free calculator</p><h1>Energy Cost Calculator</h1><p>Estimate electricity consumption and operating cost from power, operating time, and tariff.</p><section class="panel"><form id="calc"><div class="form-grid"><div><label for="v0">Power (kW)</label><input id="v0" type="number" step="any" min="0" required placeholder="Enter a number"></div><div><label for="v1">Operating hours</label><input id="v1" type="number" step="any" min="0" required placeholder="Enter a number"></div><div><label for="v2">Price per kWh (USD)</label><input id="v2" type="number" step="any" min="0" required placeholder="Enter a number"></div></div><p><button class="button" type="submit">Calculate</button></p></form><div id="result" class="result" role="status" aria-live="polite">Enter your values above.</div><p class="hint">No information is sent to a server. Calculations run in your browser.</p></section><section class="panel section-title"><h2>How it works</h2><p>Energy (kWh) = power (kW) × hours. Cost = energy × unit price. This assumes constant input power and excludes demand charges, taxes, and tariff tiers.</p><h2>Worked example</h2><p>A 5 kW machine running 8 hours at $0.15/kWh costs $6 in electricity.</p><h2>Important limitations</h2><p>Results depend on your input assumptions. Check your units and validate important business decisions against actual operating data.</p></section><p><a href="/">← All calculators</a></p></main><footer><div>© 2026 OpsCalc Tools · Independent free calculators</div><div><a href="/privacy-policy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a></div></footer><script>document.getElementById('calc').addEventListener('submit',function(e){e.preventDefault();const v=[0,1,2].map(i=>Number(document.getElementById('v'+i).value));const [a,b,c]=v;const box=document.getElementById('result');if(v.some((n,i)=>!Number.isFinite(n)||document.getElementById('v'+i).value==='')||false&&(v.some(n=>n>100))||false&&b===0||false&&(a>=24||b>=24||((b-a+24)%24)<=c/60)){box.textContent='Please check your inputs and use valid values.';return;}let answer=a*b*c;box.textContent='Estimated energy cost (USD): '+answer.toLocaleString('en-US',{maximumFractionDigits:2});});</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Energy Cost Calculator – kWh &amp; Annual Electricity Cost</title>
+<meta name="description" content="Estimate electricity use and cost for a machine or motor from rated power, load, efficiency, operating hours and tariff. Daily, monthly and annual figures.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/energy-cost">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Energy Cost Calculator – kWh &amp; Annual Electricity Cost">
+<meta property="og:description" content="Estimate electricity use and cost for a machine or motor from rated power, load, efficiency, operating hours and tariff. Daily, monthly and annual figures.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/energy-cost">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Energy Cost Calculator","url":"https://opscalc-tools.pages.dev/calculators/energy-cost","description":"Estimate electricity use and cost for a machine or motor from rated power, load, efficiency, operating hours and tariff. Daily, monthly and annual figures.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Energy & Electrical","item":"https://opscalc-tools.pages.dev/#energy"},{"@type":"ListItem","position":3,"name":"Energy Cost Calculator","item":"https://opscalc-tools.pages.dev/calculators/energy-cost"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#energy">Energy &amp; Electrical</a></li><li aria-current="page">Energy Cost Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Energy &amp; Electrical</p><h1>Energy Cost Calculator</h1><p class="lead">Estimate how much electricity a machine, motor or other load uses and what it costs per hour, day, month and year. For motors, enter load and efficiency: nameplate kW is shaft output, not electrical input.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="energy-cost" novalidate>
+<div class="form-grid">
+<div class="field" id="f-power">
+<label for="power">Rated power <span class="sr-only">(kW)</span></label>
+<div class="input-unit"><input id="power" name="power" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-power" required placeholder="e.g. 75"><span class="unit" aria-hidden="true">kW</span></div>
+
+<p class="field-error" id="err-power" aria-live="polite"></p>
+</div>
+<div class="field" id="f-load">
+<label for="load">Average load <span class="sr-only">(% of rated)</span></label>
+<div class="input-unit"><input id="load" name="load" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-load" placeholder="e.g. 80"><span class="unit" aria-hidden="true">% of rated</span></div>
+
+<p class="field-error" id="err-load" aria-live="polite"></p>
+</div>
+<div class="field" id="f-eff">
+<label for="eff">Motor efficiency (optional) <span class="sr-only">(%)</span></label>
+<div class="input-unit"><input id="eff" name="eff" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-eff err-eff" placeholder="e.g. 94"><span class="unit" aria-hidden="true">%</span></div>
+<p class="field-help" id="help-eff">For motors, nameplate kW is shaft output. Enter efficiency to get electrical input. Leave blank for other loads.</p>
+<p class="field-error" id="err-eff" aria-live="polite"></p>
+</div>
+<div class="field" id="f-hpd">
+<label for="hpd">Operating hours per day <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="hpd" name="hpd" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-hpd" required placeholder="e.g. 16"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-hpd" aria-live="polite"></p>
+</div>
+<div class="field" id="f-days">
+<label for="days">Operating days per year <span class="sr-only">(days)</span></label>
+<div class="input-unit"><input id="days" name="days" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-days" required placeholder="e.g. 300"><span class="unit" aria-hidden="true">days</span></div>
+
+<p class="field-error" id="err-days" aria-live="polite"></p>
+</div>
+<div class="field" id="f-price">
+<label for="price">Energy price <span class="sr-only">(per kWh)</span></label>
+<div class="input-unit"><input id="price" name="price" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-price" required placeholder="e.g. 0.12"><span class="unit" aria-hidden="true">per kWh</span></div>
+
+<p class="field-error" id="err-price" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Electrical input (kW) = Rated power × Load ÷ Efficiency</code><code>Energy per day (kWh) = Electrical input × Hours per day</code><code>Annual cost = Energy per day × Operating days × Price per kWh</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Rated power</td><td>Nameplate power of the load</td><td>kW</td></tr><tr><td>Average load</td><td>Average share of rated power actually drawn</td><td>%</td></tr><tr><td>Efficiency</td><td>Motor efficiency at that load; leave at 100% for non-motor loads with input rating</td><td>%</td></tr><tr><td>Energy price</td><td>Average price per kWh in your currency</td><td>per kWh</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A 75 kW conveyor drive motor runs at about 80% load, 16 hours a day, 300 days a year. Efficiency is 94% and energy costs 0.12 per kWh.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Rated power</th><td>75 kW</td></tr><tr><th scope="row">Average load</th><td>80 % of rated</td></tr><tr><th scope="row">Motor efficiency (optional)</th><td>94 %</td></tr><tr><th scope="row">Operating hours per day</th><td>16 h</td></tr><tr><th scope="row">Operating days per year</th><td>300 days</td></tr><tr><th scope="row">Energy price</th><td>0.12 per kWh</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Annual energy cost</th><td><strong>36,766</strong></td></tr><tr><th scope="row">Annual energy use</th><td><strong>306,383 kWh</strong></td></tr><tr><th scope="row">Average monthly cost</th><td><strong>3,064</strong></td></tr><tr><th scope="row">Cost per operating day</th><td><strong>122.55</strong></td></tr><tr><th scope="row">Cost per operating hour</th><td><strong>7.66</strong></td></tr><tr><th scope="row">Electrical input power</th><td><strong>63.83 kW</strong></td></tr></tbody></table></div>
+<p class="hint">Energy-only estimate: excludes demand (kW) charges, reactive-energy penalties, taxes and time-of-use tiers.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>What this estimate leaves out</h2>
+<ul><li><strong>Demand charges</strong>: many industrial tariffs bill peak kW as well as kWh.</li><li><strong>Reactive energy</strong>: low power factor can trigger penalties. See the <a href="/calculators/power-factor-correction">power factor correction calculator</a>.</li><li><strong>Time-of-use rates</strong>: shifting load to off-peak hours changes the average price.</li></ul><p>For a budget-grade figure, use the average price from recent bills (total cost ÷ total kWh).</p>
+<h2>Getting a better load figure</h2>
+<p>Nameplate power overstates consumption for most motors, which seldom run at full load. A clamp meter reading combined with the <a href="/calculators/electrical-power">electrical power calculator</a>, or data from a drive or energy meter, gives a much better load estimate.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>How do I convert kW to kWh?</summary><p>Multiply power in kW by operating time in hours. A 10 kW load running 5 hours uses 50 kWh.</p></details><details><summary>Why include motor efficiency?</summary><p>Motor nameplates give mechanical output. Electrical input is higher by the losses, so input = output ÷ efficiency.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/specific-energy-consumption">Specific Energy Consumption Calculator</a></li><li><a href="/calculators/motor-efficiency-savings">Motor Efficiency Upgrade Savings Calculator</a></li><li><a href="/calculators/electrical-power">Electrical Power Calculator (kW, kVA, kvar)</a></li><li><a href="/calculators/power-factor-correction">Power Factor Correction Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

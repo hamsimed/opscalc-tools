@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MTTR Calculator – Mean Time to Repair | OpsCalc Tools</title>
+<meta name="description" content="Calculate mean time to repair (MTTR) in hours and minutes, and inherent availability when MTBF is known.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/mttr">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="MTTR Calculator – Mean Time to Repair | OpsCalc Tools">
+<meta property="og:description" content="Calculate mean time to repair (MTTR) in hours and minutes, and inherent availability when MTBF is known.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/mttr">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"MTTR Calculator","url":"https://opscalc-tools.pages.dev/calculators/mttr","description":"Calculate mean time to repair (MTTR) in hours and minutes, and inherent availability when MTBF is known.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Maintenance & Reliability","item":"https://opscalc-tools.pages.dev/#maintenance"},{"@type":"ListItem","position":3,"name":"MTTR Calculator","item":"https://opscalc-tools.pages.dev/calculators/mttr"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#maintenance">Maintenance &amp; Reliability</a></li><li aria-current="page">MTTR Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Maintenance &amp; Reliability</p><h1>MTTR Calculator</h1><p class="lead">Mean time to repair (MTTR) is the average time to restore equipment after a failure. Enter the total corrective maintenance time and the number of repairs. Add MTBF to see the resulting inherent availability.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="mttr" novalidate>
+<div class="form-grid">
+<div class="field" id="f-repair">
+<label for="repair">Total corrective maintenance time <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="repair" name="repair" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-repair err-repair" required placeholder="e.g. 27"><span class="unit" aria-hidden="true">h</span></div>
+<p class="field-help" id="help-repair">From the stop to the restart, including diagnosis, waiting for parts and testing.</p>
+<p class="field-error" id="err-repair" aria-live="polite"></p>
+</div>
+<div class="field" id="f-repairs">
+<label for="repairs">Number of repairs</label>
+<div class="input-unit"><input id="repairs" name="repairs" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-repairs" required placeholder="e.g. 9"></div>
+
+<p class="field-error" id="err-repairs" aria-live="polite"></p>
+</div>
+<div class="field" id="f-mtbf">
+<label for="mtbf">MTBF (optional) <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="mtbf" name="mtbf" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-mtbf" placeholder="e.g. 240"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-mtbf" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>MTTR = Total corrective maintenance time ÷ Number of repairs</code><code>Inherent availability = MTBF ÷ (MTBF + MTTR)</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Corrective maintenance time</td><td>From stop to restart: detection, diagnosis, waiting for people and parts, repair, test</td><td>h</td></tr><tr><td>Number of repairs</td><td>Corrective interventions in the same period</td><td>count</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>Over a quarter, 9 corrective repairs on a conveyor drive took 27 hours in total, and MTBF for the same period was 240 hours.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Total corrective maintenance time</th><td>27 h</td></tr><tr><th scope="row">Number of repairs</th><td>9</td></tr><tr><th scope="row">MTBF (optional)</th><td>240 h</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">MTTR</th><td><strong>3 h</strong></td></tr><tr><th scope="row">MTTR</th><td><strong>180 min</strong></td></tr><tr><th scope="row">Inherent availability</th><td><strong>98.77%</strong></td></tr></tbody></table></div>
+
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Break MTTR down to reduce it</h2>
+<p>Total MTTR hides very different activities. Splitting it into <em>response</em> (time to get a technician on site), <em>diagnosis</em>, <em>logistics</em> (parts, tools, permits) and <em>hands-on repair</em> usually shows that waiting dominates. Waiting is cut through spares strategy, standard repair procedures and clear escalation rules, not faster wrenches.</p>
+<h2>Consistency checks</h2>
+<ul><li>Use the same start and stop events for every work order: stop to restart is the most common choice.</li><li>Keep preventive maintenance separate: MTTR covers corrective work.</li><li>Report the median as well as the mean. A few long repairs can distort the average.</li></ul>
+<h2>Typical MTTR improvement levers</h2>
+<ul><li><strong>Fault diagnosis</strong>: alarm lists with probable causes, troubleshooting guides for repeat failures, and condition data available at the machine.</li><li><strong>Spares</strong>: critical spares stocked, identified and kitted. A part that exists but cannot be found adds to repair time.</li><li><strong>Standard work for repairs</strong>: documented procedures for frequent repairs, with tools and isolation points listed.</li><li><strong>Modular replacement</strong>: replace an assembly and repair it off-line, instead of repairing in place.</li></ul><p>Measure each lever’s effect by tracking the components of MTTR (response, diagnosis, logistics, repair) separately for a few months.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>What does the &quot;R&quot; in MTTR stand for?</summary><p>Usually &quot;repair&quot;, but some organisations use &quot;restore&quot;, &quot;recovery&quot; or &quot;respond&quot;. Write down which one you mean, because the time boundaries differ.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/availability">Equipment Availability Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

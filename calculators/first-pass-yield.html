@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>First Pass Yield Calculator – FPY, Scrap &amp; Rework Rate</title>
+<meta name="description" content="Calculate first pass yield (FPY), scrap rate, rework rate and final yield from units entering a process, units passing first time and units scrapped.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/first-pass-yield">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="First Pass Yield Calculator – FPY, Scrap &amp; Rework Rate">
+<meta property="og:description" content="Calculate first pass yield (FPY), scrap rate, rework rate and final yield from units entering a process, units passing first time and units scrapped.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/first-pass-yield">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"First Pass Yield & Scrap Rate Calculator","url":"https://opscalc-tools.pages.dev/calculators/first-pass-yield","description":"Calculate first pass yield (FPY), scrap rate, rework rate and final yield from units entering a process, units passing first time and units scrapped.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Quality","item":"https://opscalc-tools.pages.dev/#quality"},{"@type":"ListItem","position":3,"name":"First Pass Yield & Scrap Rate Calculator","item":"https://opscalc-tools.pages.dev/calculators/first-pass-yield"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#quality">Quality</a></li><li aria-current="page">First Pass Yield &amp; Scrap Rate Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Quality</p><h1>First Pass Yield &amp; Scrap Rate Calculator</h1><p class="lead">First pass yield is the share of units that go through a process right the first time, with no rework or scrap. Final yield counts reworked units as good, so it hides the cost of fixing them. This calculator shows both, with scrap and rework rates.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="first-pass-yield" novalidate>
+<div class="form-grid">
+<div class="field" id="f-started">
+<label for="started">Units entering the process <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="started" name="started" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-started" required placeholder="e.g. 2,000"><span class="unit" aria-hidden="true">units</span></div>
+
+<p class="field-error" id="err-started" aria-live="polite"></p>
+</div>
+<div class="field" id="f-passed">
+<label for="passed">Units passing first time (no rework) <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="passed" name="passed" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-passed" required placeholder="e.g. 1,820"><span class="unit" aria-hidden="true">units</span></div>
+
+<p class="field-error" id="err-passed" aria-live="polite"></p>
+</div>
+<div class="field" id="f-scrap">
+<label for="scrap">Units scrapped <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="scrap" name="scrap" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-scrap" required placeholder="e.g. 60"><span class="unit" aria-hidden="true">units</span></div>
+
+<p class="field-error" id="err-scrap" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>FPY = Units passing first time ÷ Units entering</code><code>Scrap rate = Units scrapped ÷ Units entering</code><code>Rework rate = (Units entering − Passed first time − Scrapped) ÷ Units entering</code><code>Final yield = (Units entering − Scrapped) ÷ Units entering</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Units entering</td><td>Units started in the process step during the period</td><td>units</td></tr><tr><td>Passed first time</td><td>Units accepted without any rework or repair</td><td>units</td></tr><tr><td>Scrapped</td><td>Units rejected and discarded</td><td>units</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A welding station received 2,000 frames. 1,820 passed inspection directly, 60 were scrapped, and the rest were repaired and passed.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Units entering the process</th><td>2,000 units</td></tr><tr><th scope="row">Units passing first time (no rework)</th><td>1,820 units</td></tr><tr><th scope="row">Units scrapped</th><td>60 units</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">First pass yield</th><td><strong>91%</strong></td></tr><tr><th scope="row">Scrap rate</th><td><strong>3%</strong></td></tr><tr><th scope="row">Rework rate</th><td><strong>6%</strong></td></tr><tr><th scope="row">Final yield (after rework)</th><td><strong>97%</strong></td></tr><tr><th scope="row">Units reworked</th><td><strong>120 units</strong></td></tr></tbody></table></div>
+<p class="hint">Final yield hides the cost of rework; first pass yield exposes it. Track both.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Rolled throughput yield</h2>
+<p>For a multi-step process, multiply the FPY of each step to get rolled throughput yield (RTY), the probability that a unit passes every step first time. Three steps at 95% each give an RTY of about 85.7%. Small losses at each step add up quickly.</p>
+<h2>Using FPY for improvement</h2>
+<ul><li>Rank process steps by FPY loss (Pareto) to find where rework capacity goes.</li><li>Rework uses capacity twice. A low FPY at the bottleneck costs output directly.</li><li>Feed the quality factor of OEE with right-first-time units, consistent with FPY.</li></ul>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Is FPY the same as first time right (FTR)?</summary><p>They are usually the same idea: the share of output produced correctly without rework. Some companies use FTR at order or document level and FPY at unit level.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/dpmo">DPMO &amp; Sigma Level Calculator</a></li><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li><li><a href="/calculators/production-rate">Production Rate Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

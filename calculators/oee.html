@@ -1,1 +1,129 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>OEE Calculator | OpsCalc Tools</title><meta name="description" content="Calculate overall equipment effectiveness from availability, performance, and quality."><link rel="stylesheet" href="/assets/style.css"></head><body><header><nav><a class="brand" href="/">OpsCalc Tools</a><div><a href="/">Home</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></div></nav></header><main class="wrap"><p class="eyebrow">Free calculator</p><h1>OEE Calculator</h1><p>Calculate overall equipment effectiveness from availability, performance, and quality.</p><section class="panel"><form id="calc"><div class="form-grid"><div><label for="v0">Availability (%)</label><input id="v0" type="number" step="any" min="0" required placeholder="Enter a number"></div><div><label for="v1">Performance (%)</label><input id="v1" type="number" step="any" min="0" required placeholder="Enter a number"></div><div><label for="v2">Quality (%)</label><input id="v2" type="number" step="any" min="0" required placeholder="Enter a number"></div></div><p><button class="button" type="submit">Calculate</button></p></form><div id="result" class="result" role="status" aria-live="polite">Enter your values above.</div><p class="hint">No information is sent to a server. Calculations run in your browser.</p></section><section class="panel section-title"><h2>How it works</h2><p>OEE = Availability × Performance × Quality, with each percentage expressed as a decimal. OEE is a composite manufacturing indicator, not a standalone explanation of losses.</p><h2>Worked example</h2><p>A factory line has 90% availability, 85% performance, and 98% quality. Its OEE is 74.97%.</p><h2>Important limitations</h2><p>Results depend on your input assumptions. Check your units and validate important business decisions against actual operating data.</p></section><p><a href="/">← All calculators</a></p></main><footer><div>© 2026 OpsCalc Tools · Independent free calculators</div><div><a href="/privacy-policy.html">Privacy</a><a href="/terms.html">Terms</a><a href="/contact.html">Contact</a></div></footer><script>document.getElementById('calc').addEventListener('submit',function(e){e.preventDefault();const v=[0,1,2].map(i=>Number(document.getElementById('v'+i).value));const [a,b,c]=v;const box=document.getElementById('result');if(v.some((n,i)=>!Number.isFinite(n)||document.getElementById('v'+i).value==='')||true&&(v.some(n=>n>100))||false&&b===0||false&&(a>=24||b>=24||((b-a+24)%24)<=c/60)){box.textContent='Please check your inputs and use valid values.';return;}let answer=(a*b*c)/10000;box.textContent='OEE (%): '+answer.toLocaleString('en-US',{maximumFractionDigits:2});});</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OEE Calculator – Availability, Performance, Quality</title>
+<meta name="description" content="Calculate Overall Equipment Effectiveness (OEE) from shop-floor time and count data or from A, P and Q percentages. Shows the biggest loss factor.">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/oee">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="OEE Calculator – Availability, Performance, Quality">
+<meta property="og:description" content="Calculate Overall Equipment Effectiveness (OEE) from shop-floor time and count data or from A, P and Q percentages. Shows the biggest loss factor.">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/oee">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"OEE Calculator","url":"https://opscalc-tools.pages.dev/calculators/oee","description":"Calculate Overall Equipment Effectiveness (OEE) from shop-floor time and count data or from A, P and Q percentages. Shows the biggest loss factor.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Production & Lean","item":"https://opscalc-tools.pages.dev/#production"},{"@type":"ListItem","position":3,"name":"OEE Calculator","item":"https://opscalc-tools.pages.dev/calculators/oee"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#production">Production &amp; Lean</a></li><li aria-current="page">OEE Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Production &amp; Lean</p><h1>OEE Calculator</h1><p class="lead">Overall Equipment Effectiveness (OEE) shows how much of your planned production time actually produces good parts at full speed. Enter raw shift data (times and counts) or the three factors if you already have them. The calculator also tells you which factor is losing the most.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="oee" novalidate>
+<div class="form-grid">
+<div class="field" id="f-mode">
+<label for="mode">Input method</label>
+<select id="mode" name="mode" aria-describedby="err-mode"><option value="raw" selected>Shop-floor data (times, counts)</option><option value="factors">Known A, P, Q percentages</option></select>
+
+<p class="field-error" id="err-mode" aria-live="polite"></p>
+</div>
+<div class="field" id="f-planned" data-showif="mode" hidden>
+<label for="planned">Planned production time <span class="sr-only">(min)</span></label>
+<div class="input-unit"><input id="planned" name="planned" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-planned err-planned" required placeholder="e.g. 480"><span class="unit" aria-hidden="true">min</span></div>
+<p class="field-help" id="help-planned">Shift time minus planned stops (breaks, planned maintenance).</p>
+<p class="field-error" id="err-planned" aria-live="polite"></p>
+</div>
+<div class="field" id="f-downtime" data-showif="mode" hidden>
+<label for="downtime">Unplanned stop time <span class="sr-only">(min)</span></label>
+<div class="input-unit"><input id="downtime" name="downtime" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-downtime err-downtime" required placeholder="e.g. 47"><span class="unit" aria-hidden="true">min</span></div>
+<p class="field-help" id="help-downtime">Breakdowns, changeovers, waiting for material.</p>
+<p class="field-error" id="err-downtime" aria-live="polite"></p>
+</div>
+<div class="field" id="f-idealCycle" data-showif="mode" hidden>
+<label for="idealCycle">Ideal cycle time <span class="sr-only">(s/unit)</span></label>
+<div class="input-unit"><input id="idealCycle" name="idealCycle" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-idealCycle err-idealCycle" required placeholder="e.g. 1"><span class="unit" aria-hidden="true">s/unit</span></div>
+<p class="field-help" id="help-idealCycle">Fastest sustainable time to produce one unit.</p>
+<p class="field-error" id="err-idealCycle" aria-live="polite"></p>
+</div>
+<div class="field" id="f-total" data-showif="mode" hidden>
+<label for="total">Total units produced <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="total" name="total" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-total" required placeholder="e.g. 19,271"><span class="unit" aria-hidden="true">units</span></div>
+
+<p class="field-error" id="err-total" aria-live="polite"></p>
+</div>
+<div class="field" id="f-good" data-showif="mode" hidden>
+<label for="good">Good units (right first time) <span class="sr-only">(units)</span></label>
+<div class="input-unit"><input id="good" name="good" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-good" required placeholder="e.g. 18,848"><span class="unit" aria-hidden="true">units</span></div>
+
+<p class="field-error" id="err-good" aria-live="polite"></p>
+</div>
+<div class="field" id="f-a" data-showif="mode" hidden>
+<label for="a">Availability <span class="sr-only">(%)</span></label>
+<div class="input-unit"><input id="a" name="a" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-a" required placeholder="e.g. 90"><span class="unit" aria-hidden="true">%</span></div>
+
+<p class="field-error" id="err-a" aria-live="polite"></p>
+</div>
+<div class="field" id="f-p" data-showif="mode" hidden>
+<label for="p">Performance <span class="sr-only">(%)</span></label>
+<div class="input-unit"><input id="p" name="p" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-p" required placeholder="e.g. 85"><span class="unit" aria-hidden="true">%</span></div>
+
+<p class="field-error" id="err-p" aria-live="polite"></p>
+</div>
+<div class="field" id="f-q" data-showif="mode" hidden>
+<label for="q">Quality <span class="sr-only">(%)</span></label>
+<div class="input-unit"><input id="q" name="q" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-q" required placeholder="e.g. 98"><span class="unit" aria-hidden="true">%</span></div>
+
+<p class="field-error" id="err-q" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Availability = Run time ÷ Planned production time</code><code>Run time = Planned production time − Unplanned stop time</code><code>Performance = (Ideal cycle time × Total units) ÷ Run time</code><code>Quality = Good units ÷ Total units</code><code>OEE = Availability × Performance × Quality</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Planned production time</td><td>Shift time minus planned stops (breaks, planned maintenance, no-demand time)</td><td>min</td></tr><tr><td>Unplanned stop time</td><td>Breakdowns, changeovers, material shortages, minor stops logged as downtime</td><td>min</td></tr><tr><td>Ideal cycle time</td><td>Fastest sustainable cycle for the product, from design rate or demonstrated best</td><td>s/unit</td></tr><tr><td>Good units</td><td>Units meeting specification the first time, without rework</td><td>units</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A packaging line runs one 8-hour shift (480 planned minutes). It loses 47 minutes to stops, produces 19,271 units against a 1-second ideal cycle, and 18,848 of them are right first time.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Input method</th><td>Shop-floor data (times, counts)</td></tr><tr><th scope="row">Planned production time</th><td>480 min</td></tr><tr><th scope="row">Unplanned stop time</th><td>47 min</td></tr><tr><th scope="row">Ideal cycle time</th><td>1 s/unit</td></tr><tr><th scope="row">Total units produced</th><td>19,271 units</td></tr><tr><th scope="row">Good units (right first time)</th><td>18,848 units</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">OEE</th><td><strong>65.4%</strong></td></tr><tr><th scope="row">Availability</th><td><strong>90.2%</strong></td></tr><tr><th scope="row">Performance</th><td><strong>74.2%</strong></td></tr><tr><th scope="row">Quality</th><td><strong>97.8%</strong></td></tr></tbody></table></div>
+<p class="hint">Largest loss: Performance (74.2%). Start the loss analysis there.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>How to read your OEE</h2>
+<p>OEE puts three separate losses into one percentage. The single number is good for trends. For action, the factors matter more. A 65% OEE with 97% quality and 74% performance needs a different response from one with 75% availability.</p><p>Many references quote 85% as "world-class" OEE (from Seiichi Nakajima’s TPM work). Treat it as a convention, not a target. Achievable OEE depends on product mix, changeover frequency and how strictly you define planned time. Comparing a line with its own history is usually more useful than comparing it with another plant.</p>
+<h2>Common mistakes</h2>
+<ul><li><strong>Inflated ideal cycle time.</strong> Using the average or standard cycle instead of the true best cycle pushes performance toward or above 100% and hides speed losses.</li><li><strong>Moving losses into "planned" time.</strong> Classifying changeovers or waiting time as planned stops raises availability on paper but hides the loss you most need to see.</li><li><strong>Counting reworked parts as good.</strong> Quality should use right-first-time units. Reworked parts consumed capacity twice.</li><li><strong>Averaging OEE percentages across machines.</strong> Weight by planned time, or recompute from summed times and counts.</li></ul>
+<h2>Standards and definitions</h2>
+<p>ISO 22400-2 defines OEE as a key performance indicator for manufacturing operations management, using the same availability × effectiveness × quality structure. Write down your plant’s definitions (what counts as planned time, which stops are minor stops) and apply them the same way every shift, so trends stay meaningful.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>What is the difference between OEE and TEEP?</summary><p>OEE measures losses against planned production time. TEEP (Total Effective Equipment Performance) measures against all calendar time, so it also shows the capacity left unused by not running nights, weekends or holidays.</p></details><details><summary>Can OEE be above 100%?</summary><p>No. If your calculation gives more than 100%, the ideal cycle time is usually set too slow, or counts and times come from different periods.</p></details><details><summary>Should minor stops count as availability or performance loss?</summary><p>Either can work if you are consistent. A common practice is to log stops above a threshold (for example 5 minutes) as downtime and let shorter stops show up as performance loss.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/availability">Equipment Availability Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li><li><a href="/calculators/first-pass-yield">First Pass Yield &amp; Scrap Rate Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li><li><a href="/calculators/cycle-time">Cycle Time Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>

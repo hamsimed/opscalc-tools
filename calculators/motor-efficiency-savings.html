@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motor Efficiency Savings Calculator – IE3/IE4 Payback</title>
+<meta name="description" content="Estimate annual kWh and cost savings, and simple payback, from replacing an electric motor with a higher-efficiency model (e.g. IE2 to IE3 or IE4).">
+<link rel="canonical" href="https://opscalc-tools.pages.dev/calculators/motor-efficiency-savings">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Motor Efficiency Savings Calculator – IE3/IE4 Payback">
+<meta property="og:description" content="Estimate annual kWh and cost savings, and simple payback, from replacing an electric motor with a higher-efficiency model (e.g. IE2 to IE3 or IE4).">
+<meta property="og:url" content="https://opscalc-tools.pages.dev/calculators/motor-efficiency-savings">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#101d38">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Motor Efficiency Upgrade Savings Calculator","url":"https://opscalc-tools.pages.dev/calculators/motor-efficiency-savings","description":"Estimate annual kWh and cost savings, and simple payback, from replacing an electric motor with a higher-efficiency model (e.g. IE2 to IE3 or IE4).","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://opscalc-tools.pages.dev/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://opscalc-tools.pages.dev/"},{"@type":"ListItem","position":2,"name":"Energy & Electrical","item":"https://opscalc-tools.pages.dev/#energy"},{"@type":"ListItem","position":3,"name":"Motor Efficiency Upgrade Savings Calculator","item":"https://opscalc-tools.pages.dev/calculators/motor-efficiency-savings"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><nav class="nav" aria-label="Main">
+<a class="brand" href="/">OpsCalc<span>Tools</span></a>
+<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
+</nav></header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#energy">Energy &amp; Electrical</a></li><li aria-current="page">Motor Efficiency Upgrade Savings Calculator</li></ol></nav>
+<article class="calc-page">
+<header class="page-head"><p class="eyebrow">Energy &amp; Electrical</p><h1>Motor Efficiency Upgrade Savings Calculator</h1><p class="lead">A more efficient motor saves energy every hour it runs. Enter the motor output, load, running hours and the two efficiencies to estimate annual energy and cost savings. Add the installed cost to get simple payback.</p></header>
+<section class="panel calculator" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Calculator</h2>
+<form id="calc-form" data-calc="motor-efficiency-savings" novalidate>
+<div class="form-grid">
+<div class="field" id="f-kw">
+<label for="kw">Motor shaft output <span class="sr-only">(kW)</span></label>
+<div class="input-unit"><input id="kw" name="kw" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-kw" required placeholder="e.g. 45"><span class="unit" aria-hidden="true">kW</span></div>
+
+<p class="field-error" id="err-kw" aria-live="polite"></p>
+</div>
+<div class="field" id="f-load">
+<label for="load">Average load <span class="sr-only">(% of rated)</span></label>
+<div class="input-unit"><input id="load" name="load" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-load" required placeholder="e.g. 75"><span class="unit" aria-hidden="true">% of rated</span></div>
+
+<p class="field-error" id="err-load" aria-live="polite"></p>
+</div>
+<div class="field" id="f-hours">
+<label for="hours">Operating hours per year <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="hours" name="hours" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-hours" required placeholder="e.g. 6,000"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-hours" aria-live="polite"></p>
+</div>
+<div class="field" id="f-eff1">
+<label for="eff1">Existing motor efficiency <span class="sr-only">(%)</span></label>
+<div class="input-unit"><input id="eff1" name="eff1" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-eff1" required placeholder="e.g. 91"><span class="unit" aria-hidden="true">%</span></div>
+
+<p class="field-error" id="err-eff1" aria-live="polite"></p>
+</div>
+<div class="field" id="f-eff2">
+<label for="eff2">New motor efficiency <span class="sr-only">(%)</span></label>
+<div class="input-unit"><input id="eff2" name="eff2" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-eff2" required placeholder="e.g. 94.6"><span class="unit" aria-hidden="true">%</span></div>
+
+<p class="field-error" id="err-eff2" aria-live="polite"></p>
+</div>
+<div class="field" id="f-price">
+<label for="price">Energy price <span class="sr-only">(per kWh)</span></label>
+<div class="input-unit"><input id="price" name="price" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-price" required placeholder="e.g. 0.12"><span class="unit" aria-hidden="true">per kWh</span></div>
+
+<p class="field-error" id="err-price" aria-live="polite"></p>
+</div>
+<div class="field" id="f-cost">
+<label for="cost">Installed cost of new motor (optional)</label>
+<div class="input-unit"><input id="cost" name="cost" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-cost" placeholder="e.g. 4,200"></div>
+
+<p class="field-error" id="err-cost" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+</form>
+<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
+<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+</section>
+<section class="content">
+<h2>Formula</h2>
+<div class="formula"><code>Output power = Rated output × Load</code><code>Input power saving = Output × (1 ÷ η_old − 1 ÷ η_new)</code><code>Annual savings = Input power saving × Hours × Energy price</code><code>Payback = Installed cost ÷ Annual savings</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Rated output</td><td>Motor shaft rating</td><td>kW</td></tr><tr><td>η_old, η_new</td><td>Efficiency of existing and new motor at the operating load</td><td>%</td></tr><tr><td>Hours</td><td>Annual running hours</td><td>h/year</td></tr></tbody></table></div>
+<h2>Worked example</h2>
+<p>A 45 kW pump motor runs 6,000 hours a year at 75% load. Its efficiency is 91.0%. An IE4 replacement offers 94.6% and costs 4,200 installed. Energy costs 0.12 per kWh.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Motor shaft output</th><td>45 kW</td></tr><tr><th scope="row">Average load</th><td>75 % of rated</td></tr><tr><th scope="row">Operating hours per year</th><td>6,000 h</td></tr><tr><th scope="row">Existing motor efficiency</th><td>91 %</td></tr><tr><th scope="row">New motor efficiency</th><td>94.6 %</td></tr><tr><th scope="row">Energy price</th><td>0.12 per kWh</td></tr><tr><th scope="row">Installed cost of new motor (optional)</th><td>4,200</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Annual cost savings</th><td><strong>1,016</strong></td></tr><tr><th scope="row">Annual energy savings</th><td><strong>8,468 kWh</strong></td></tr><tr><th scope="row">Input power reduction</th><td><strong>1.41 kW</strong></td></tr><tr><th scope="row">Simple payback</th><td><strong>4.1 years</strong></td></tr></tbody></table></div>
+<p class="hint">Uses efficiency at the stated load. Part-load efficiency can differ from nameplate; use manufacturer data at your load point where available.</p>
+<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2>Where upgrades pay</h2>
+<p>Savings grow with running hours and load. Motors that run most of the year and are reasonably loaded are the best candidates. Lightly used or oversized motors may never pay back. Replacing at failure (instead of rewinding) usually gives the best economics, because only the price difference with a like-for-like motor counts.</p>
+<h2>Efficiency classes</h2>
+<p>IEC 60034-30-1 defines efficiency classes IE1 to IE4 for line-operated motors (IE5 is referenced as a future class). Class limits depend on power rating and pole count, so check the manufacturer’s data sheet for the actual efficiency at your load point.</p>
+<h2>Look at the system first</h2>
+<p>Motor efficiency is one link in the chain. Throttled valves, dampers and oversized pumps often waste more energy than motor losses. A variable-speed drive or correct sizing can give larger savings. Check the driven system before upgrading the motor.</p>
+<h2>Frequently asked questions</h2>
+<div class="faq"><details><summary>Does a rewound motor lose efficiency?</summary><p>It can. A poor-quality rewind can lower efficiency, while a rewind done to good-practice standards largely keeps it. Ask the repair shop for test data.</p></details></div>
+<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/payback-period">Payback Period Calculator</a></li><li><a href="/calculators/electrical-power">Electrical Power Calculator (kW, kVA, kvar)</a></li><li><a href="/calculators/specific-energy-consumption">Specific Energy Consumption Calculator</a></li></ul></aside>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</section>
+</article>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
+<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
+<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+</div></footer>
+</body>
+</html>
