@@ -25,3 +25,6 @@
 
 /tests/*
   X-Robots-Tag: noindex
+
+/functions/*
+  X-Robots-Tag: noindex
