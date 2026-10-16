@@ -118,3 +118,8 @@ test('_headers sets sitemap content type and security headers', () => {
   assert.match(h, /X-Content-Type-Options: nosniff/);
   assert.match(h, /Content-Security-Policy:/);
 });
+
+test('domain migration: no reference to the old pages.dev host in indexable output', () => {
+  assert.equal(site.origin, 'https://tools.saharienne.org');
+  for (const f of [...htmlFiles, 'sitemap.xml', 'robots.txt']) assert.ok(!read(f).includes('pages.dev'), `${f} still references pages.dev`);
+});
