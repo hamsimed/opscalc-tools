@@ -11,7 +11,7 @@ import { pages } from '../src/content.mjs';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const C = createRequire(import.meta.url)('../assets/js/calc-core.js');
 const read = (f) => readFileSync(join(ROOT, f), 'utf8');
-const htmlFiles = ['index.html', 'about.html', 'contact.html', 'privacy-policy.html', 'terms.html', ...readdirSync(join(ROOT, 'calculators')).map((f) => 'calculators/' + f)];
+const htmlFiles = ['index.html', 'about.html', 'contact.html', 'privacy-policy.html', 'terms.html', ...readdirSync(join(ROOT, 'calculators')).map((f) => 'calculators/' + f), ...readdirSync(join(ROOT, 'categories')).map((f) => 'categories/' + f)];
 const m1 = (h, re) => (re.exec(h) || [])[1];
 const pathOf = (f) => (f === 'index.html' ? '/' : '/' + f.replace(/\.html$/, ''));
 
@@ -122,4 +122,25 @@ test('_headers sets sitemap content type and security headers', () => {
 test('domain migration: no reference to the old pages.dev host in indexable output', () => {
   assert.equal(site.origin, 'https://tools.saharienne.org');
   for (const f of [...htmlFiles, 'sitemap.xml', 'robots.txt']) assert.ok(!read(f).includes('pages.dev'), `${f} still references pages.dev`);
+});
+
+test('v4: category pages, search index and shared UI hooks', () => {
+  const idx = JSON.parse(read('assets/search-index.json'));
+  assert.equal(idx.length, pages.length);
+  for (const it of idx) assert.ok(resolveLocal(it.u), it.u);
+  for (const f of readdirSync(join(ROOT, 'categories'))) {
+    const h = read('categories/' + f);
+    const words = h.replace(/<script[\s\S]*?<\/script>/g, '').replace(/<[^>]+>/g, ' ').split(/\s+/).length;
+    assert.ok(words >= 300, `${f}: ${words} words`);
+  }
+  const home = read('index.html');
+  assert.match(home, /id="home-search"/); assert.match(home, /data-cat-filter="energy"/);
+  assert.equal((home.match(/<li data-cat=/g) || []).length, pages.length, 'every calculator listed on home');
+  for (const p of pages) {
+    const h = read(`calculators/${p.id}.html`);
+    assert.match(h, /id="copy-result"/); assert.match(h, /id="reset"/); assert.match(h, /aria-controls="site-nav"/);
+    assert.match(h, /href="\/categories\//, `${p.id}: breadcrumb links to category`);
+    assert.match(h, /id="mistakes"|Common mistakes/, `${p.id}: common mistakes`);
+    assert.match(h, /id="uses"/, `${p.id}: applications`);
+  }
 });

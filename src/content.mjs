@@ -467,3 +467,21 @@ const extra = {
   'cycle-time': [{ h: 'Measuring cycle time on the shop floor', html: '<ul><li>Time at least 10 to 20 consecutive cycles, and note anything unusual (minor stops, waiting for material).</li><li>Record the lowest repeatable value as well as the average. The difference shows how much instability costs.</li><li>For manual work, separate operator cycle time from machine cycle time. The longer of the two sets the pace.</li></ul>' }]
 };
 for (const p of pages) if (extra[p.id]) p.sections.push(...extra[p.id]);
+
+// ---- V4: new calculators, structured mistakes/applications, extra internal links ----
+import { newPages, mistakes as v4Mistakes, applications as v4Applications } from './content-v4.mjs';
+pages.push(...newPages);
+for (const p of pages) {
+  if (!p.mistakes && v4Mistakes[p.id]) p.mistakes = v4Mistakes[p.id];
+  if (!p.applications && v4Applications[p.id]) p.applications = v4Applications[p.id];
+}
+const extraLinks = {
+  'oee': ['teep'], 'capacity-utilization': ['teep'], 'energy-cost': ['pump-power', 'co2-emissions'],
+  'specific-energy-consumption': ['co2-emissions', 'compressed-air-leak-cost'], 'motor-efficiency-savings': ['affinity-laws'],
+  'payback-period': ['npv'], 'roi': ['npv'], 'break-even': ['unit-cost'], 'eoq': ['inventory-carrying-cost'],
+  'inventory-turnover': ['inventory-carrying-cost'], 'first-pass-yield': ['unit-cost'], 'electrical-power': ['pump-power']
+};
+for (const [id, add] of Object.entries(extraLinks)) {
+  const p = pages.find((x) => x.id === id);
+  for (const a of add) if (!p.related.includes(a)) p.related.push(a);
+}

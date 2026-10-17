@@ -12,28 +12,39 @@
 <meta property="og:description" content="Calculate Overall Equipment Effectiveness (OEE) from shop-floor time and count data or from A, P and Q percentages. Shows the biggest loss factor.">
 <meta property="og:url" content="https://tools.saharienne.org/calculators/oee">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#101d38">
+<meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css?v=20261016">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"OEE Calculator","url":"https://tools.saharienne.org/calculators/oee","description":"Calculate Overall Equipment Effectiveness (OEE) from shop-floor time and count data or from A, P and Q percentages. Shows the biggest loss factor.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Production & Lean","item":"https://tools.saharienne.org/#production"},{"@type":"ListItem","position":3,"name":"OEE Calculator","item":"https://tools.saharienne.org/calculators/oee"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Production & Lean","item":"https://tools.saharienne.org/categories/production"},{"@type":"ListItem","position":3,"name":"OEE Calculator","item":"https://tools.saharienne.org/calculators/oee"}]}</script>
 <script src="/assets/js/site-config.js?v=20261016" defer></script>
 <script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
 <script src="/assets/js/calc-core.js?v=20261016" defer></script>
 <script src="/assets/js/calc-ui.js?v=20261016" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header"><nav class="nav" aria-label="Main">
-<a class="brand" href="/">OpsCalc<span>Tools</span></a>
-<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
-</nav></header>
-<main id="main" class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#production">Production &amp; Lean</a></li><li aria-current="page">OEE Calculator</li></ol></nav>
-<article class="calc-page">
-<header class="page-head"><p class="eyebrow">Production &amp; Lean</p><h1>OEE Calculator</h1><p class="lead">Overall Equipment Effectiveness (OEE) shows how much of your planned production time actually produces good parts at full speed. Enter raw shift data (times and counts) or the three factors if you already have them. The calculator also tells you which factor is losing the most.</p></header>
-<section class="panel calculator" aria-labelledby="calc-title">
-<h2 id="calc-title" class="panel-title">Calculator</h2>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/production">Production &amp; Lean</a></li><li aria-current="page">OEE Calculator</li></ol></nav>
+<h1>OEE Calculator</h1>
+<p class="lead">Overall Equipment Effectiveness (OEE) shows how much of your planned production time actually produces good parts at full speed. Enter raw shift data (times and counts) or the three factors if you already have them. The calculator also tells you which factor is losing the most.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
 <form id="calc-form" data-calc="oee" novalidate>
 <div class="form-grid">
 <div class="field" id="f-mode">
@@ -91,39 +102,55 @@
 <p class="field-error" id="err-q" aria-live="polite"></p>
 </div>
 </div>
-<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
 </form>
-<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
-<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
-<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
 </section>
-<section class="content">
-<h2>Formula</h2>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">How to read your OEE</a></li><li><a href="#s1">Common mistakes</a></li><li><a href="#s2">Standards and definitions</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
 <div class="formula"><code>Availability = Run time ÷ Planned production time</code><code>Run time = Planned production time − Unplanned stop time</code><code>Performance = (Ideal cycle time × Total units) ÷ Run time</code><code>Quality = Good units ÷ Total units</code><code>OEE = Availability × Performance × Quality</code></div>
 <div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Planned production time</td><td>Shift time minus planned stops (breaks, planned maintenance, no-demand time)</td><td>min</td></tr><tr><td>Unplanned stop time</td><td>Breakdowns, changeovers, material shortages, minor stops logged as downtime</td><td>min</td></tr><tr><td>Ideal cycle time</td><td>Fastest sustainable cycle for the product, from design rate or demonstrated best</td><td>s/unit</td></tr><tr><td>Good units</td><td>Units meeting specification the first time, without rework</td><td>units</td></tr></tbody></table></div>
-<h2>Worked example</h2>
+<h2 id="example">Worked example</h2>
 <p>A packaging line runs one 8-hour shift (480 planned minutes). It loses 47 minutes to stops, produces 19,271 units against a 1-second ideal cycle, and 18,848 of them are right first time.</p>
 <div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Input method</th><td>Shop-floor data (times, counts)</td></tr><tr><th scope="row">Planned production time</th><td>480 min</td></tr><tr><th scope="row">Unplanned stop time</th><td>47 min</td></tr><tr><th scope="row">Ideal cycle time</th><td>1 s/unit</td></tr><tr><th scope="row">Total units produced</th><td>19,271 units</td></tr><tr><th scope="row">Good units (right first time)</th><td>18,848 units</td></tr></tbody></table></div>
 <div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">OEE</th><td><strong>65.4%</strong></td></tr><tr><th scope="row">Availability</th><td><strong>90.2%</strong></td></tr><tr><th scope="row">Performance</th><td><strong>74.2%</strong></td></tr><tr><th scope="row">Quality</th><td><strong>97.8%</strong></td></tr></tbody></table></div>
 <p class="hint">Largest loss: Performance (74.2%). Start the loss analysis there.</p>
-<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
-<h2>How to read your OEE</h2>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">How to read your OEE</h2>
 <p>OEE puts three separate losses into one percentage. The single number is good for trends. For action, the factors matter more. A 65% OEE with 97% quality and 74% performance needs a different response from one with 75% availability.</p><p>Many references quote 85% as "world-class" OEE (from Seiichi Nakajima’s TPM work). Treat it as a convention, not a target. Achievable OEE depends on product mix, changeover frequency and how strictly you define planned time. Comparing a line with its own history is usually more useful than comparing it with another plant.</p>
-<h2>Common mistakes</h2>
+<h2 id="s1">Common mistakes</h2>
 <ul><li><strong>Inflated ideal cycle time.</strong> Using the average or standard cycle instead of the true best cycle pushes performance toward or above 100% and hides speed losses.</li><li><strong>Moving losses into "planned" time.</strong> Classifying changeovers or waiting time as planned stops raises availability on paper but hides the loss you most need to see.</li><li><strong>Counting reworked parts as good.</strong> Quality should use right-first-time units. Reworked parts consumed capacity twice.</li><li><strong>Averaging OEE percentages across machines.</strong> Weight by planned time, or recompute from summed times and counts.</li></ul>
-<h2>Standards and definitions</h2>
+<h2 id="s2">Standards and definitions</h2>
 <p>ISO 22400-2 defines OEE as a key performance indicator for manufacturing operations management, using the same availability × effectiveness × quality structure. Write down your plant’s definitions (what counts as planned time, which stops are minor stops) and apply them the same way every shift, so trends stay meaningful.</p>
-<h2>Frequently asked questions</h2>
+
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Daily and shift performance reviews on critical equipment.</li><li>Ranking loss categories for TPM and kaizen activities.</li><li>Before/after evaluation of SMED or reliability projects.</li></ul>
+<h2 id="faq">Questions</h2>
 <div class="faq"><details><summary>What is the difference between OEE and TEEP?</summary><p>OEE measures losses against planned production time. TEEP (Total Effective Equipment Performance) measures against all calendar time, so it also shows the capacity left unused by not running nights, weekends or holidays.</p></details><details><summary>Can OEE be above 100%?</summary><p>No. If your calculation gives more than 100%, the ideal cycle time is usually set too slow, or counts and times come from different periods.</p></details><details><summary>Should minor stops count as availability or performance loss?</summary><p>Either can work if you are consistent. A common practice is to log stops above a threshold (for example 5 minutes) as downtime and let shorter stops show up as performance loss.</p></details></div>
-<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/availability">Equipment Availability Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li><li><a href="/calculators/first-pass-yield">First Pass Yield &amp; Scrap Rate Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li><li><a href="/calculators/cycle-time">Cycle Time Calculator</a></li></ul></aside>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/availability"><strong>Equipment Availability Calculator</strong><span>Calculate equipment availability from MTBF and MTTR (inherent availability) or from measured uptime and downtime, with equivalent downtime per year.</span></a><a class="rel-card" href="/calculators/takt-time"><strong>Takt Time Calculator</strong><span>Calculate takt time from shift length, breaks, shifts per day and customer demand, and check whether your bottleneck cycle time can keep up.</span></a><a class="rel-card" href="/calculators/first-pass-yield"><strong>First Pass Yield &amp; Scrap Rate Calculator</strong><span>Calculate first pass yield (FPY), scrap rate, rework rate and final yield from units entering a process, units passing first time and units scrapped.</span></a><a class="rel-card" href="/calculators/downtime-cost"><strong>Downtime Cost Calculator</strong><span>Estimate the cost of unplanned downtime from lost output, contribution margin, idle labour and direct repair costs.</span></a><a class="rel-card" href="/calculators/cycle-time"><strong>Cycle Time Calculator</strong><span>Calculate average cycle time and throughput from net production time and units completed.</span></a><a class="rel-card" href="/calculators/teep"><strong>TEEP Calculator</strong><span>Calculate TEEP from OEE, planned production time and calendar time, and see how much capacity the schedule leaves unused.</span></a></div>
+<p class="muted">More in <a href="/categories/production">Production &amp; Lean</a>.</p></section>
 <p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
-</section>
 </article>
+</div>
+</div>
 </main>
-<footer class="site-footer"><div class="footer-inner">
-<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
-<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
-<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
 </div></footer>
 </body>
 </html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pump Power Calculator – Hydraulic, Shaft &amp; Input kW</title>
+<meta name="description" content="Calculate pump hydraulic power, shaft power and electrical input from flow, head, density and efficiencies, with optional annual energy use.">
+<link rel="canonical" href="https://tools.saharienne.org/calculators/pump-power">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Pump Power Calculator – Hydraulic, Shaft &amp; Input kW">
+<meta property="og:description" content="Calculate pump hydraulic power, shaft power and electrical input from flow, head, density and efficiencies, with optional annual energy use.">
+<meta property="og:url" content="https://tools.saharienne.org/calculators/pump-power">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Pump Power Calculator","url":"https://tools.saharienne.org/calculators/pump-power","description":"Calculate pump hydraulic power, shaft power and electrical input from flow, head, density and efficiencies, with optional annual energy use.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Energy & Electrical","item":"https://tools.saharienne.org/categories/energy"},{"@type":"ListItem","position":3,"name":"Pump Power Calculator","item":"https://tools.saharienne.org/calculators/pump-power"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li aria-current="page">Pump Power Calculator</li></ol></nav>
+<h1>Pump Power Calculator</h1>
+<p class="lead">Pump power follows directly from flow, head and fluid density. This calculator gives hydraulic power, the shaft power the motor must deliver, and the electrical power drawn from the supply, so you can size a motor or estimate energy cost at the duty point.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
+<form id="calc-form" data-calc="pump-power" novalidate>
+<div class="form-grid">
+<div class="field" id="f-flow">
+<label for="flow">Flow rate <span class="sr-only">(m³/h)</span></label>
+<div class="input-unit"><input id="flow" name="flow" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-flow" required placeholder="e.g. 180"><span class="unit" aria-hidden="true">m³/h</span></div>
+
+<p class="field-error" id="err-flow" aria-live="polite"></p>
+</div>
+<div class="field" id="f-head">
+<label for="head">Total dynamic head <span class="sr-only">(m)</span></label>
+<div class="input-unit"><input id="head" name="head" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-head" required placeholder="e.g. 45"><span class="unit" aria-hidden="true">m</span></div>
+
+<p class="field-error" id="err-head" aria-live="polite"></p>
+</div>
+<div class="field" id="f-density">
+<label for="density">Fluid density <span class="sr-only">(kg/m³)</span></label>
+<div class="input-unit"><input id="density" name="density" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-density err-density" placeholder="e.g. 1,000"><span class="unit" aria-hidden="true">kg/m³</span></div>
+<p class="field-help" id="help-density">Water ≈ 1,000 kg/m³. Slurries are denser.</p>
+<p class="field-error" id="err-density" aria-live="polite"></p>
+</div>
+<div class="field" id="f-pumpEff">
+<label for="pumpEff">Pump efficiency <span class="sr-only">(%)</span></label>
+<div class="input-unit"><input id="pumpEff" name="pumpEff" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-pumpEff" required placeholder="e.g. 72"><span class="unit" aria-hidden="true">%</span></div>
+
+<p class="field-error" id="err-pumpEff" aria-live="polite"></p>
+</div>
+<div class="field" id="f-motorEff">
+<label for="motorEff">Motor efficiency <span class="sr-only">(%)</span></label>
+<div class="input-unit"><input id="motorEff" name="motorEff" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-motorEff" placeholder="e.g. 94"><span class="unit" aria-hidden="true">%</span></div>
+
+<p class="field-error" id="err-motorEff" aria-live="polite"></p>
+</div>
+<div class="field" id="f-hours">
+<label for="hours">Operating hours per year (optional) <span class="sr-only">(h)</span></label>
+<div class="input-unit"><input id="hours" name="hours" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-hours" placeholder="e.g. 6,000"><span class="unit" aria-hidden="true">h</span></div>
+
+<p class="field-error" id="err-hours" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
+</form>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
+</section>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">Reading the result</a></li><li><a href="#s1">Total dynamic head</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
+<div class="formula"><code>Hydraulic power (kW) = ρ × g × Q × H ÷ 1,000</code><code>Shaft power = Hydraulic power ÷ Pump efficiency</code><code>Electrical input = Shaft power ÷ Motor efficiency</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>ρ</td><td>Fluid density</td><td>kg/m³</td></tr><tr><td>g</td><td>Gravitational acceleration, 9.80665</td><td>m/s²</td></tr><tr><td>Q</td><td>Flow rate (converted from m³/h to m³/s)</td><td>m³/s</td></tr><tr><td>H</td><td>Total dynamic head at the duty point</td><td>m</td></tr></tbody></table></div>
+<h2 id="example">Worked example</h2>
+<p>A process water pump delivers 180 m³/h against 45 m of total head. The pump is 72% efficient at that point, the motor 94%, and it runs 6,000 hours a year.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Flow rate</th><td>180 m³/h</td></tr><tr><th scope="row">Total dynamic head</th><td>45 m</td></tr><tr><th scope="row">Fluid density</th><td>1,000 kg/m³</td></tr><tr><th scope="row">Pump efficiency</th><td>72 %</td></tr><tr><th scope="row">Motor efficiency</th><td>94 %</td></tr><tr><th scope="row">Operating hours per year (optional)</th><td>6,000 h</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Electrical input power</th><td><strong>32.6 kW</strong></td></tr><tr><th scope="row">Pump shaft power</th><td><strong>30.65 kW</strong></td></tr><tr><th scope="row">Hydraulic power</th><td><strong>22.06 kW</strong></td></tr><tr><th scope="row">Wire-to-water efficiency</th><td><strong>67.7%</strong></td></tr><tr><th scope="row">Annual energy use</th><td><strong>195,611 kWh</strong></td></tr></tbody></table></div>
+<p class="hint">Select a motor with margin above shaft power at the duty point, and check power at the end of the pump curve.</p>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">Reading the result</h2>
+<p>Wire-to-water efficiency (hydraulic power ÷ electrical input) summarises the whole pumping set. Values well below the pump’s best-efficiency figure suggest the pump runs away from its best efficiency point, often because of oversizing or throttling. The <a href="/calculators/affinity-laws">affinity laws calculator</a> estimates what speed control could save.</p>
+<h2 id="s1">Total dynamic head</h2>
+<p>Head is the sum of static lift, pressure difference and friction losses in pipes and fittings at the actual flow. Read it from the system curve or from measured suction and discharge pressures. Using the pump’s nameplate head instead of the operating head is the most common source of error.</p>
+<h2 id="mistakes">Common mistakes</h2><ul class="list-check list-warn"><li>Using nameplate head instead of the head at the operating flow.</li><li>Forgetting density for slurries or brines, which can raise power markedly.</li><li>Sizing the motor exactly to shaft power at the duty point without margin for the end of the curve.</li></ul>
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Motor sizing for new pumping duties.</li><li>Energy audits of pumping systems.</li><li>Checking measured motor power against the expected duty point.</li></ul>
+<h2 id="faq">Questions</h2>
+<div class="faq"><details><summary>Why multiply by 9.80665?</summary><p>Hydraulic power is the energy needed to lift the fluid mass per second: density × g × flow × head. g is standard gravity in m/s².</p></details></div>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/affinity-laws"><strong>Fan &amp; Pump Affinity Laws Calculator</strong><span>Estimate power, flow and pressure at a new speed using the fan and pump affinity laws, and the theoretical energy savings from a variable speed drive.</span></a><a class="rel-card" href="/calculators/energy-cost"><strong>Energy Cost Calculator</strong><span>Estimate electricity use and cost for a machine or motor from rated power, load, efficiency, operating hours and tariff.</span></a><a class="rel-card" href="/calculators/motor-efficiency-savings"><strong>Motor Efficiency Upgrade Savings Calculator</strong><span>Estimate annual kWh and cost savings, and simple payback, from replacing an electric motor with a higher-efficiency model (e.g.</span></a><a class="rel-card" href="/calculators/electrical-power"><strong>Electrical Power Calculator (kW, kVA, kvar)</strong><span>Calculate active (kW), apparent (kVA) and reactive (kvar) power from voltage, current and power factor for three-phase or single-phase loads.</span></a></div>
+<p class="muted">More in <a href="/categories/energy">Energy &amp; Electrical</a>.</p></section>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</article>
+</div>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
+</div></footer>
+</body>
+</html>

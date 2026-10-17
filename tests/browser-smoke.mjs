@@ -39,16 +39,17 @@ for (const [vpName, viewport] of [['desktop', { width: 1280, height: 900 }], ['m
 
     // empty submit -> error
     await page.click('button[type=submit]');
-    check(await page.locator('#result.is-error').count() === 1, `${vpName} ${id}: empty submit did not show error`);
+    check(await page.locator('#result .ro-error').count() === 1, `${vpName} ${id}: empty submit did not show error`);
     check(await page.locator('[aria-invalid=true]').count() >= 1, `${vpName} ${id}: no aria-invalid field`);
 
     // example -> result matches core
     await page.click('#load-example');
-    const shown = (await page.locator('.result-value').textContent())?.trim();
+    const shown = (await page.locator('.ro-primary').textContent())?.trim();
     const r = Core.run(id, Core.exampleRaw(id));
     const primary = r.output.results.find((x) => x.primary) || r.output.results[0];
     check(shown === Core.formatResult(primary), `${vpName} ${id}: shown "${shown}" != expected "${Core.formatResult(primary)}"`);
 
+    check(await page.locator('#copy-result:not([disabled])').count() === 1, `${vpName} ${id}: copy button not enabled after result`);
     // no horizontal overflow
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     check(overflow <= 0, `${vpName} ${id}: horizontal overflow ${overflow}px`);
@@ -57,20 +58,49 @@ for (const [vpName, viewport] of [['desktop', { width: 1280, height: 900 }], ['m
       // prefill from link
       const qs = new URLSearchParams(Core.exampleRaw(id)).toString();
       await page.goto(`${BASE}/calculators/${id}?${qs}`);
-      const shown2 = (await page.locator('.result-value').textContent())?.trim();
+      const shown2 = (await page.locator('.ro-primary').textContent())?.trim();
       check(shown2 === Core.formatResult(primary), `${id}: link prefill shows "${shown2}"`);
       await audit(page, id);
     }
     check(errors.length === 0, `${vpName} ${id}: console errors: ${errors.join(' | ')}`);
     await page.close();
   }
-  for (const p of ['/', '/about', '/contact', '/privacy-policy', '/terms']) {
+  for (const p of ['/', '/about', '/contact', '/privacy-policy', '/terms', '/categories/production', '/categories/quality', '/categories/maintenance', '/categories/energy', '/categories/inventory', '/categories/finance', '/categories/workforce']) {
     const page = await ctx.newPage();
     const resp = await page.goto(BASE + p);
     check(resp.status() === 200, `${p}: HTTP ${resp.status()}`);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     check(overflow <= 0, `${vpName} ${p}: horizontal overflow ${overflow}px`);
     if (vpName === 'desktop') await audit(page, p);
+    await page.close();
+  }
+  // home search + category filter
+  {
+    const page = await ctx.newPage();
+    await page.goto(BASE + '/');
+    await page.fill('#home-search', 'mtbf');
+    const vis = await page.locator('#tool-list li:not([hidden])').count();
+    check(vis >= 1 && vis <= 3, `${vpName}: home search 'mtbf' shows ${vis} rows`);
+    check(await page.locator('#home-search-list [role=option]').count() >= 1, `${vpName}: combobox suggestions missing`);
+    await page.fill('#home-search', '');
+    await page.click('[data-cat-filter="energy"]');
+    const en = await page.locator('#tool-list li:not([hidden])').count();
+    check(en === Object.values(Core.registry).length - (await page.locator('#tool-list li[hidden]').count()) && en >= 5, `${vpName}: energy filter shows ${en}`);
+    await page.fill('#home-search', 'zzzz-nothing');
+    check(await page.locator('#filter-empty:not([hidden])').count() === 1, `${vpName}: empty state not shown`);
+    await page.goto(BASE + '/?cat=finance');
+    check(await page.locator('[data-cat-filter="finance"][aria-pressed="true"]').count() === 1, `${vpName}: ?cat=finance not applied`);
+    if (vpName === 'mobile') {
+      await page.click('.menu-btn');
+      check(await page.locator('.menu-btn[aria-expanded="true"]').count() === 1 && await page.locator('#site-nav').isVisible(), 'mobile menu does not open');
+    } else {
+      await page.goto(BASE + '/calculators/eoq');
+      await page.fill('#hdr-search-input', 'safety');
+      await page.waitForSelector('#hdr-search-input-list [role=option]');
+      await page.keyboard.press('ArrowDown'); await page.keyboard.press('Enter');
+      await page.waitForURL('**/calculators/safety-stock');
+      check(page.url().endsWith('/calculators/safety-stock'), 'header combobox keyboard navigation failed');
+    }
     await page.close();
   }
   const page = await ctx.newPage();

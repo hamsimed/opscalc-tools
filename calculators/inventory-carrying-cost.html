@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inventory Carrying Cost Calculator – Holding Cost Rate</title>
+<meta name="description" content="Calculate the annual cost of holding inventory from capital, storage, insurance and obsolescence rates, and get the carrying cost rate for EOQ.">
+<link rel="canonical" href="https://tools.saharienne.org/calculators/inventory-carrying-cost">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Inventory Carrying Cost Calculator – Holding Cost Rate">
+<meta property="og:description" content="Calculate the annual cost of holding inventory from capital, storage, insurance and obsolescence rates, and get the carrying cost rate for EOQ.">
+<meta property="og:url" content="https://tools.saharienne.org/calculators/inventory-carrying-cost">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Inventory Carrying Cost Calculator","url":"https://tools.saharienne.org/calculators/inventory-carrying-cost","description":"Calculate the annual cost of holding inventory from capital, storage, insurance and obsolescence rates, and get the carrying cost rate for EOQ.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Inventory & Logistics","item":"https://tools.saharienne.org/categories/inventory"},{"@type":"ListItem","position":3,"name":"Inventory Carrying Cost Calculator","item":"https://tools.saharienne.org/calculators/inventory-carrying-cost"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li aria-current="page">Inventory Carrying Cost Calculator</li></ol></nav>
+<h1>Inventory Carrying Cost Calculator</h1>
+<p class="lead">Inventory costs money every day it sits on the shelf: capital tied up, warehouse space, insurance and the risk of damage or obsolescence. This calculator turns those components into an annual carrying cost and a single carrying cost rate.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
+<form id="calc-form" data-calc="inventory-carrying-cost" novalidate>
+<div class="form-grid">
+<div class="field" id="f-avg">
+<label for="avg">Average inventory value</label>
+<div class="input-unit"><input id="avg" name="avg" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-avg" required placeholder="e.g. 400,000"></div>
+
+<p class="field-error" id="err-avg" aria-live="polite"></p>
+</div>
+<div class="field" id="f-capital">
+<label for="capital">Cost of capital <span class="sr-only">(% per year)</span></label>
+<div class="input-unit"><input id="capital" name="capital" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-capital" required placeholder="e.g. 10"><span class="unit" aria-hidden="true">% per year</span></div>
+
+<p class="field-error" id="err-capital" aria-live="polite"></p>
+</div>
+<div class="field" id="f-storage">
+<label for="storage">Storage and handling <span class="sr-only">(% per year)</span></label>
+<div class="input-unit"><input id="storage" name="storage" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-storage" required placeholder="e.g. 6"><span class="unit" aria-hidden="true">% per year</span></div>
+
+<p class="field-error" id="err-storage" aria-live="polite"></p>
+</div>
+<div class="field" id="f-insurance">
+<label for="insurance">Insurance and taxes <span class="sr-only">(% per year)</span></label>
+<div class="input-unit"><input id="insurance" name="insurance" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-insurance" placeholder="e.g. 2"><span class="unit" aria-hidden="true">% per year</span></div>
+
+<p class="field-error" id="err-insurance" aria-live="polite"></p>
+</div>
+<div class="field" id="f-risk">
+<label for="risk">Obsolescence, damage and shrinkage <span class="sr-only">(% per year)</span></label>
+<div class="input-unit"><input id="risk" name="risk" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-risk" placeholder="e.g. 5"><span class="unit" aria-hidden="true">% per year</span></div>
+
+<p class="field-error" id="err-risk" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
+</form>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
+</section>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">Where the rates come from</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
+<div class="formula"><code>Carrying cost rate = Capital % + Storage % + Insurance % + Risk %</code><code>Annual carrying cost = Average inventory value × Carrying cost rate</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Average inventory value</td><td>Inventory at cost, averaged over the year</td><td>currency</td></tr><tr><td>Rates</td><td>Annual cost of each component as a share of inventory value</td><td>% per year</td></tr></tbody></table></div>
+<h2 id="example">Worked example</h2>
+<p>A plant holds 400,000 of inventory on average. Capital costs 10% a year, storage and handling 6%, insurance 2% and obsolescence and shrinkage 5%.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Average inventory value</th><td>400,000</td></tr><tr><th scope="row">Cost of capital</th><td>10 % per year</td></tr><tr><th scope="row">Storage and handling</th><td>6 % per year</td></tr><tr><th scope="row">Insurance and taxes</th><td>2 % per year</td></tr><tr><th scope="row">Obsolescence, damage and shrinkage</th><td>5 % per year</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Annual carrying cost</th><td><strong>92,000</strong></td></tr><tr><th scope="row">Carrying cost rate</th><td><strong>23%</strong></td></tr><tr><th scope="row">Carrying cost per month</th><td><strong>7,667</strong></td></tr><tr><th scope="row">Of which cost of capital</th><td><strong>40,000</strong></td></tr></tbody></table></div>
+<p class="hint">Use the carrying cost rate as the holding cost input in the EOQ calculator: holding cost per unit = unit cost × rate.</p>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">Where the rates come from</h2>
+<ul><li><strong>Capital:</strong> your cost of capital or the return you could earn elsewhere.</li><li><strong>Storage and handling:</strong> warehouse cost (rent or depreciation, energy, staff) divided by average inventory value.</li><li><strong>Risk:</strong> write-offs, damage and shrinkage from the last few years, divided by average inventory.</li></ul><p>The rate feeds the <a href="/calculators/eoq">EOQ calculator</a>: holding cost per unit = unit cost × rate.</p>
+<h2 id="mistakes">Common mistakes</h2><ul class="list-check list-warn"><li>Counting storage costs that would not change if inventory fell.</li><li>Using an optimistic obsolescence rate for spares or seasonal goods.</li><li>Applying one rate to items with very different risk profiles.</li></ul>
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Inventory reduction business cases.</li><li>EOQ and safety stock settings.</li><li>Comparing in-house stock with consignment or vendor-managed inventory.</li></ul>
+<h2 id="faq">Questions</h2>
+<div class="faq"><details><summary>Is the carrying cost rate the same as the interest rate?</summary><p>No. Interest or capital cost is only one component; storage, insurance and risk are added to it.</p></details></div>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/eoq"><strong>EOQ Calculator (Economic Order Quantity)</strong><span>Calculate the economic order quantity (EOQ), number of orders per year, order interval and total annual ordering and holding cost.</span></a><a class="rel-card" href="/calculators/inventory-turnover"><strong>Inventory Turnover Calculator</strong><span>Calculate inventory turnover ratio and days inventory outstanding (DIO) from cost of goods sold and beginning and ending inventory.</span></a><a class="rel-card" href="/calculators/safety-stock"><strong>Safety Stock Calculator</strong><span>Calculate safety stock for a target service level from demand variability and lead-time variability, using the combined statistical formula.</span></a><a class="rel-card" href="/calculators/reorder-point"><strong>Reorder Point Calculator</strong><span>Calculate the reorder point from average daily demand, lead time and safety stock, and check whether your current inventory position means you should order now.</span></a></div>
+<p class="muted">More in <a href="/categories/inventory">Inventory &amp; Logistics</a>.</p></section>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</article>
+</div>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
+</div></footer>
+</body>
+</html>

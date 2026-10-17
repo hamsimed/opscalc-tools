@@ -12,28 +12,39 @@
 <meta property="og:description" content="Calculate first pass yield (FPY), scrap rate, rework rate and final yield from units entering a process, units passing first time and units scrapped.">
 <meta property="og:url" content="https://tools.saharienne.org/calculators/first-pass-yield">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#101d38">
+<meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css?v=20261016">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"First Pass Yield & Scrap Rate Calculator","url":"https://tools.saharienne.org/calculators/first-pass-yield","description":"Calculate first pass yield (FPY), scrap rate, rework rate and final yield from units entering a process, units passing first time and units scrapped.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Quality","item":"https://tools.saharienne.org/#quality"},{"@type":"ListItem","position":3,"name":"First Pass Yield & Scrap Rate Calculator","item":"https://tools.saharienne.org/calculators/first-pass-yield"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Quality","item":"https://tools.saharienne.org/categories/quality"},{"@type":"ListItem","position":3,"name":"First Pass Yield & Scrap Rate Calculator","item":"https://tools.saharienne.org/calculators/first-pass-yield"}]}</script>
 <script src="/assets/js/site-config.js?v=20261016" defer></script>
 <script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
 <script src="/assets/js/calc-core.js?v=20261016" defer></script>
 <script src="/assets/js/calc-ui.js?v=20261016" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header"><nav class="nav" aria-label="Main">
-<a class="brand" href="/">OpsCalc<span>Tools</span></a>
-<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
-</nav></header>
-<main id="main" class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#quality">Quality</a></li><li aria-current="page">First Pass Yield &amp; Scrap Rate Calculator</li></ol></nav>
-<article class="calc-page">
-<header class="page-head"><p class="eyebrow">Quality</p><h1>First Pass Yield &amp; Scrap Rate Calculator</h1><p class="lead">First pass yield is the share of units that go through a process right the first time, with no rework or scrap. Final yield counts reworked units as good, so it hides the cost of fixing them. This calculator shows both, with scrap and rework rates.</p></header>
-<section class="panel calculator" aria-labelledby="calc-title">
-<h2 id="calc-title" class="panel-title">Calculator</h2>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/quality">Quality</a></li><li aria-current="page">First Pass Yield &amp; Scrap Rate Calculator</li></ol></nav>
+<h1>First Pass Yield &amp; Scrap Rate Calculator</h1>
+<p class="lead">First pass yield is the share of units that go through a process right the first time, with no rework or scrap. Final yield counts reworked units as good, so it hides the cost of fixing them. This calculator shows both, with scrap and rework rates.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
 <form id="calc-form" data-calc="first-pass-yield" novalidate>
 <div class="form-grid">
 <div class="field" id="f-started">
@@ -55,37 +66,53 @@
 <p class="field-error" id="err-scrap" aria-live="polite"></p>
 </div>
 </div>
-<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
 </form>
-<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
-<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
-<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
 </section>
-<section class="content">
-<h2>Formula</h2>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">Rolled throughput yield</a></li><li><a href="#s1">Using FPY for improvement</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
 <div class="formula"><code>FPY = Units passing first time ÷ Units entering</code><code>Scrap rate = Units scrapped ÷ Units entering</code><code>Rework rate = (Units entering − Passed first time − Scrapped) ÷ Units entering</code><code>Final yield = (Units entering − Scrapped) ÷ Units entering</code></div>
 <div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Units entering</td><td>Units started in the process step during the period</td><td>units</td></tr><tr><td>Passed first time</td><td>Units accepted without any rework or repair</td><td>units</td></tr><tr><td>Scrapped</td><td>Units rejected and discarded</td><td>units</td></tr></tbody></table></div>
-<h2>Worked example</h2>
+<h2 id="example">Worked example</h2>
 <p>A welding station received 2,000 frames. 1,820 passed inspection directly, 60 were scrapped, and the rest were repaired and passed.</p>
 <div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Units entering the process</th><td>2,000 units</td></tr><tr><th scope="row">Units passing first time (no rework)</th><td>1,820 units</td></tr><tr><th scope="row">Units scrapped</th><td>60 units</td></tr></tbody></table></div>
 <div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">First pass yield</th><td><strong>91%</strong></td></tr><tr><th scope="row">Scrap rate</th><td><strong>3%</strong></td></tr><tr><th scope="row">Rework rate</th><td><strong>6%</strong></td></tr><tr><th scope="row">Final yield (after rework)</th><td><strong>97%</strong></td></tr><tr><th scope="row">Units reworked</th><td><strong>120 units</strong></td></tr></tbody></table></div>
 <p class="hint">Final yield hides the cost of rework; first pass yield exposes it. Track both.</p>
-<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
-<h2>Rolled throughput yield</h2>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">Rolled throughput yield</h2>
 <p>For a multi-step process, multiply the FPY of each step to get rolled throughput yield (RTY), the probability that a unit passes every step first time. Three steps at 95% each give an RTY of about 85.7%. Small losses at each step add up quickly.</p>
-<h2>Using FPY for improvement</h2>
+<h2 id="s1">Using FPY for improvement</h2>
 <ul><li>Rank process steps by FPY loss (Pareto) to find where rework capacity goes.</li><li>Rework uses capacity twice. A low FPY at the bottleneck costs output directly.</li><li>Feed the quality factor of OEE with right-first-time units, consistent with FPY.</li></ul>
-<h2>Frequently asked questions</h2>
+<h2 id="mistakes">Common mistakes</h2><ul class="list-check list-warn"><li>Counting reworked units as first-pass good.</li><li>Measuring at the end of the line only, which hides internal rework loops.</li><li>Mixing units started and units finished from different periods.</li></ul>
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Quality KPIs per process step.</li><li>Prioritising rework reduction.</li><li>Feeding the quality factor of OEE.</li></ul>
+<h2 id="faq">Questions</h2>
 <div class="faq"><details><summary>Is FPY the same as first time right (FTR)?</summary><p>They are usually the same idea: the share of output produced correctly without rework. Some companies use FTR at order or document level and FPY at unit level.</p></details></div>
-<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/dpmo">DPMO &amp; Sigma Level Calculator</a></li><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li><li><a href="/calculators/production-rate">Production Rate Calculator</a></li></ul></aside>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/dpmo"><strong>DPMO &amp; Sigma Level Calculator</strong><span>Calculate DPMO, defects per unit (DPU), process yield and short-term sigma level from defects, units and opportunities per unit.</span></a><a class="rel-card" href="/calculators/oee"><strong>OEE Calculator</strong><span>Calculate Overall Equipment Effectiveness (OEE) from shop-floor time and count data or from A, P and Q percentages.</span></a><a class="rel-card" href="/calculators/downtime-cost"><strong>Downtime Cost Calculator</strong><span>Estimate the cost of unplanned downtime from lost output, contribution margin, idle labour and direct repair costs.</span></a><a class="rel-card" href="/calculators/production-rate"><strong>Production Rate Calculator</strong><span>Calculate production rate in units per hour, compare it with a target rate and see the shortfall or surplus in units.</span></a><a class="rel-card" href="/calculators/unit-cost"><strong>Cost per Unit Calculator</strong><span>Calculate the cost per unit from materials, direct labor and overhead for a batch or period, with an optional margin check against selling price.</span></a></div>
+<p class="muted">More in <a href="/categories/quality">Quality</a>.</p></section>
 <p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
-</section>
 </article>
+</div>
+</div>
 </main>
-<footer class="site-footer"><div class="footer-inner">
-<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
-<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
-<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
 </div></footer>
 </body>
 </html>

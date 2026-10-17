@@ -12,28 +12,39 @@
 <meta property="og:description" content="Calculate the capacitor bank rating (kvar) needed to raise power factor from its current value to a target, with the resulting reduction in kVA and current.">
 <meta property="og:url" content="https://tools.saharienne.org/calculators/power-factor-correction">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#101d38">
+<meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css?v=20261016">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Power Factor Correction Calculator","url":"https://tools.saharienne.org/calculators/power-factor-correction","description":"Calculate the capacitor bank rating (kvar) needed to raise power factor from its current value to a target, with the resulting reduction in kVA and current.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Energy & Electrical","item":"https://tools.saharienne.org/#energy"},{"@type":"ListItem","position":3,"name":"Power Factor Correction Calculator","item":"https://tools.saharienne.org/calculators/power-factor-correction"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Energy & Electrical","item":"https://tools.saharienne.org/categories/energy"},{"@type":"ListItem","position":3,"name":"Power Factor Correction Calculator","item":"https://tools.saharienne.org/calculators/power-factor-correction"}]}</script>
 <script src="/assets/js/site-config.js?v=20261016" defer></script>
 <script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
 <script src="/assets/js/calc-core.js?v=20261016" defer></script>
 <script src="/assets/js/calc-ui.js?v=20261016" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header"><nav class="nav" aria-label="Main">
-<a class="brand" href="/">OpsCalc<span>Tools</span></a>
-<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
-</nav></header>
-<main id="main" class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#energy">Energy &amp; Electrical</a></li><li aria-current="page">Power Factor Correction Calculator</li></ol></nav>
-<article class="calc-page">
-<header class="page-head"><p class="eyebrow">Energy &amp; Electrical</p><h1>Power Factor Correction Calculator</h1><p class="lead">Low power factor increases current, losses and often your electricity bill. Enter active power, current power factor and target power factor to get the capacitor rating needed, plus the drop in apparent power and line current.</p></header>
-<section class="panel calculator" aria-labelledby="calc-title">
-<h2 id="calc-title" class="panel-title">Calculator</h2>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li aria-current="page">Power Factor Correction Calculator</li></ol></nav>
+<h1>Power Factor Correction Calculator</h1>
+<p class="lead">Low power factor increases current, losses and often your electricity bill. Enter active power, current power factor and target power factor to get the capacitor rating needed, plus the drop in apparent power and line current.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
 <form id="calc-form" data-calc="power-factor-correction" novalidate>
 <div class="form-grid">
 <div class="field" id="f-kw">
@@ -55,39 +66,55 @@
 <p class="field-error" id="err-pf2" aria-live="polite"></p>
 </div>
 </div>
-<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
 </form>
-<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
-<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
-<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
 </section>
-<section class="content">
-<h2>Formula</h2>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">Before buying capacitors</a></li><li><a href="#s1">Why aim for 0.95 rather than 1.0?</a></li><li><a href="#s2">Worked interpretation</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
 <div class="formula"><code>Qc = P × (tan φ₁ − tan φ₂)</code><code>φ = arccos(PF)</code><code>Current reduction = 1 − PF₁ ÷ PF₂</code></div>
 <div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>P</td><td>Active power of the load</td><td>kW</td></tr><tr><td>PF₁</td><td>Present power factor</td><td>—</td></tr><tr><td>PF₂</td><td>Target power factor</td><td>—</td></tr><tr><td>Qc</td><td>Capacitor reactive power required</td><td>kvar</td></tr></tbody></table></div>
-<h2>Worked example</h2>
+<h2 id="example">Worked example</h2>
 <p>A workshop draws 500 kW at a power factor of 0.78. The utility applies penalties below 0.95.</p>
 <div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Active power</th><td>500 kW</td></tr><tr><th scope="row">Current power factor</th><td>0.78</td></tr><tr><th scope="row">Target power factor</th><td>0.95</td></tr></tbody></table></div>
 <div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Required capacitor rating</th><td><strong>236.8 kvar</strong></td></tr><tr><th scope="row">Apparent power before</th><td><strong>641 kVA</strong></td></tr><tr><th scope="row">Apparent power after</th><td><strong>526.3 kVA</strong></td></tr><tr><th scope="row">Line current reduction</th><td><strong>17.9%</strong></td></tr><tr><th scope="row">Approx. I²R loss reduction</th><td><strong>32.6%</strong></td></tr></tbody></table></div>
 <p class="hint">Select the nearest standard bank size above the result, and check harmonics (VFDs) before installing capacitors — detuned banks may be needed.</p>
-<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
-<h2>Before buying capacitors</h2>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">Before buying capacitors</h2>
 <ul><li><strong>Harmonics</strong>: drives, rectifiers and welders create harmonics that can resonate with capacitors. Detuned (reactor-protected) banks are often needed. A harmonic survey is recommended.</li><li><strong>Load variation</strong>: automatic stepped banks follow changing loads and avoid over-correction (leading power factor) at light load.</li><li><strong>Location</strong>: correcting at large motors also reduces current in the feeders upstream. Central correction is cheaper but only relieves the supply transformer and tariff.</li></ul>
-<h2>Why aim for 0.95 rather than 1.0?</h2>
+<h2 id="s1">Why aim for 0.95 rather than 1.0?</h2>
 <p>Each step towards unity needs more kvar for less benefit, and a bank sized for unity at full load over-corrects at partial load. Most tariffs set penalty thresholds between 0.9 and 0.95. Check your own utility’s rules.</p>
-<h2>Worked interpretation</h2>
+<h2 id="s2">Worked interpretation</h2>
 <p>In the example, raising the power factor from 0.78 to 0.95 needs about 237 kvar. Apparent power falls from 641 kVA to 526 kVA, freeing about 115 kVA of transformer and cable capacity. A standard 250 kvar automatic bank in steps would typically be selected, with step sizes matched to how the load varies.</p>
-<h2>Frequently asked questions</h2>
+<h2 id="mistakes">Common mistakes</h2><ul class="list-check list-warn"><li>Sizing capacitors for unity at full load and over-correcting at light load.</li><li>Installing standard capacitors on networks with strong harmonics.</li><li>Using peak instead of typical active power.</li></ul>
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Avoiding reactive-energy penalties.</li><li>Releasing transformer capacity.</li><li>Specifying capacitor banks.</li></ul>
+<h2 id="faq">Questions</h2>
 <div class="faq"><details><summary>Does power factor correction reduce kWh?</summary><p>Only slightly, through lower I²R losses in cables and transformers downstream of the capacitors. Most of the savings come from avoided reactive-energy penalties and released capacity.</p></details></div>
-<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/electrical-power">Electrical Power Calculator (kW, kVA, kvar)</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/motor-efficiency-savings">Motor Efficiency Upgrade Savings Calculator</a></li></ul></aside>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/electrical-power"><strong>Electrical Power Calculator (kW, kVA, kvar)</strong><span>Calculate active (kW), apparent (kVA) and reactive (kvar) power from voltage, current and power factor for three-phase or single-phase loads.</span></a><a class="rel-card" href="/calculators/energy-cost"><strong>Energy Cost Calculator</strong><span>Estimate electricity use and cost for a machine or motor from rated power, load, efficiency, operating hours and tariff.</span></a><a class="rel-card" href="/calculators/motor-efficiency-savings"><strong>Motor Efficiency Upgrade Savings Calculator</strong><span>Estimate annual kWh and cost savings, and simple payback, from replacing an electric motor with a higher-efficiency model (e.g.</span></a></div>
+<p class="muted">More in <a href="/categories/energy">Energy &amp; Electrical</a>.</p></section>
 <p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
-</section>
 </article>
+</div>
+</div>
 </main>
-<footer class="site-footer"><div class="footer-inner">
-<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
-<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
-<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
 </div></footer>
 </body>
 </html>

@@ -12,28 +12,39 @@
 <meta property="og:description" content="Calculate inventory turnover ratio and days inventory outstanding (DIO) from cost of goods sold and beginning and ending inventory.">
 <meta property="og:url" content="https://tools.saharienne.org/calculators/inventory-turnover">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#101d38">
+<meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css?v=20261016">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Inventory Turnover Calculator","url":"https://tools.saharienne.org/calculators/inventory-turnover","description":"Calculate inventory turnover ratio and days inventory outstanding (DIO) from cost of goods sold and beginning and ending inventory.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Inventory & Logistics","item":"https://tools.saharienne.org/#inventory"},{"@type":"ListItem","position":3,"name":"Inventory Turnover Calculator","item":"https://tools.saharienne.org/calculators/inventory-turnover"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Inventory & Logistics","item":"https://tools.saharienne.org/categories/inventory"},{"@type":"ListItem","position":3,"name":"Inventory Turnover Calculator","item":"https://tools.saharienne.org/calculators/inventory-turnover"}]}</script>
 <script src="/assets/js/site-config.js?v=20261016" defer></script>
 <script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
 <script src="/assets/js/calc-core.js?v=20261016" defer></script>
 <script src="/assets/js/calc-ui.js?v=20261016" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header"><nav class="nav" aria-label="Main">
-<a class="brand" href="/">OpsCalc<span>Tools</span></a>
-<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
-</nav></header>
-<main id="main" class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#inventory">Inventory &amp; Logistics</a></li><li aria-current="page">Inventory Turnover Calculator</li></ol></nav>
-<article class="calc-page">
-<header class="page-head"><p class="eyebrow">Inventory &amp; Logistics</p><h1>Inventory Turnover Calculator</h1><p class="lead">Inventory turnover shows how many times inventory is used up and replaced in a period. Days inventory outstanding (DIO) gives the same information as the average number of days stock sits before it is used or sold.</p></header>
-<section class="panel calculator" aria-labelledby="calc-title">
-<h2 id="calc-title" class="panel-title">Calculator</h2>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li aria-current="page">Inventory Turnover Calculator</li></ol></nav>
+<h1>Inventory Turnover Calculator</h1>
+<p class="lead">Inventory turnover shows how many times inventory is used up and replaced in a period. Days inventory outstanding (DIO) gives the same information as the average number of days stock sits before it is used or sold.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
 <form id="calc-form" data-calc="inventory-turnover" novalidate>
 <div class="form-grid">
 <div class="field" id="f-cogs">
@@ -61,37 +72,53 @@
 <p class="field-error" id="err-days" aria-live="polite"></p>
 </div>
 </div>
-<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
 </form>
-<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
-<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
-<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
 </section>
-<section class="content">
-<h2>Formula</h2>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">Interpreting the ratio</a></li><li><a href="#s1">Turnover by item class</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
 <div class="formula"><code>Average inventory = (Beginning + Ending inventory) ÷ 2</code><code>Inventory turnover = COGS ÷ Average inventory</code><code>DIO = Days in period ÷ Inventory turnover</code></div>
 <div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>COGS</td><td>Cost of goods sold over the period</td><td>currency</td></tr><tr><td>Beginning / ending inventory</td><td>Inventory valued at cost</td><td>currency</td></tr><tr><td>Days in period</td><td>365 for a year, 90 for a quarter, etc.</td><td>days</td></tr></tbody></table></div>
-<h2>Worked example</h2>
+<h2 id="example">Worked example</h2>
 <p>A manufacturer reports annual COGS of 2.4 million, with inventory of 380,000 at the start of the year and 420,000 at the end.</p>
 <div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Cost of goods sold (period)</th><td>2,400,000</td></tr><tr><th scope="row">Beginning inventory value</th><td>380,000</td></tr><tr><th scope="row">Ending inventory value</th><td>420,000</td></tr><tr><th scope="row">Days in period</th><td>365 days</td></tr></tbody></table></div>
 <div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Inventory turnover</th><td><strong>6 turns</strong></td></tr><tr><th scope="row">Average inventory</th><td><strong>400,000</strong></td></tr><tr><th scope="row">Days inventory outstanding</th><td><strong>60.8 days</strong></td></tr></tbody></table></div>
 <p class="hint">Compare turnover only between periods of equal length and against peers in the same industry.</p>
-<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
-<h2>Interpreting the ratio</h2>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">Interpreting the ratio</h2>
 <p>Higher turnover means less capital tied up per unit of sales. But very high turnover can also signal stockouts and lost sales. Benchmarks vary widely by industry, so compare with your own history and with peers in the same sector.</p><p>Two data points (start and end) can misrepresent seasonal businesses. Use monthly averages where possible.</p>
-<h2>Turnover by item class</h2>
+<h2 id="s1">Turnover by item class</h2>
 <p>A single turnover figure for the whole warehouse averages fast movers with slow and obsolete stock. Calculate turnover by ABC class or product family. Then list the items with no movement in the last 6 or 12 months. They tie up capital and space and usually need a decision: use, sell, or write off.</p><p>For maintenance spares, low turnover is often intentional. Critical insurance spares are held for availability, not rotation. Judge them by the downtime risk they cover (see the <a href="/calculators/downtime-cost">downtime cost calculator</a>), not by turnover.</p>
-<h2>Frequently asked questions</h2>
+<h2 id="mistakes">Common mistakes</h2><ul class="list-check list-warn"><li>Using sales instead of cost of goods sold.</li><li>Using year-end inventory only in a seasonal business.</li><li>Comparing turnover across unrelated industries.</li></ul>
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Working capital reviews.</li><li>Identifying slow-moving stock.</li><li>Supply chain KPIs.</li></ul>
+<h2 id="faq">Questions</h2>
 <div class="faq"><details><summary>Why use COGS instead of sales?</summary><p>Inventory is valued at cost, so COGS is the consistent numerator. Using sales (at selling price) inflates the ratio.</p></details></div>
-<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/eoq">EOQ Calculator (Economic Order Quantity)</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/littles-law">Lead Time Calculator (Little’s Law)</a></li></ul></aside>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/eoq"><strong>EOQ Calculator (Economic Order Quantity)</strong><span>Calculate the economic order quantity (EOQ), number of orders per year, order interval and total annual ordering and holding cost.</span></a><a class="rel-card" href="/calculators/safety-stock"><strong>Safety Stock Calculator</strong><span>Calculate safety stock for a target service level from demand variability and lead-time variability, using the combined statistical formula.</span></a><a class="rel-card" href="/calculators/littles-law"><strong>Lead Time Calculator (Little’s Law)</strong><span>Estimate process lead time from work in process and throughput using Little’s Law, and calculate process cycle efficiency from value-added time.</span></a><a class="rel-card" href="/calculators/inventory-carrying-cost"><strong>Inventory Carrying Cost Calculator</strong><span>Calculate the annual cost of holding inventory from capital, storage, insurance and obsolescence rates, and get the carrying cost rate for EOQ.</span></a></div>
+<p class="muted">More in <a href="/categories/inventory">Inventory &amp; Logistics</a>.</p></section>
 <p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
-</section>
 </article>
+</div>
+</div>
 </main>
-<footer class="site-footer"><div class="footer-inner">
-<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
-<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
-<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
 </div></footer>
 </body>
 </html>

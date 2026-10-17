@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NPV &amp; IRR Calculator – Net Present Value, Discounted Payback</title>
+<meta name="description" content="Calculate net present value, internal rate of return, profitability index and discounted payback for a project with equal annual cash flows.">
+<link rel="canonical" href="https://tools.saharienne.org/calculators/npv">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="NPV &amp; IRR Calculator – Net Present Value, Discounted Payback">
+<meta property="og:description" content="Calculate net present value, internal rate of return, profitability index and discounted payback for a project with equal annual cash flows.">
+<meta property="og:url" content="https://tools.saharienne.org/calculators/npv">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"NPV & IRR Calculator","url":"https://tools.saharienne.org/calculators/npv","description":"Calculate net present value, internal rate of return, profitability index and discounted payback for a project with equal annual cash flows.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Business Finance","item":"https://tools.saharienne.org/categories/finance"},{"@type":"ListItem","position":3,"name":"NPV & IRR Calculator","item":"https://tools.saharienne.org/calculators/npv"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/finance">Business Finance</a></li><li aria-current="page">NPV &amp; IRR Calculator</li></ol></nav>
+<h1>NPV &amp; IRR Calculator</h1>
+<p class="lead">Net present value converts future cash flows into today’s money using a discount rate, then subtracts the investment. A positive NPV means the project earns more than the required return. This calculator handles the common case of equal annual cash flows over the project life, with an optional salvage value.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
+<form id="calc-form" data-calc="npv" novalidate>
+<div class="form-grid">
+<div class="field" id="f-inv">
+<label for="inv">Initial investment</label>
+<div class="input-unit"><input id="inv" name="inv" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-inv" required placeholder="e.g. 85,000"></div>
+
+<p class="field-error" id="err-inv" aria-live="polite"></p>
+</div>
+<div class="field" id="f-cf">
+<label for="cf">Annual net cash inflow <span class="sr-only">(per year)</span></label>
+<div class="input-unit"><input id="cf" name="cf" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-cf" required placeholder="e.g. 31,000"><span class="unit" aria-hidden="true">per year</span></div>
+
+<p class="field-error" id="err-cf" aria-live="polite"></p>
+</div>
+<div class="field" id="f-years">
+<label for="years">Project life <span class="sr-only">(years)</span></label>
+<div class="input-unit"><input id="years" name="years" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-years" required placeholder="e.g. 8"><span class="unit" aria-hidden="true">years</span></div>
+
+<p class="field-error" id="err-years" aria-live="polite"></p>
+</div>
+<div class="field" id="f-rate">
+<label for="rate">Discount rate <span class="sr-only">(% per year)</span></label>
+<div class="input-unit"><input id="rate" name="rate" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-rate" required placeholder="e.g. 10"><span class="unit" aria-hidden="true">% per year</span></div>
+
+<p class="field-error" id="err-rate" aria-live="polite"></p>
+</div>
+<div class="field" id="f-salvage">
+<label for="salvage">Salvage value at end of life (optional)</label>
+<div class="input-unit"><input id="salvage" name="salvage" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-salvage" placeholder="e.g. 5,000"></div>
+
+<p class="field-error" id="err-salvage" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
+</form>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
+</section>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">NPV, IRR and payback together</a></li><li><a href="#s1">Choosing the discount rate</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
+<div class="formula"><code>NPV = −I + Σ CF ÷ (1 + r)ᵗ + S ÷ (1 + r)ⁿ</code><code>IRR = the rate r at which NPV = 0</code><code>Profitability index = PV of inflows ÷ I</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>I</td><td>Initial investment</td><td>currency</td></tr><tr><td>CF</td><td>Annual net cash inflow</td><td>currency/year</td></tr><tr><td>r</td><td>Discount rate</td><td>% per year</td></tr><tr><td>n</td><td>Project life</td><td>years</td></tr><tr><td>S</td><td>Salvage value at the end of life</td><td>currency</td></tr></tbody></table></div>
+<h2 id="example">Worked example</h2>
+<p>A variable-speed drive retrofit costs 85,000, saves 31,000 a year for 8 years and has a residual value of 5,000. The company uses a 10% discount rate.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Initial investment</th><td>85,000</td></tr><tr><th scope="row">Annual net cash inflow</th><td>31,000 per year</td></tr><tr><th scope="row">Project life</th><td>8 years</td></tr><tr><th scope="row">Discount rate</th><td>10 % per year</td></tr><tr><th scope="row">Salvage value at end of life (optional)</th><td>5,000</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Net present value (NPV)</th><td><strong>82,715</strong></td></tr><tr><th scope="row">Internal rate of return (IRR)</th><td><strong>32.93%</strong></td></tr><tr><th scope="row">Profitability index</th><td><strong>1.97</strong></td></tr><tr><th scope="row">Discounted payback</th><td><strong>3.37 years</strong></td></tr></tbody></table></div>
+<p class="hint">NPV is positive: at this discount rate the project creates value. Cash flows are assumed equal each year and received at year end.</p>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">NPV, IRR and payback together</h2>
+<p>Payback tells you how fast money returns, IRR the return rate, NPV the value created. They can disagree: a short project with a high IRR may create less value than a longer one with a lower IRR. For mutually exclusive choices, rank by NPV at the company’s discount rate. Use the <a href="/calculators/payback-period">payback calculator</a> as a first screen.</p>
+<h2 id="s1">Choosing the discount rate</h2>
+<p>Use your organisation’s hurdle rate or weighted average cost of capital, adjusted for project risk. Your finance team normally sets it.</p>
+<h2 id="mistakes">Common mistakes</h2><ul class="list-check list-warn"><li>Discounting savings that are not cash (allocated overheads that do not change).</li><li>Using a discount rate that ignores project risk.</li><li>Comparing IRRs of projects of very different size or duration.</li></ul>
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Capital requests for maintenance and energy projects.</li><li>Comparing repair-versus-replace options.</li><li>Lease, buy or retrofit decisions.</li></ul>
+<h2 id="faq">Questions</h2>
+<div class="faq"><details><summary>What if cash flows differ each year?</summary><p>This version assumes equal annual flows. For uneven flows, discount each year separately in a spreadsheet; the method is the same.</p></details></div>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/payback-period"><strong>Payback Period Calculator</strong><span>Calculate simple payback period in years and months from initial investment and annual net cash inflow, and check it against useful life.</span></a><a class="rel-card" href="/calculators/roi"><strong>ROI Calculator</strong><span>Calculate return on investment (ROI), net gain and annualized ROI (CAGR) from investment cost, total return and holding period.</span></a><a class="rel-card" href="/calculators/break-even"><strong>Break-Even Calculator</strong><span>Calculate break-even volume and revenue from fixed costs, selling price and variable cost per unit, plus the volume needed for a target profit.</span></a><a class="rel-card" href="/calculators/motor-efficiency-savings"><strong>Motor Efficiency Upgrade Savings Calculator</strong><span>Estimate annual kWh and cost savings, and simple payback, from replacing an electric motor with a higher-efficiency model (e.g.</span></a></div>
+<p class="muted">More in <a href="/categories/finance">Business Finance</a>.</p></section>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</article>
+</div>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
+</div></footer>
+</body>
+</html>

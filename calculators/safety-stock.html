@@ -12,28 +12,39 @@
 <meta property="og:description" content="Calculate safety stock for a target service level from demand variability and lead-time variability, using the combined statistical formula.">
 <meta property="og:url" content="https://tools.saharienne.org/calculators/safety-stock">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#101d38">
+<meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css?v=20261016">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Safety Stock Calculator","url":"https://tools.saharienne.org/calculators/safety-stock","description":"Calculate safety stock for a target service level from demand variability and lead-time variability, using the combined statistical formula.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Inventory & Logistics","item":"https://tools.saharienne.org/#inventory"},{"@type":"ListItem","position":3,"name":"Safety Stock Calculator","item":"https://tools.saharienne.org/calculators/safety-stock"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Inventory & Logistics","item":"https://tools.saharienne.org/categories/inventory"},{"@type":"ListItem","position":3,"name":"Safety Stock Calculator","item":"https://tools.saharienne.org/calculators/safety-stock"}]}</script>
 <script src="/assets/js/site-config.js?v=20261016" defer></script>
 <script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
 <script src="/assets/js/calc-core.js?v=20261016" defer></script>
 <script src="/assets/js/calc-ui.js?v=20261016" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header"><nav class="nav" aria-label="Main">
-<a class="brand" href="/">OpsCalc<span>Tools</span></a>
-<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
-</nav></header>
-<main id="main" class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#inventory">Inventory &amp; Logistics</a></li><li aria-current="page">Safety Stock Calculator</li></ol></nav>
-<article class="calc-page">
-<header class="page-head"><p class="eyebrow">Inventory &amp; Logistics</p><h1>Safety Stock Calculator</h1><p class="lead">Safety stock is the buffer that protects you from stockouts when demand or lead time varies. This calculator uses the standard statistical formula. It combines demand variability and lead-time variability for a target cycle service level, and also returns the resulting reorder point.</p></header>
-<section class="panel calculator" aria-labelledby="calc-title">
-<h2 id="calc-title" class="panel-title">Calculator</h2>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li aria-current="page">Safety Stock Calculator</li></ol></nav>
+<h1>Safety Stock Calculator</h1>
+<p class="lead">Safety stock is the buffer that protects you from stockouts when demand or lead time varies. This calculator uses the standard statistical formula. It combines demand variability and lead-time variability for a target cycle service level, and also returns the resulting reorder point.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
 <form id="calc-form" data-calc="safety-stock" novalidate>
 <div class="form-grid">
 <div class="field" id="f-sl">
@@ -67,37 +78,53 @@
 <p class="field-error" id="err-sdlt" aria-live="polite"></p>
 </div>
 </div>
-<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
 </form>
-<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
-<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
-<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
 </section>
-<section class="content">
-<h2>Formula</h2>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">Choosing a service level</a></li><li><a href="#s1">When the formula does not fit</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
 <div class="formula"><code>SS = z × √(LT × σd² + d² × σLT²)</code><code>z = Φ⁻¹(Service level)</code><code>Reorder point = d × LT + SS</code></div>
 <div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>d</td><td>Average daily demand</td><td>units/day</td></tr><tr><td>σd</td><td>Standard deviation of daily demand</td><td>units/day</td></tr><tr><td>LT</td><td>Average lead time</td><td>days</td></tr><tr><td>σLT</td><td>Standard deviation of lead time</td><td>days</td></tr><tr><td>z</td><td>Service factor for the target cycle service level</td><td>—</td></tr></tbody></table></div>
-<h2>Worked example</h2>
+<h2 id="example">Worked example</h2>
 <p>An item averages 40 units of demand per day with a daily standard deviation of 12. Lead time averages 7 days with a standard deviation of 1.5 days. The target cycle service level is 95%.</p>
 <div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Target cycle service level</th><td>95 %</td></tr><tr><th scope="row">Average daily demand</th><td>40 units/day</td></tr><tr><th scope="row">Std. deviation of daily demand</th><td>12 units/day</td></tr><tr><th scope="row">Average lead time</th><td>7 days</td></tr><tr><th scope="row">Std. deviation of lead time (optional)</th><td>1.5 days</td></tr></tbody></table></div>
 <div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Safety stock</th><td><strong>112 units</strong></td></tr><tr><th scope="row">Service factor (z)</th><td><strong>1.645</strong></td></tr><tr><th scope="row">Std. deviation of lead-time demand</th><td><strong>67.9 units</strong></td></tr><tr><th scope="row">Reorder point (d × LT + SS)</th><td><strong>392 units</strong></td></tr></tbody></table></div>
 <p class="hint">Assumes normally distributed, independent demand and lead time. Rounded up to whole units. For intermittent demand, this model understates the stock required.</p>
-<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
-<h2>Choosing a service level</h2>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">Choosing a service level</h2>
 <p>Safety stock rises steeply as service level approaches 100%. Moving from 95% to 99% raises the z-factor from about 1.645 to 2.326, roughly 41% more safety stock. Set service levels by item class (for example by criticality or ABC class) instead of applying 99% everywhere.</p><p>Cycle service level is the probability of no stockout during one replenishment cycle. It is not the same as fill rate (the share of demand served from stock). Fill rate is usually higher for the same safety stock.</p>
-<h2>When the formula does not fit</h2>
+<h2 id="s1">When the formula does not fit</h2>
 <ul><li>Intermittent or lumpy demand (many zero-demand days) breaks the normal-distribution assumption.</li><li>Strong trends or seasonality need forecast-error variability, not raw demand variability.</li><li>For critical spares with very low usage, use a Poisson-based or risk-based method.</li></ul>
-<h2>Frequently asked questions</h2>
+<h2 id="mistakes">Common mistakes</h2><ul class="list-check list-warn"><li>Using the standard deviation of monthly demand with lead time in days.</li><li>Confusing cycle service level with fill rate.</li><li>Applying the normal model to intermittent demand.</li></ul>
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Inventory policy by ABC class.</li><li>Service-level versus stock trade-offs.</li><li>Supplier variability reviews.</li></ul>
+<h2 id="faq">Questions</h2>
 <div class="faq"><details><summary>What if lead time is constant?</summary><p>Leave the lead-time standard deviation blank (zero). The formula then becomes z × σd × √LT.</p></details></div>
-<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/reorder-point">Reorder Point Calculator</a></li><li><a href="/calculators/eoq">EOQ Calculator (Economic Order Quantity)</a></li><li><a href="/calculators/inventory-turnover">Inventory Turnover Calculator</a></li></ul></aside>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/reorder-point"><strong>Reorder Point Calculator</strong><span>Calculate the reorder point from average daily demand, lead time and safety stock, and check whether your current inventory position means you should order now.</span></a><a class="rel-card" href="/calculators/eoq"><strong>EOQ Calculator (Economic Order Quantity)</strong><span>Calculate the economic order quantity (EOQ), number of orders per year, order interval and total annual ordering and holding cost.</span></a><a class="rel-card" href="/calculators/inventory-turnover"><strong>Inventory Turnover Calculator</strong><span>Calculate inventory turnover ratio and days inventory outstanding (DIO) from cost of goods sold and beginning and ending inventory.</span></a></div>
+<p class="muted">More in <a href="/categories/inventory">Inventory &amp; Logistics</a>.</p></section>
 <p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
-</section>
 </article>
+</div>
+</div>
 </main>
-<footer class="site-footer"><div class="footer-inner">
-<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
-<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
-<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
 </div></footer>
 </body>
 </html>

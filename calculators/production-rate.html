@@ -12,28 +12,39 @@
 <meta property="og:description" content="Calculate production rate in units per hour, compare it with a target rate and see the shortfall or surplus in units.">
 <meta property="og:url" content="https://tools.saharienne.org/calculators/production-rate">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#101d38">
+<meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css?v=20261016">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Production Rate Calculator","url":"https://tools.saharienne.org/calculators/production-rate","description":"Calculate production rate in units per hour, compare it with a target rate and see the shortfall or surplus in units.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Production & Lean","item":"https://tools.saharienne.org/#production"},{"@type":"ListItem","position":3,"name":"Production Rate Calculator","item":"https://tools.saharienne.org/calculators/production-rate"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Production & Lean","item":"https://tools.saharienne.org/categories/production"},{"@type":"ListItem","position":3,"name":"Production Rate Calculator","item":"https://tools.saharienne.org/calculators/production-rate"}]}</script>
 <script src="/assets/js/site-config.js?v=20261016" defer></script>
 <script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
 <script src="/assets/js/calc-core.js?v=20261016" defer></script>
 <script src="/assets/js/calc-ui.js?v=20261016" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header"><nav class="nav" aria-label="Main">
-<a class="brand" href="/">OpsCalc<span>Tools</span></a>
-<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
-</nav></header>
-<main id="main" class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#production">Production &amp; Lean</a></li><li aria-current="page">Production Rate Calculator</li></ol></nav>
-<article class="calc-page">
-<header class="page-head"><p class="eyebrow">Production &amp; Lean</p><h1>Production Rate Calculator</h1><p class="lead">Production rate is output divided by operating time. Add a target rate to see attainment and how many units you are short of (or above) the plan for the period.</p></header>
-<section class="panel calculator" aria-labelledby="calc-title">
-<h2 id="calc-title" class="panel-title">Calculator</h2>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/production">Production &amp; Lean</a></li><li aria-current="page">Production Rate Calculator</li></ol></nav>
+<h1>Production Rate Calculator</h1>
+<p class="lead">Production rate is output divided by operating time. Add a target rate to see attainment and how many units you are short of (or above) the plan for the period.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
 <form id="calc-form" data-calc="production-rate" novalidate>
 <div class="form-grid">
 <div class="field" id="f-units">
@@ -55,39 +66,55 @@
 <p class="field-error" id="err-target" aria-live="polite"></p>
 </div>
 </div>
-<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
 </form>
-<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
-<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
-<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
 </section>
-<section class="content">
-<h2>Formula</h2>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">Making the rate meaningful</a></li><li><a href="#s1">Typical uses</a></li><li><a href="#s2">Rate vs. capacity planning</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
 <div class="formula"><code>Production rate = Units produced ÷ Operating time</code><code>Attainment = Production rate ÷ Target rate</code><code>Gap = Target rate × Operating time − Units produced</code></div>
 <div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Units produced</td><td>Output in the period (good units, or total — state which)</td><td>units</td></tr><tr><td>Operating time</td><td>Time the process was scheduled to run</td><td>h</td></tr><tr><td>Target rate</td><td>Planned or standard rate</td><td>units/h</td></tr></tbody></table></div>
-<h2>Worked example</h2>
+<h2 id="example">Worked example</h2>
 <p>A filling line produced 900 cases in 6.5 scheduled hours. The standard rate is 150 cases per hour.</p>
 <div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Units produced</th><td>900 units</td></tr><tr><th scope="row">Operating time</th><td>6.5 h</td></tr><tr><th scope="row">Target rate (optional)</th><td>150 units/h</td></tr></tbody></table></div>
 <div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Production rate</th><td><strong>138.5 units/h</strong></td></tr><tr><th scope="row">Production rate</th><td><strong>2.308 units/min</strong></td></tr><tr><th scope="row">Target attainment</th><td><strong>92.3%</strong></td></tr><tr><th scope="row">Shortfall vs. target</th><td><strong>75 units</strong></td></tr></tbody></table></div>
 <p class="hint">Output is below target. Split the gap into stoppage time and slow running to see which loss dominates.</p>
-<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
-<h2>Making the rate meaningful</h2>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">Making the rate meaningful</h2>
 <p>Define the time base before comparing rates. "Operating time" can mean scheduled time, run time or time excluding breaks. Each definition gives a different rate. For a shift report, scheduled time shows the whole loss. Run time isolates speed losses.</p><p>When attainment is below 100%, split the gap into stoppage time (availability) and running below rate (performance). The <a href="/calculators/oee">OEE calculator</a> does this split.</p>
-<h2>Typical uses</h2>
+<h2 id="s1">Typical uses</h2>
 <ul><li>Shift and daily production reports.</li><li>Checking a new standard rate against observed performance.</li><li>Estimating the hours needed to complete an order: units required ÷ observed rate.</li></ul>
-<h2>Rate vs. capacity planning</h2>
+<h2 id="s2">Rate vs. capacity planning</h2>
 <p>To estimate how long an order will take, divide the quantity by the <em>observed</em> rate, not the nameplate rate. If you only have a design rate, multiply it by a realistic OEE or efficiency figure from your own history. In the example, a 1,500-case order at the observed 138 cases per hour needs about 10.8 scheduled hours, compared with 10 hours at standard rate.</p>
-<h2>Frequently asked questions</h2>
+<h2 id="mistakes">Common mistakes</h2><ul class="list-check list-warn"><li>Mixing scheduled time and run time between periods.</li><li>Counting total output in one report and good output in another.</li><li>Comparing rates across products with different work content.</li></ul>
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Shift reports and daily production meetings.</li><li>Estimating hours to complete an order.</li><li>Validating standard rates.</li></ul>
+<h2 id="faq">Questions</h2>
 <div class="faq"><details><summary>Should I use good units or total units?</summary><p>Use good units if the rate feeds customer delivery planning. Use total units if you want to measure machine speed. Label the report clearly either way.</p></details></div>
-<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/cycle-time">Cycle Time Calculator</a></li><li><a href="/calculators/capacity-utilization">Capacity Utilization Calculator</a></li><li><a href="/calculators/labor-productivity">Labor Productivity Calculator</a></li></ul></aside>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/oee"><strong>OEE Calculator</strong><span>Calculate Overall Equipment Effectiveness (OEE) from shop-floor time and count data or from A, P and Q percentages.</span></a><a class="rel-card" href="/calculators/cycle-time"><strong>Cycle Time Calculator</strong><span>Calculate average cycle time and throughput from net production time and units completed.</span></a><a class="rel-card" href="/calculators/capacity-utilization"><strong>Capacity Utilization Calculator</strong><span>Calculate capacity utilization (actual vs design capacity) and efficiency (actual vs effective capacity) for a plant, line or machine.</span></a><a class="rel-card" href="/calculators/labor-productivity"><strong>Labor Productivity Calculator</strong><span>Calculate labor productivity as output per labor hour, labor hours per unit and output per worker, and compare with a baseline.</span></a></div>
+<p class="muted">More in <a href="/categories/production">Production &amp; Lean</a>.</p></section>
 <p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
-</section>
 </article>
+</div>
+</div>
 </main>
-<footer class="site-footer"><div class="footer-inner">
-<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
-<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
-<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
 </div></footer>
 </body>
 </html>

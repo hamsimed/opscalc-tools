@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://tools.saharienne.org/</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/categories/production</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/categories/quality</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/categories/maintenance</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/categories/energy</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/categories/inventory</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/categories/finance</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/categories/workforce</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://tools.saharienne.org/calculators/oee</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://tools.saharienne.org/calculators/takt-time</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://tools.saharienne.org/calculators/cycle-time</loc><lastmod>2026-10-16</lastmod></url>
@@ -28,6 +35,14 @@
   <url><loc>https://tools.saharienne.org/calculators/break-even</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://tools.saharienne.org/calculators/working-hours</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://tools.saharienne.org/calculators/labor-productivity</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/calculators/teep</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/calculators/pump-power</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/calculators/affinity-laws</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/calculators/compressed-air-leak-cost</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/calculators/co2-emissions</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/calculators/npv</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/calculators/inventory-carrying-cost</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://tools.saharienne.org/calculators/unit-cost</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://tools.saharienne.org/about</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://tools.saharienne.org/contact</loc><lastmod>2026-10-16</lastmod></url>
   <url><loc>https://tools.saharienne.org/privacy-policy</loc><lastmod>2026-10-16</lastmod></url>

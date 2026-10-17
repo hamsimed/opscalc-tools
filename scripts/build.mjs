@@ -8,6 +8,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { site } from '../src/site.mjs';
 import { pages, categories } from '../src/content.mjs';
+import { categoryPages, featured } from '../src/content-v4.mjs';
 
 const require = createRequire(import.meta.url);
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -29,7 +30,21 @@ function jsonLd(obj) {
   return `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>`;
 }
 
-function layout({ title, description, path, body, ld = [], scripts = [], noindex = false }) {
+const catPath = (id) => `/categories/${id}`;
+const catById = Object.fromEntries(categories.map((c) => [c.id, c]));
+const ICON_SEARCH = '<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>';
+const LOGO = '<svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg>';
+
+function searchBox({ id, label, placeholder, big = false }) {
+  return `<div class="search" data-combobox>
+<label class="sr-only" for="${id}">${esc(label)}</label>
+${ICON_SEARCH}<input id="${id}" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="${esc(placeholder)}" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="${id}-list"${big ? '' : ''}>
+<ul id="${id}-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div>`;
+}
+
+function layout({ title, description, path, body, ld = [], scripts = [], noindex = false, home = false, active = '' }) {
+  const navLink = (href, label, key) => `<a href="${href}"${active === key ? ' aria-current="page"' : ''}>${label}</a>`;
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -44,33 +59,39 @@ ${noindex ? '<meta name="robots" content="noindex">' : `<link rel="canonical" hr
 <meta property="og:description" content="${esc(description)}">
 ${noindex ? '' : `<meta property="og:url" content="${url(path)}">`}
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#101d38">
+<meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css?v=${ASSET_V}">
 ${ld.map(jsonLd).join('\n')}
 <script src="/assets/js/site-config.js?v=${ASSET_V}" defer></script>
 <script src="/assets/js/analytics.js?v=${ASSET_V}" defer></script>
+<script src="/assets/js/site.js?v=${ASSET_V}" defer></script>
 ${scripts.map((s) => `<script src="${s}?v=${ASSET_V}" defer></script>`).join('\n')}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header"><nav class="nav" aria-label="Main">
-<a class="brand" href="/">OpsCalc<span>Tools</span></a>
-<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
-</nav></header>
-<main id="main" class="wrap">
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/">${LOGO}<span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main">${navLink('/#calculators', 'Calculators', 'calc')}${navLink('/#categories', 'Topics', 'topics')}${navLink('/about', 'About', 'about')}${navLink('/contact', 'Contact', 'contact')}</nav>
+${home ? '' : `<div class="hdr-search">${searchBox({ id: 'hdr-search-input', label: 'Search calculators', placeholder: 'Search calculators' })}</div>`}
+</div></header>
+<main id="main">
 ${body}
 </main>
-<footer class="site-footer"><div class="footer-inner">
-<div><strong>${esc(site.name)}</strong><br><span>${esc(site.tagline)}.</span></div>
-<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
-<div class="small">© ${site.year} ${esc(site.name)}. Results are estimates for planning and learning; verify before critical decisions.</div>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/">${LOGO}<span>OpsCalc <b>Tools</b></span></a><p class="muted">${esc(site.tagline)}. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul>${categories.map((c) => `<li><a href="${catPath(c.id)}">${esc(c.name)}</a></li>`).join('')}</ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul>${featured.map((f) => `<li><a href="${calcPath(f)}">${esc(byId[f].title)}</a></li>`).join('')}</ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© ${site.year} ${esc(site.name)}. Results are estimates for planning and learning; verify them before critical decisions.</p>
 </div></footer>
 </body>
 </html>
 `;
 }
-
 function fieldHtml(inp) {
   const id = inp.name;
   const showAttr = inp.showIf ? ` data-showif="${esc(inp.showIf.name)}"` : '';
@@ -112,74 +133,172 @@ function exampleTable(p) {
 <div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody>${rows}</tbody></table></div>
 <div class="table-scroll"><table class="data"><caption>Results</caption><tbody>${results}</tbody></table></div>
 ${r.output.notes.length ? `<p class="hint">${r.output.notes.map(esc).join(' ')}</p>` : ''}
-<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>`;
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>`;
 }
+
+const SYMBOL = { oee: 'OEE', mtbf: 'MTBF', 'energy-cost': 'kWh', 'safety-stock': 'SS', npv: 'NPV', 'takt-time': 'TAKT' };
+const firstSentence = (s) => s.split('. ')[0].replace(/\.$/, '') + '.';
+const listHtml = (items, cls) => `<ul class="list-check${cls ? ' ' + cls : ''}">${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`;
 
 function calcPage(p) {
   const calc = Core.registry[p.id];
   if (!calc) throw new Error(`No core definition for ${p.id}`);
-  const cat = categories.find((c) => c.id === p.category);
+  const cat = catById[p.category];
   const path = calcPath(p.id);
   const related = p.related.map((id) => {
     const r = byId[id];
     if (!r) throw new Error(`${p.id}: related id ${id} not found`);
-    return `<li><a href="${calcPath(id)}">${esc(r.title)}</a></li>`;
+    return `<a class="rel-card" href="${calcPath(id)}"><strong>${esc(r.title)}</strong><span>${esc(firstSentence(r.description))}</span></a>`;
   }).join('');
+  const toc = [['formula', 'Formula'], ['example', 'Worked example'], ...p.sections.map((s, i) => [`s${i}`, s.h])];
+  if (p.mistakes) toc.push(['mistakes', 'Common mistakes']);
+  if (p.applications) toc.push(['uses', 'Where it’s used']);
+  toc.push(['faq', 'Questions'], ['related', 'Related calculators']);
   const ld = [
     { '@context': 'https://schema.org', '@type': 'WebApplication', name: p.title, url: url(path), description: p.description, applicationCategory: 'BusinessApplication', operatingSystem: 'Any (web browser)', isAccessibleForFree: true, offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, publisher: { '@type': 'Organization', name: site.name, url: url('/') } },
-    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: url('/') }, { '@type': 'ListItem', position: 2, name: cat.name, item: url('/#' + cat.id) }, { '@type': 'ListItem', position: 3, name: p.title, item: url(path) }] }
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: url('/') }, { '@type': 'ListItem', position: 2, name: cat.name, item: url(catPath(cat.id)) }, { '@type': 'ListItem', position: 3, name: p.title, item: url(path) }] }
   ];
-  // 'scripts' load in order with defer: core before ui.
-  const body = `<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#${cat.id}">${esc(cat.name)}</a></li><li aria-current="page">${esc(p.title)}</li></ol></nav>
-<article class="calc-page">
-<header class="page-head"><p class="eyebrow">${esc(cat.name)}</p><h1>${esc(p.title)}</h1><p class="lead">${esc(p.intro)}</p></header>
-<section class="panel calculator" aria-labelledby="calc-title">
-<h2 id="calc-title" class="panel-title">Calculator</h2>
+  const body = `<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="${catPath(cat.id)}">${esc(cat.name)}</a></li><li aria-current="page">${esc(p.title)}</li></ol></nav>
+<h1>${esc(p.title)}</h1>
+<p class="lead">${esc(p.intro)}</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
 <form id="calc-form" data-calc="${p.id}" novalidate>
 <div class="form-grid">
 ${calc.inputs.map(fieldHtml).join('\n')}
 </div>
-<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
 </form>
-<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
-<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
-<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
 </section>
-<section class="content">
-<h2>Formula</h2>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol>${toc.map(([a, l]) => `<li><a href="#${a}">${esc(l)}</a></li>`).join('')}</ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
 <div class="formula">${p.formulas.map((f) => `<code>${esc(f)}</code>`).join('')}</div>
 <div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody>${p.vars.map((v) => `<tr><td>${esc(v[0])}</td><td>${esc(v[1])}</td><td>${esc(v[2])}</td></tr>`).join('')}</tbody></table></div>
-<h2>Worked example</h2>
+<h2 id="example">Worked example</h2>
 ${exampleTable(p)}
-${p.sections.map((s) => `<h2>${esc(s.h)}</h2>\n${s.html}`).join('\n')}
-<h2>Frequently asked questions</h2>
+${p.sections.map((s, i) => `<h2 id="s${i}">${esc(s.h)}</h2>\n${s.html}`).join('\n')}
+${p.mistakes ? `<h2 id="mistakes">Common mistakes</h2>${listHtml(p.mistakes, 'list-warn')}` : ''}
+${p.applications ? `<h2 id="uses">Where it’s used</h2>${listHtml(p.applications)}` : ''}
+<h2 id="faq">Questions</h2>
 <div class="faq">${p.faq.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div>
-<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul>${related}</ul></aside>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid">${related}</div>
+<p class="muted">More in <a href="${catPath(cat.id)}">${esc(cat.name)}</a>.</p></section>
 <p class="meta">Formula and example reviewed ${site.lastReviewed}. Found an error? <a href="/contact">Tell us</a>.</p>
-</section>
-</article>`;
+</article>
+</div>
+</div>`;
   return layout({ title: p.seoTitle.length > 48 ? p.seoTitle : `${p.seoTitle} | ${site.name}`, description: p.description, path, body, ld, scripts: ['/assets/js/calc-core.js', '/assets/js/calc-ui.js'] });
 }
 
+function toolRow(p) {
+  const cat = catById[p.category];
+  const kw = `${p.seoTitle} ${p.formulas.join(' ')}`;
+  return `<li data-cat="${p.category}" data-t="${esc(p.title)}" data-d="${esc(p.description)}" data-k="${esc(kw)}"><a class="tool-row" href="${calcPath(p.id)}"><strong>${esc(p.title)}</strong><span>${esc(firstSentence(p.description))}</span><em>${esc(cat.name)}</em></a></li>`;
+}
+
 function homePage() {
-  const sections = categories.map((c) => {
-    const items = pages.filter((p) => p.category === c.id);
-    return `<section class="cat" id="${c.id}" aria-labelledby="h-${c.id}"><h3 id="h-${c.id}">${esc(c.name)}</h3><p class="hint">${esc(c.blurb)}</p>
-<div class="grid">${items.map((p) => `<a class="card" href="${calcPath(p.id)}"><strong>${esc(p.title)}</strong><span>${esc(p.description.split('. ')[0])}.</span></a>`).join('')}</div></section>`;
-  }).join('\n');
-  const body = `<section class="hero"><p class="eyebrow">${pages.length} free calculators</p><h1>Practical calculators for operations, maintenance and energy</h1><p>Every tool shows its formula, units, a worked example and the assumptions behind the result. No sign-up, and your inputs stay in your browser.</p><p><a class="button button-light" href="#calculators">Browse calculators</a></p></section>
-<h2 id="calculators" class="section-title">Calculators by topic</h2>
-${sections}
-<section class="panel section-title"><h2>How these tools are built</h2><p>Each formula is written once in a shared calculation library and checked by automated tests against hand-calculated reference values before publication. Inputs are validated (no silent division by zero or impossible values), units are stated next to every field, and each page explains the limits of the method.</p><p>The calculators are written for practitioners: production and maintenance managers, engineers, planners and continuous-improvement teams. They support decisions but do not replace professional judgement or site-specific data.</p></section>`;
+  const demo = Core.run('oee', Core.exampleRaw('oee')).output.results;
+  const g = (k) => demo.find((r) => r.key === k);
+  const counts = Object.fromEntries(categories.map((c) => [c.id, pages.filter((p) => p.category === c.id).length]));
+  const sorted = [...pages].sort((a, b) => a.title.localeCompare(b.title));
+  const body = `<section class="hero"><div class="wrap hero-inner">
+<div>
+<h1>Engineering-grade calculators for operations</h1>
+<p class="hero-lead">${pages.length} free tools for production, maintenance, energy, inventory and finance decisions. Every result comes with its formula, units and a worked example you can check.</p>
+${searchBox({ id: 'home-search', label: 'Search calculators', placeholder: 'Search: OEE, MTBF, NPV…', big: true })}
+<p class="hero-meta">Try: <a href="/calculators/oee">OEE</a>, <a href="/calculators/mtbf">MTBF</a>, <a href="/calculators/takt-time">takt time</a>, <a href="/calculators/safety-stock">safety stock</a>, <a href="/calculators/power-factor-correction">power factor</a>.</p>
+</div>
+<aside class="readout-demo" aria-labelledby="demo-h">
+<h2 id="demo-h">Example result: packaging line OEE</h2>
+<div class="rd-big">${esc(Core.formatResult(g('oee')))}</div>
+<p class="rd-sub">Largest loss: performance. Start the loss analysis there.</p>
+${['a', 'p', 'q'].map((k) => `<div class="rd-row"><span>${esc(g(k).label)}</span><div class="meter" data-pct="${g(k).value.toFixed(1)}"><span></span></div><span class="v">${esc(Core.formatResult(g(k)))}</span></div>`).join('')}
+<p class="rd-foot">From the worked example in the <a href="/calculators/oee">OEE calculator</a>.</p>
+</aside>
+</div></section>
+
+<div class="wrap">
+<section class="section" id="categories" aria-labelledby="cat-h">
+<div class="section-head"><h2 id="cat-h">Browse by topic</h2><p>Seven areas of plant and business performance.</p></div>
+<div class="cat-grid">${categories.map((c) => {
+    const ex = pages.filter((p) => p.category === c.id).slice(0, 3).map((p) => p.title.replace(/ Calculator.*$/, '')).join(', ');
+    return `<a class="cat-card" href="${catPath(c.id)}"><span class="count">${counts[c.id]} calculators</span><h3>${esc(c.name)}</h3><p>${esc(c.blurb)}</p><span class="examples">${esc(ex)}</span></a>`;
+  }).join('')}</div>
+</section>
+
+<section class="section" aria-labelledby="start-h">
+<div class="section-head"><h2 id="start-h">Start here</h2><p>Six core tools, one from each main area.</p></div>
+<div class="feat-grid">${featured.map((id) => { const p = byId[id]; return `<a class="feat-card" href="${calcPath(id)}"><span class="sym" aria-hidden="true">${SYMBOL[id]}</span><span><h3>${esc(p.title)}</h3><p>${esc(firstSentence(p.description))}</p></span></a>`; }).join('')}</div>
+</section>
+
+<section class="section" id="calculators" aria-labelledby="all-h">
+<div class="section-head"><h2 id="all-h">All calculators</h2><p>Filter by topic, or type in the search box above.</p></div>
+<div class="chips" role="group" aria-label="Filter by topic"><button type="button" class="chip" data-cat-filter="all" data-name="all topics" aria-pressed="true">All<span class="count">${pages.length}</span></button>${categories.map((c) => `<button type="button" class="chip" data-cat-filter="${c.id}" data-name="${esc(c.name)}" aria-pressed="false">${esc(c.name)}<span class="count">${counts[c.id]}</span></button>`).join('')}</div>
+<p class="filter-status" id="filter-status" aria-live="polite">${pages.length} of ${pages.length} calculators</p>
+<ul class="tool-list" id="tool-list">${sorted.map(toolRow).join('')}</ul>
+<p class="empty" id="filter-empty" hidden>No calculator matches. Try a shorter term such as “energy” or “stock”, or <a href="/contact">suggest a calculator</a>.</p>
+</section>
+
+<section class="section" aria-labelledby="how-h">
+<h2 id="how-h">Why these calculators can be trusted</h2>
+<div class="split">
+<div class="note-card"><h3>Formulas you can check</h3><p>Each page shows the formula, a table of variables and units, and a worked example computed by the same engine as the calculator.</p></div>
+<div class="note-card"><h3>Tested before publication</h3><p>Every formula is covered by automated tests against hand-calculated reference values. Impossible inputs are rejected with a clear message.</p></div>
+<div class="note-card"><h3>Written by a practitioner</h3><p>Built by an industrial production manager. Pages explain how to interpret results, the common mistakes and where each method stops being valid.</p></div>
+<div class="note-card"><h3>Private by design</h3><p>Calculations run in your browser. The values you type are never sent to a server. <a href="/privacy-policy">Privacy policy</a>.</p></div>
+</div>
+</section>
+</div>`;
   const ld = [
     { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: url('/') },
     { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: pages.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: url(calcPath(p.id)), name: p.title })) }
   ];
-  return layout({ title: `Free Operations, Maintenance & Energy Calculators | ${site.name}`, description: `${pages.length} free calculators for OEE, takt time, MTBF, MTTR, energy cost, safety stock, EOQ, ROI and more. Formulas, worked examples and clear assumptions.`, path: '/', body, ld });
+  return layout({ title: `Free Operations, Maintenance & Energy Calculators | ${site.name}`, description: `${pages.length} free calculators for OEE, takt time, MTBF, MTTR, energy cost, safety stock, EOQ, NPV and more. Formulas, worked examples and clear assumptions.`, path: '/', body, ld, home: true, active: 'calc' });
 }
 
+function categoryPage(c) {
+  const cp = categoryPages[c.id];
+  const items = pages.filter((p) => p.category === c.id).sort((a, b) => a.title.localeCompare(b.title));
+  const others = categories.filter((x) => x.id !== c.id);
+  const path = catPath(c.id);
+  const body = `<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#categories">Topics</a></li><li aria-current="page">${esc(c.name)}</li></ol></nav>
+<h1>${esc(cp.h1)}</h1>
+<div class="lead prose">${cp.intro}</div>
+</div>
+<section aria-labelledby="list-h"><div class="section-head"><h2 id="list-h">${items.length} calculators</h2></div>
+<ul class="tool-list">${items.map(toolRow).join('')}</ul></section>
+<section class="prose section">${cp.guide}</section>
+<section class="section" aria-labelledby="other-h"><h2 id="other-h">Other topics</h2><div class="related-grid">${others.map((o) => `<a class="rel-card" href="${catPath(o.id)}"><strong>${esc(o.name)}</strong><span>${esc(o.blurb)}</span></a>`).join('')}</div></section>
+</div>`;
+  const ld = [
+    { '@context': 'https://schema.org', '@type': 'CollectionPage', name: cp.h1, url: url(path), description: cp.description, hasPart: items.map((p) => ({ '@type': 'WebApplication', name: p.title, url: url(calcPath(p.id)) })) },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: url('/') }, { '@type': 'ListItem', position: 2, name: c.name, item: url(path) }] }
+  ];
+  return layout({ title: cp.seoTitle.length > 48 ? cp.seoTitle : `${cp.seoTitle} | ${site.name}`, description: cp.description, path, body, ld, active: 'topics' });
+}
+
+function searchIndex() {
+  return JSON.stringify(pages.map((p) => ({ t: p.title, d: p.description, c: catById[p.category].name, u: calcPath(p.id), k: `${p.seoTitle} ${p.formulas.join(' ')}` })));
+}
 function simplePage(path, title, description, inner) {
-  return layout({ title: `${title} | ${site.name}`, description, path, body: `<article class="prose"><h1>${esc(title)}</h1>${inner}</article>` });
+  return layout({ title: `${title} | ${site.name}`, description, path, body: `<div class="wrap"><article class="prose page-head"><h1>${esc(title)}</h1>${inner}</article></div>` });
 }
 
 const contactBlock = site.contactEmail
@@ -214,11 +333,11 @@ const staticPages = {
 };
 
 function notFound() {
-  return layout({ title: `Page not found | ${site.name}`, description: 'The requested page does not exist.', path: '/404', noindex: true, body: `<article class="prose"><h1>Page not found</h1><p>The page you requested does not exist or has moved.</p><p><a class="button" href="/">Go to all calculators</a></p></article>` });
+  return layout({ title: `Page not found | ${site.name}`, description: 'The requested page does not exist.', path: '/404', noindex: true, body: `<div class="wrap"><article class="prose page-head"><h1>Page not found</h1><p>Try the search above, or browse by topic.</p><p>The page you requested does not exist or has moved.</p><p><a class="btn btn-primary" href="/">Browse all calculators</a></p></article></div>` });
 }
 
 function sitemap() {
-  const paths = ['/', ...pages.map((p) => calcPath(p.id)), '/about', '/contact', '/privacy-policy', '/terms'];
+  const paths = ['/', ...categories.map((c) => catPath(c.id)), ...pages.map((p) => calcPath(p.id)), '/about', '/contact', '/privacy-policy', '/terms'];
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${paths.map((p) => `  <url><loc>${url(p)}</loc><lastmod>${site.lastReviewed}</lastmod></url>`).join('\n')}
@@ -228,12 +347,18 @@ ${paths.map((p) => `  <url><loc>${url(p)}</loc><lastmod>${site.lastReviewed}</la
 
 // ---- write everything ----
 for (const p of pages) out(`calculators/${p.id}.html`, calcPage(p));
+for (const c of categories) {
+  if (!categoryPages[c.id]) throw new Error('Missing category content: ' + c.id);
+  out(`categories/${c.id}.html`, categoryPage(c));
+}
 out('index.html', homePage());
 for (const [f, html] of Object.entries(staticPages)) out(f, html);
 out('404.html', notFound());
 out('sitemap.xml', sitemap());
 out('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${url('/sitemap.xml')}\n`);
+out('assets/search-index.json', searchIndex());
+for (const f of featured) if (!byId[f]) throw new Error('Featured id not found: ' + f);
 
 const missing = Object.keys(Core.registry).filter((id) => !byId[id]);
 if (missing.length) throw new Error('Calculators without content: ' + missing.join(', '));
-console.log(`Built ${pages.length} calculator pages + home, 4 static pages, 404, sitemap, robots.`);
+console.log(`Built ${pages.length} calculator pages, ${categories.length} category pages, home, 4 static pages, 404, sitemap, robots, search index.`);

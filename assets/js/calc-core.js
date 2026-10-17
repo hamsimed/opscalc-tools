@@ -708,6 +708,156 @@
     }
   });
 
+  // ===== V4 additions (formulas verified by hand-calculated tests) =====
+
+  define('teep', {
+    inputs: [
+      num('oee', 'OEE', '%', { min: 0, max: 100, example: 65 }),
+      num('planned', 'Planned production time', 'h', { min: 0, example: 120, help: 'Time scheduled to run in the period.' }),
+      num('calendar', 'Calendar time', 'h', { min: 0, minExclusive: true, example: 168, help: 'All time in the period: 168 h for a week, 24 h for a day.' })
+    ],
+    compute: function (v) {
+      if (v.planned > v.calendar) fail('planned', 'Planned production time cannot exceed calendar time.');
+      var loading = v.planned / v.calendar, teep = v.oee / 100 * loading;
+      return {
+        results: [pct('teep', 'TEEP', teep, { primary: true }), pct('loading', 'Utilization (loading)', loading), res('unscheduled', 'Unscheduled time', v.calendar - v.planned, 'h', { dp: 1 }), res('effective', 'Fully productive time', teep * v.calendar, 'h', { dp: 1 })],
+        notes: ['TEEP shows how much of all calendar time produces good parts at full speed. The gap to OEE is capacity left unused by the schedule, not by the equipment.']
+      };
+    }
+  });
+
+  define('pump-power', {
+    inputs: [
+      num('flow', 'Flow rate', 'm³/h', { min: 0, minExclusive: true, example: 180 }),
+      num('head', 'Total dynamic head', 'm', { min: 0, minExclusive: true, example: 45 }),
+      num('density', 'Fluid density', 'kg/m³', { min: 0, minExclusive: true, optional: true, default: 1000, example: 1000, help: 'Water ≈ 1,000 kg/m³. Slurries are denser.' }),
+      num('pumpEff', 'Pump efficiency', '%', { min: 0, minExclusive: true, max: 100, example: 72 }),
+      num('motorEff', 'Motor efficiency', '%', { min: 0, minExclusive: true, max: 100, optional: true, default: 100, example: 94 }),
+      num('hours', 'Operating hours per year (optional)', 'h', { min: 0, minExclusive: true, max: 8784, optional: true, example: 6000 })
+    ],
+    compute: function (v) {
+      var g = 9.80665, q = v.flow / 3600;
+      var hyd = v.density * g * q * v.head / 1000, shaft = hyd / (v.pumpEff / 100), input = shaft / (v.motorEff / 100);
+      var out = [res('input', 'Electrical input power', input, 'kW', { primary: true, dp: 2 }), res('shaft', 'Pump shaft power', shaft, 'kW', { dp: 2 }), res('hyd', 'Hydraulic power', hyd, 'kW', { dp: 2 }), pct('wire', 'Wire-to-water efficiency', hyd / input)];
+      if (v.hours != null) out.push(res('energy', 'Annual energy use', input * v.hours, 'kWh', { dp: 0 }));
+      return { results: out, notes: ['Select a motor with margin above shaft power at the duty point, and check power at the end of the pump curve.'] };
+    }
+  });
+
+  define('affinity-laws', {
+    inputs: [
+      num('power', 'Power at current speed', 'kW', { min: 0, minExclusive: true, example: 55 }),
+      num('speed', 'New speed', '% of current', { min: 0, minExclusive: true, max: 100, example: 80 }),
+      num('hours', 'Operating hours per year', 'h', { min: 0, minExclusive: true, max: 8784, example: 5000 }),
+      num('price', 'Energy price', 'per kWh', { min: 0, example: 0.12 })
+    ],
+    compute: function (v) {
+      var r = v.speed / 100, p2 = v.power * r * r * r, save = (v.power - p2) * v.hours;
+      return {
+        results: [res('money', 'Theoretical annual savings', save * v.price, '', { primary: true, dp: 0 }), res('p2', 'Power at new speed', p2, 'kW', { dp: 2 }), res('flow', 'Flow at new speed', r * 100, '', { format: 'percent' }), res('head', 'Head / pressure at new speed', r * r * 100, '', { format: 'percent' }), res('kwh', 'Theoretical annual energy savings', save, 'kWh', { dp: 0 })],
+        notes: ['The cube law assumes a system with no static head (friction-dominated). With static head or fixed pressure, real savings are lower. Measure power after the change to confirm.']
+      };
+    }
+  });
+
+  define('compressed-air-leak-cost', {
+    inputs: [
+      num('load', 'Average load time per cycle', 's', { min: 0, minExclusive: true, example: 18, help: 'Measured with no production air demand (e.g. during a shutdown).' }),
+      num('unload', 'Average unload time per cycle', 's', { min: 0, example: 42 }),
+      num('kw', 'Compressor input power at full load', 'kW', { min: 0, minExclusive: true, example: 75 }),
+      num('hours', 'Hours the system is pressurized per year', 'h', { min: 0, minExclusive: true, max: 8784, example: 8000 }),
+      num('price', 'Energy price', 'per kWh', { min: 0, example: 0.12 })
+    ],
+    compute: function (v) {
+      var leak = v.load / (v.load + v.unload), kwh = v.kw * leak * v.hours;
+      return {
+        results: [res('cost', 'Annual cost of leaks', kwh * v.price, '', { primary: true, dp: 0 }), pct('leak', 'Leakage (share of compressor capacity)', leak), res('kwh', 'Annual energy lost to leaks', kwh, 'kWh', { dp: 0 })],
+        notes: ['Load/unload test: run with all production demand off. Unloaded running power is ignored here, so the estimate is conservative for load/unload compressors.']
+      };
+    }
+  });
+
+  define('co2-emissions', {
+    inputs: [
+      num('kwh', 'Electricity consumed', 'kWh', { min: 0, example: 306383 }),
+      num('factor', 'Grid emission factor', 'kg CO₂e/kWh', { min: 0, max: 2, example: 0.45, help: 'Use the factor published by your utility or national authority for the reporting year.' }),
+      num('output', 'Production output (optional)', 't (or units)', { min: 0, minExclusive: true, optional: true, example: 920000 })
+    ],
+    compute: function (v) {
+      var t = v.kwh * v.factor / 1000;
+      var out = [res('t', 'Emissions (Scope 2, location-based)', t, 't CO₂e', { primary: true, dp: 2 }), res('kg', 'Emissions', v.kwh * v.factor, 'kg CO₂e', { dp: 0 })];
+      if (v.output != null) out.push(res('intensity', 'Emission intensity', v.kwh * v.factor / v.output, 'kg CO₂e per t/unit', { dp: 4 }));
+      return { results: out, notes: ['The result is only as good as the emission factor. State the factor, its source and year whenever you report the figure.'] };
+    }
+  });
+
+  define('npv', {
+    inputs: [
+      num('inv', 'Initial investment', '', { min: 0, minExclusive: true, example: 85000 }),
+      num('cf', 'Annual net cash inflow', 'per year', { min: 0, minExclusive: true, example: 31000 }),
+      num('years', 'Project life', 'years', { min: 1, max: 50, integer: true, example: 8 }),
+      num('rate', 'Discount rate', '% per year', { min: 0, max: 100, example: 10 }),
+      num('salvage', 'Salvage value at end of life (optional)', '', { min: 0, optional: true, default: 0, example: 5000 })
+    ],
+    compute: function (v) {
+      var r = v.rate / 100;
+      function npvAt(rate) {
+        var s = -v.inv;
+        for (var t = 1; t <= v.years; t++) s += v.cf / Math.pow(1 + rate, t);
+        return s + v.salvage / Math.pow(1 + rate, v.years);
+      }
+      var npv = npvAt(r), pv = npv + v.inv;
+      // IRR by bisection (NPV decreases monotonically with rate for this cash-flow pattern)
+      var lo = -0.99, hi = 10, irr = null;
+      if (npvAt(lo) * npvAt(hi) < 0) {
+        for (var i = 0; i < 200; i++) { var mid = (lo + hi) / 2; if (npvAt(mid) > 0) lo = mid; else hi = mid; }
+        irr = (lo + hi) / 2;
+      }
+      // Discounted payback
+      var cum = -v.inv, dpb = null;
+      for (var t = 1; t <= v.years; t++) {
+        var d = v.cf / Math.pow(1 + r, t);
+        if (cum + d >= 0) { dpb = t - 1 + (-cum) / d; break; }
+        cum += d;
+      }
+      var out = [res('npv', 'Net present value (NPV)', npv, '', { primary: true, dp: 0 }), irr != null ? pct('irr', 'Internal rate of return (IRR)', irr, { dp: 2 }) : res('irr', 'Internal rate of return (IRR)', null, '', { text: 'Not defined for these cash flows' }), res('pi', 'Profitability index', pv / v.inv, '', { dp: 2 }), dpb != null ? res('dpb', 'Discounted payback', dpb, 'years', { dp: 2 }) : res('dpb', 'Discounted payback', null, '', { text: 'Not reached within project life' })];
+      return { results: out, notes: [npv >= 0 ? 'NPV is positive: at this discount rate the project creates value.' : 'NPV is negative: at this discount rate the project destroys value.', 'Cash flows are assumed equal each year and received at year end.'] };
+    }
+  });
+
+  define('inventory-carrying-cost', {
+    inputs: [
+      num('avg', 'Average inventory value', '', { min: 0, minExclusive: true, example: 400000 }),
+      num('capital', 'Cost of capital', '% per year', { min: 0, max: 100, example: 10 }),
+      num('storage', 'Storage and handling', '% per year', { min: 0, max: 100, example: 6 }),
+      num('insurance', 'Insurance and taxes', '% per year', { min: 0, max: 100, optional: true, default: 0, example: 2 }),
+      num('risk', 'Obsolescence, damage and shrinkage', '% per year', { min: 0, max: 100, optional: true, default: 0, example: 5 })
+    ],
+    compute: function (v) {
+      var rate = (v.capital + v.storage + v.insurance + v.risk) / 100;
+      return {
+        results: [res('cost', 'Annual carrying cost', v.avg * rate, '', { primary: true, dp: 0 }), pct('rate', 'Carrying cost rate', rate), res('month', 'Carrying cost per month', v.avg * rate / 12, '', { dp: 0 }), res('capitalCost', 'Of which cost of capital', v.avg * v.capital / 100, '', { dp: 0 })],
+        notes: ['Use the carrying cost rate as the holding cost input in the EOQ calculator: holding cost per unit = unit cost × rate.']
+      };
+    }
+  });
+
+  define('unit-cost', {
+    inputs: [
+      num('materials', 'Materials cost (batch or period)', '', { min: 0, example: 18000 }),
+      num('labor', 'Direct labor cost', '', { min: 0, example: 9600 }),
+      num('overhead', 'Overhead allocated', '', { min: 0, example: 7400, help: 'Energy, maintenance, depreciation and supervision attributed to this output.' }),
+      num('units', 'Good units produced', 'units', { min: 0, minExclusive: true, example: 2500 }),
+      num('price', 'Selling price per unit (optional)', '', { min: 0, minExclusive: true, optional: true, example: 17.5 })
+    ],
+    compute: function (v) {
+      var total = v.materials + v.labor + v.overhead, unit = total / v.units;
+      var out = [res('unit', 'Cost per unit', unit, '', { primary: true, dp: 2 }), res('total', 'Total cost', total, '', { dp: 2 }), res('mat', 'Materials per unit', v.materials / v.units, '', { dp: 2 }), res('lab', 'Labor per unit', v.labor / v.units, '', { dp: 2 }), res('ovh', 'Overhead per unit', v.overhead / v.units, '', { dp: 2 })];
+      if (v.price != null) { out.push(res('margin', 'Margin per unit', v.price - unit, '', { dp: 2 })); out.push(pct('marginPct', 'Margin on price', (v.price - unit) / v.price)); }
+      return { results: out, notes: ['Divide by good units only. Scrap and rework raise the real cost of each good unit.'] };
+    }
+  });
+
   return {
     registry: registry,
     run: run,

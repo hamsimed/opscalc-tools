@@ -12,28 +12,39 @@
 <meta property="og:description" content="Calculate simple payback period in years and months from initial investment and annual net cash inflow, and check it against useful life.">
 <meta property="og:url" content="https://tools.saharienne.org/calculators/payback-period">
 <meta name="twitter:card" content="summary">
-<meta name="theme-color" content="#101d38">
+<meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css?v=20261016">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Payback Period Calculator","url":"https://tools.saharienne.org/calculators/payback-period","description":"Calculate simple payback period in years and months from initial investment and annual net cash inflow, and check it against useful life.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Business Finance","item":"https://tools.saharienne.org/#finance"},{"@type":"ListItem","position":3,"name":"Payback Period Calculator","item":"https://tools.saharienne.org/calculators/payback-period"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Business Finance","item":"https://tools.saharienne.org/categories/finance"},{"@type":"ListItem","position":3,"name":"Payback Period Calculator","item":"https://tools.saharienne.org/calculators/payback-period"}]}</script>
 <script src="/assets/js/site-config.js?v=20261016" defer></script>
 <script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
 <script src="/assets/js/calc-core.js?v=20261016" defer></script>
 <script src="/assets/js/calc-ui.js?v=20261016" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-header"><nav class="nav" aria-label="Main">
-<a class="brand" href="/">OpsCalc<span>Tools</span></a>
-<div class="nav-links"><a href="/#calculators">Calculators</a><a href="/about">About</a><a href="/contact">Contact</a></div>
-</nav></header>
-<main id="main" class="wrap">
-<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/#finance">Business Finance</a></li><li aria-current="page">Payback Period Calculator</li></ol></nav>
-<article class="calc-page">
-<header class="page-head"><p class="eyebrow">Business Finance</p><h1>Payback Period Calculator</h1><p class="lead">The payback period is the time an investment takes to recover its cost from the cash it generates. It is the first screen most operations improvement projects go through. Enter the investment and annual net inflow, and optionally the asset’s useful life.</p></header>
-<section class="panel calculator" aria-labelledby="calc-title">
-<h2 id="calc-title" class="panel-title">Calculator</h2>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/finance">Business Finance</a></li><li aria-current="page">Payback Period Calculator</li></ol></nav>
+<h1>Payback Period Calculator</h1>
+<p class="lead">The payback period is the time an investment takes to recover its cost from the cash it generates. It is the first screen most operations improvement projects go through. Enter the investment and annual net inflow, and optionally the asset’s useful life.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
 <form id="calc-form" data-calc="payback-period" novalidate>
 <div class="form-grid">
 <div class="field" id="f-inv">
@@ -55,39 +66,55 @@
 <p class="field-error" id="err-life" aria-live="polite"></p>
 </div>
 </div>
-<div class="actions"><button class="button" type="submit">Calculate</button><button class="button button-secondary" type="button" id="load-example">Load example</button><button class="button button-ghost" type="button" id="reset">Reset</button></div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
 </form>
-<div id="result" class="result" role="status" aria-live="polite"><p class="hint">Enter your values and press Calculate, or load the worked example.</p></div>
-<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server. <button type="button" class="linklike" id="share-link">Copy link with these inputs</button></p>
-<noscript><p class="error">This calculator needs JavaScript. The formulas below let you calculate by hand.</p></noscript>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
 </section>
-<section class="content">
-<h2>Formula</h2>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">Strengths and weaknesses</a></li><li><a href="#s1">Uneven cash flows</a></li><li><a href="#s2">Worked interpretation</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
 <div class="formula"><code>Payback period = Initial investment ÷ Annual net cash inflow</code><code>Undiscounted net gain = Annual inflow × Useful life − Investment</code></div>
 <div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Initial investment</td><td>Up-front cost including installation</td><td>currency</td></tr><tr><td>Annual net cash inflow</td><td>Yearly savings or extra profit after operating costs</td><td>currency/year</td></tr><tr><td>Useful life</td><td>Expected service life</td><td>years</td></tr></tbody></table></div>
-<h2>Worked example</h2>
+<h2 id="example">Worked example</h2>
 <p>A variable-speed drive retrofit on a fan costs 85,000 installed and saves 31,000 a year in energy. Its useful life is about 8 years.</p>
 <div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Initial investment</th><td>85,000</td></tr><tr><th scope="row">Annual net cash inflow</th><td>31,000 per year</td></tr><tr><th scope="row">Useful life (optional)</th><td>8 years</td></tr></tbody></table></div>
 <div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Payback period</th><td><strong>2.74 years</strong></td></tr><tr><th scope="row">Payback period</th><td><strong>2 years 8.9 months</strong></td></tr><tr><th scope="row">Undiscounted net gain over life</th><td><strong>163,000</strong></td></tr></tbody></table></div>
 <p class="hint">The investment pays back within its useful life. Simple payback ignores the time value of money and cash flows after payback.</p>
-<p><button type="button" class="button button-secondary" id="load-example-2">Load this example into the calculator</button></p>
-<h2>Strengths and weaknesses</h2>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">Strengths and weaknesses</h2>
 <p>Payback is easy to explain and favours fast, low-risk returns, which is useful when cash or certainty is limited. It ignores the time value of money and everything that happens after payback. A project with a slightly longer payback but a much longer life can be worth more. Use payback as a screen and net present value for the final decision.</p>
-<h2>Uneven cash flows</h2>
+<h2 id="s1">Uneven cash flows</h2>
 <p>If savings vary year to year (ramp-up, degradation), add cumulative cash flows year by year until they exceed the investment. This calculator assumes a constant annual inflow.</p>
-<h2>Worked interpretation</h2>
+<h2 id="s2">Worked interpretation</h2>
 <p>In the example, 85,000 is recovered in about 2.7 years from 31,000 of annual savings. Over an 8-year life, the undiscounted net gain is 163,000. Discounting at, say, 10% a year would reduce that figure. The project still clearly pays back within its life, so payback alone is enough to pass a screening step, and a net present value calculation can follow for the final decision.</p>
-<h2>Frequently asked questions</h2>
+<h2 id="mistakes">Common mistakes</h2><ul class="list-check list-warn"><li>Using profit instead of cash flow.</li><li>Ignoring cash flows after payback.</li><li>Applying the same payback threshold to all risk levels.</li></ul>
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>First screening of improvement projects.</li><li>Capital request forms.</li><li>Energy efficiency investments.</li></ul>
+<h2 id="faq">Questions</h2>
 <div class="faq"><details><summary>What is a good payback period?</summary><p>It depends on company policy and risk. Thresholds of 1 to 3 years are common for operational improvements, while infrastructure is often judged on longer horizons. Use your organisation’s own hurdle.</p></details></div>
-<aside class="related" aria-labelledby="rel-title"><h2 id="rel-title">Related calculators</h2><ul><li><a href="/calculators/roi">ROI Calculator</a></li><li><a href="/calculators/break-even">Break-Even Calculator</a></li><li><a href="/calculators/motor-efficiency-savings">Motor Efficiency Upgrade Savings Calculator</a></li><li><a href="/calculators/downtime-cost">Downtime Cost Calculator</a></li></ul></aside>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/roi"><strong>ROI Calculator</strong><span>Calculate return on investment (ROI), net gain and annualized ROI (CAGR) from investment cost, total return and holding period.</span></a><a class="rel-card" href="/calculators/break-even"><strong>Break-Even Calculator</strong><span>Calculate break-even volume and revenue from fixed costs, selling price and variable cost per unit, plus the volume needed for a target profit.</span></a><a class="rel-card" href="/calculators/motor-efficiency-savings"><strong>Motor Efficiency Upgrade Savings Calculator</strong><span>Estimate annual kWh and cost savings, and simple payback, from replacing an electric motor with a higher-efficiency model (e.g.</span></a><a class="rel-card" href="/calculators/downtime-cost"><strong>Downtime Cost Calculator</strong><span>Estimate the cost of unplanned downtime from lost output, contribution margin, idle labour and direct repair costs.</span></a><a class="rel-card" href="/calculators/npv"><strong>NPV &amp; IRR Calculator</strong><span>Calculate net present value, internal rate of return, profitability index and discounted payback for a project with equal annual cash flows.</span></a></div>
+<p class="muted">More in <a href="/categories/finance">Business Finance</a>.</p></section>
 <p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
-</section>
 </article>
+</div>
+</div>
 </main>
-<footer class="site-footer"><div class="footer-inner">
-<div><strong>OpsCalc Tools</strong><br><span>Free calculators for operations, maintenance, energy and inventory.</span></div>
-<nav aria-label="Footer"><a href="/about">About</a><a href="/contact">Contact</a><a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a></nav>
-<div class="small">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify before critical decisions.</div>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
 </div></footer>
 </body>
 </html>

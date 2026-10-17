@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Electricity CO2 Emissions Calculator – Scope 2 (kg CO2e)</title>
+<meta name="description" content="Convert electricity consumption into CO₂-equivalent emissions with your grid emission factor, and calculate emission intensity per tonne or unit of output.">
+<link rel="canonical" href="https://tools.saharienne.org/calculators/co2-emissions">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpsCalc Tools">
+<meta property="og:title" content="Electricity CO2 Emissions Calculator – Scope 2 (kg CO2e)">
+<meta property="og:description" content="Convert electricity consumption into CO₂-equivalent emissions with your grid emission factor, and calculate emission intensity per tonne or unit of output.">
+<meta property="og:url" content="https://tools.saharienne.org/calculators/co2-emissions">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#0B1F3A">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/style.css?v=20261016">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Electricity CO₂ Emissions Calculator","url":"https://tools.saharienne.org/calculators/co2-emissions","description":"Convert electricity consumption into CO₂-equivalent emissions with your grid emission factor, and calculate emission intensity per tonne or unit of output.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Energy & Electrical","item":"https://tools.saharienne.org/categories/energy"},{"@type":"ListItem","position":3,"name":"Electricity CO₂ Emissions Calculator","item":"https://tools.saharienne.org/calculators/co2-emissions"}]}</script>
+<script src="/assets/js/site-config.js?v=20261016" defer></script>
+<script src="/assets/js/analytics.js?v=20261016" defer></script>
+<script src="/assets/js/site.js?v=20261016" defer></script>
+<script src="/assets/js/calc-core.js?v=20261016" defer></script>
+<script src="/assets/js/calc-ui.js?v=20261016" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap hdr">
+<a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a>
+<button class="menu-btn" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+<nav class="nav" id="site-nav" aria-label="Main"><a href="/#calculators">Calculators</a><a href="/#categories">Topics</a><a href="/about">About</a><a href="/contact">Contact</a></nav>
+<div class="hdr-search"><div class="search" data-combobox>
+<label class="sr-only" for="hdr-search-input">Search calculators</label>
+<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="hdr-search-input" class="search-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search calculators" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="hdr-search-input-list">
+<ul id="hdr-search-input-list" class="search-list" role="listbox" aria-label="Matching calculators" hidden></ul>
+</div></div>
+</div></header>
+<main id="main">
+<div class="wrap">
+<div class="page-head">
+<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li aria-current="page">Electricity CO₂ Emissions Calculator</li></ol></nav>
+<h1>Electricity CO₂ Emissions Calculator</h1>
+<p class="lead">Scope 2 emissions from purchased electricity equal the energy consumed multiplied by an emission factor. The factor depends on the country, the year and the reporting method, so this calculator asks for it instead of assuming one.</p>
+</div>
+<div class="calc-layout">
+<section class="panel" aria-labelledby="calc-title">
+<h2 id="calc-title" class="panel-title">Your inputs</h2>
+<form id="calc-form" data-calc="co2-emissions" novalidate>
+<div class="form-grid">
+<div class="field" id="f-kwh">
+<label for="kwh">Electricity consumed <span class="sr-only">(kWh)</span></label>
+<div class="input-unit"><input id="kwh" name="kwh" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-kwh" required placeholder="e.g. 306,383"><span class="unit" aria-hidden="true">kWh</span></div>
+
+<p class="field-error" id="err-kwh" aria-live="polite"></p>
+</div>
+<div class="field" id="f-factor">
+<label for="factor">Grid emission factor <span class="sr-only">(kg CO₂e/kWh)</span></label>
+<div class="input-unit"><input id="factor" name="factor" type="text" inputmode="decimal" autocomplete="off" aria-describedby="help-factor err-factor" required placeholder="e.g. 0.45"><span class="unit" aria-hidden="true">kg CO₂e/kWh</span></div>
+<p class="field-help" id="help-factor">Use the factor published by your utility or national authority for the reporting year.</p>
+<p class="field-error" id="err-factor" aria-live="polite"></p>
+</div>
+<div class="field" id="f-output">
+<label for="output">Production output (optional) <span class="sr-only">(t (or units))</span></label>
+<div class="input-unit"><input id="output" name="output" type="text" inputmode="decimal" autocomplete="off" aria-describedby="err-output" placeholder="e.g. 920,000"><span class="unit" aria-hidden="true">t (or units)</span></div>
+
+<p class="field-error" id="err-output" aria-live="polite"></p>
+</div>
+</div>
+<div class="actions"><button class="btn btn-primary" type="submit">Calculate</button><button class="btn btn-secondary" type="button" id="load-example">Load example</button><button class="btn btn-ghost" type="button" id="reset">Clear inputs</button></div>
+</form>
+<p class="privacy-note">Calculations run in your browser. Your inputs are not sent to any server.</p>
+<noscript><p class="field-error">This calculator needs JavaScript. The formula below lets you calculate by hand.</p></noscript>
+</section>
+<aside class="readout" aria-labelledby="ro-title">
+<h2 id="ro-title">Result</h2>
+<div id="result" role="status" aria-live="polite"><p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p></div>
+<div class="ro-actions"><button class="btn btn-on-dark" type="button" id="copy-result" data-needs-result disabled>Copy result</button><button class="btn btn-on-dark" type="button" id="share-link">Copy link with inputs</button></div>
+<p class="ro-status" id="ro-status" aria-live="polite"></p>
+</aside>
+</div>
+<div class="content-layout">
+<nav class="toc" aria-label="On this page"><p>On this page</p><ol><li><a href="#formula">Formula</a></li><li><a href="#example">Worked example</a></li><li><a href="#s0">Choosing the emission factor</a></li><li><a href="#s1">Linking energy and emissions</a></li><li><a href="#mistakes">Common mistakes</a></li><li><a href="#uses">Where it’s used</a></li><li><a href="#faq">Questions</a></li><li><a href="#related">Related calculators</a></li></ol></nav>
+<article class="content">
+<h2 id="formula">Formula</h2>
+<div class="formula"><code>Emissions (kg CO₂e) = Electricity (kWh) × Emission factor (kg CO₂e/kWh)</code><code>Intensity = Emissions ÷ Production output</code></div>
+<div class="table-scroll"><table class="data"><caption>Variables and units</caption><thead><tr><th scope="col">Term</th><th scope="col">Meaning</th><th scope="col">Unit</th></tr></thead><tbody><tr><td>Emission factor</td><td>Grid factor for the location and year (location-based method)</td><td>kg CO₂e/kWh</td></tr><tr><td>Output</td><td>Production in the same period and boundary</td><td>t or units</td></tr></tbody></table></div>
+<h2 id="example">Worked example</h2>
+<p>A conveyor drive used 306,383 kWh in a year. The illustrative grid factor is 0.45 kg CO₂e/kWh (replace it with your official factor), and the system moved 920,000 tonnes.</p>
+<div class="table-scroll"><table class="data"><caption>Inputs</caption><tbody><tr><th scope="row">Electricity consumed</th><td>306,383 kWh</td></tr><tr><th scope="row">Grid emission factor</th><td>0.45 kg CO₂e/kWh</td></tr><tr><th scope="row">Production output (optional)</th><td>920,000 t (or units)</td></tr></tbody></table></div>
+<div class="table-scroll"><table class="data"><caption>Results</caption><tbody><tr><th scope="row">Emissions (Scope 2, location-based)</th><td><strong>137.87 t CO₂e</strong></td></tr><tr><th scope="row">Emissions</th><td><strong>137,872 kg CO₂e</strong></td></tr><tr><th scope="row">Emission intensity</th><td><strong>0.1499 kg CO₂e per t/unit</strong></td></tr></tbody></table></div>
+<p class="hint">The result is only as good as the emission factor. State the factor, its source and year whenever you report the figure.</p>
+<p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>
+<h2 id="s0">Choosing the emission factor</h2>
+<p>Use the factor published by your national authority, grid operator or utility for the reporting year. The GHG Protocol distinguishes the <em>location-based</em> method (average grid factor) from the <em>market-based</em> method (contractual instruments such as green tariffs). Report which method and factor you used. The example value on this page is illustrative only.</p>
+<h2 id="s1">Linking energy and emissions</h2>
+<p>Every kWh saved with the <a href="/calculators/motor-efficiency-savings">motor efficiency</a>, <a href="/calculators/affinity-laws">VSD</a> or <a href="/calculators/compressed-air-leak-cost">compressed air</a> calculators can be converted here into avoided emissions.</p>
+<h2 id="mistakes">Common mistakes</h2><ul class="list-check list-warn"><li>Using a factor from another country or year.</li><li>Mixing location-based and market-based figures in one report.</li><li>Dividing by output from a different boundary than the energy meter.</li></ul>
+<h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Scope 2 reporting for a site or line.</li><li>Expressing energy projects in avoided CO₂e.</li><li>Emission intensity indicators per tonne produced.</li></ul>
+<h2 id="faq">Questions</h2>
+<div class="faq"><details><summary>Does this include Scope 1 emissions?</summary><p>No. Fuels burned on site (boilers, vehicles) are Scope 1 and use fuel-specific factors.</p></details></div>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/energy-cost"><strong>Energy Cost Calculator</strong><span>Estimate electricity use and cost for a machine or motor from rated power, load, efficiency, operating hours and tariff.</span></a><a class="rel-card" href="/calculators/specific-energy-consumption"><strong>Specific Energy Consumption Calculator</strong><span>Calculate specific energy consumption (SEC) in kWh per tonne or per unit, and compare it with a baseline to estimate energy saved or over-consumed.</span></a><a class="rel-card" href="/calculators/motor-efficiency-savings"><strong>Motor Efficiency Upgrade Savings Calculator</strong><span>Estimate annual kWh and cost savings, and simple payback, from replacing an electric motor with a higher-efficiency model (e.g.</span></a><a class="rel-card" href="/calculators/compressed-air-leak-cost"><strong>Compressed Air Leak Cost Calculator</strong><span>Estimate the share of compressor capacity lost to leaks and its annual energy cost using the load/unload test method.</span></a></div>
+<p class="muted">More in <a href="/categories/energy">Energy &amp; Electrical</a>.</p></section>
+<p class="meta">Formula and example reviewed 2026-10-16. Found an error? <a href="/contact">Tell us</a>.</p>
+</article>
+</div>
+</div>
+</main>
+<footer class="site-footer"><div class="wrap">
+<div class="ftr">
+<div><a class="brand" href="/"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#12305A"/><path d="M7 21a9 9 0 0 1 18 0" fill="none" stroke="#5FD9CF" stroke-width="2.4" stroke-linecap="round"/><path d="M16 21l5-6" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="21" r="2" fill="#fff"/></svg><span>OpsCalc <b>Tools</b></span></a><p class="muted">Free calculators for operations, maintenance, energy and inventory. Formulas, units and worked examples on every page.</p></div>
+<nav aria-labelledby="f-topics"><h2 id="f-topics">Topics</h2><ul><li><a href="/categories/production">Production &amp; Lean</a></li><li><a href="/categories/quality">Quality</a></li><li><a href="/categories/maintenance">Maintenance &amp; Reliability</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li><a href="/categories/inventory">Inventory &amp; Logistics</a></li><li><a href="/categories/finance">Business Finance</a></li><li><a href="/categories/workforce">Time &amp; Workforce</a></li></ul></nav>
+<nav aria-labelledby="f-start"><h2 id="f-start">Start here</h2><ul><li><a href="/calculators/oee">OEE Calculator</a></li><li><a href="/calculators/mtbf">MTBF Calculator</a></li><li><a href="/calculators/energy-cost">Energy Cost Calculator</a></li><li><a href="/calculators/safety-stock">Safety Stock Calculator</a></li><li><a href="/calculators/npv">NPV &amp; IRR Calculator</a></li><li><a href="/calculators/takt-time">Takt Time Calculator</a></li></ul></nav>
+<nav aria-labelledby="f-site"><h2 id="f-site">Site</h2><ul><li><a href="/about">About</a></li><li><a href="/contact">Contact</a></li><li><a href="/privacy-policy">Privacy</a></li><li><a href="/terms">Terms</a></li></ul></nav>
+</div>
+<p class="ftr-base">© 2026 OpsCalc Tools. Results are estimates for planning and learning; verify them before critical decisions.</p>
+</div></footer>
+</body>
+</html>

@@ -1,4 +1,4 @@
-/*! OpsCalc Tools — calculator UI binding. Requires calc-core.js. */
+/*! OpsCalc Tools — calculator UI binding (v4). Requires calc-core.js. */
 (function () {
   'use strict';
   var C = window.OpsCalc;
@@ -7,81 +7,77 @@
   var id = form.getAttribute('data-calc');
   var calc = C.registry[id];
   var box = document.getElementById('result');
-  var calculated = false;
+  var statusEl = document.getElementById('ro-status');
+  var title = document.querySelector('h1') ? document.querySelector('h1').textContent : id;
+  var calculated = false, lastOutput = null;
 
-  function emit(name, detail) {
-    try { document.dispatchEvent(new CustomEvent(name, { detail: detail })); } catch (e) { /* old browsers */ }
-  }
-
+  function emit(name, detail) { try { document.dispatchEvent(new CustomEvent(name, { detail: detail })); } catch (e) { /* old browsers */ } }
   function field(name) { return form.elements[name]; }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function say(msg) { if (statusEl) { statusEl.textContent = msg; setTimeout(function () { if (statusEl.textContent === msg) statusEl.textContent = ''; }, 2500); } }
 
   function rawValues() {
     var raw = {};
-    calc.inputs.forEach(function (i) { var el = field(i.name); if (el) raw[i.name] = el.value; });
+    calc.inputs.forEach(function (i) { var f = field(i.name); if (f) raw[i.name] = f.value; });
     return raw;
   }
-
-  function selectValues() {
-    var v = {};
-    calc.inputs.forEach(function (i) { if (i.type === 'select') v[i.name] = field(i.name).value; });
-    return v;
-  }
-
   function updateVisibility() {
-    var sv = selectValues();
+    var sv = {};
+    calc.inputs.forEach(function (i) { if (i.type === 'select') sv[i.name] = field(i.name).value; });
     calc.inputs.forEach(function (i) {
       if (!i.showIf) return;
-      var wrap = document.getElementById('f-' + i.name);
       var show = C.isVisible(i, sv);
-      wrap.hidden = !show;
+      document.getElementById('f-' + i.name).hidden = !show;
       field(i.name).disabled = !show;
     });
   }
-
   function clearErrors() {
     calc.inputs.forEach(function (i) {
-      var el = field(i.name), err = document.getElementById('err-' + i.name);
-      if (el) el.removeAttribute('aria-invalid');
+      var f = field(i.name), err = document.getElementById('err-' + i.name);
+      if (f) f.removeAttribute('aria-invalid');
       if (err) err.textContent = '';
     });
   }
-
-  function el(tag, cls, text) {
-    var e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (text != null) e.textContent = text;
-    return e;
+  function meterFor(r) {
+    if (r.format !== 'percent' || r.text != null || !(r.value >= 0 && r.value <= 100)) return null;
+    var m = el('div', 'meter'); m.setAttribute('aria-hidden', 'true');
+    var s = el('span'); s.style.width = r.value + '%'; m.appendChild(s);
+    return m;
   }
-
   function render(out) {
+    lastOutput = out;
     box.innerHTML = '';
-    box.classList.remove('is-error');
     var primary = out.results.filter(function (r) { return r.primary; })[0] || out.results[0];
-    var p = el('div', 'result-primary');
-    p.appendChild(el('span', 'result-label', primary.label));
-    p.appendChild(el('strong', 'result-value', C.formatResult(primary)));
-    box.appendChild(p);
+    box.appendChild(el('span', 'ro-primary-label', primary.label));
+    box.appendChild(el('strong', 'ro-primary', C.formatResult(primary)));
+    var pm = meterFor(primary); if (pm) box.appendChild(pm);
     var rest = out.results.filter(function (r) { return r !== primary; });
     if (rest.length) {
-      var dl = el('dl', 'result-list');
-      rest.forEach(function (r) { dl.appendChild(el('dt', null, r.label)); dl.appendChild(el('dd', null, C.formatResult(r))); });
+      var dl = el('dl', 'ro-list');
+      rest.forEach(function (r) {
+        var row = el('div', 'ro-item');
+        row.appendChild(el('dt', null, r.label)); row.appendChild(el('dd', null, C.formatResult(r)));
+        var m = meterFor(r); if (m) row.appendChild(m);
+        dl.appendChild(row);
+      });
       box.appendChild(dl);
     }
     if (out.notes && out.notes.length) {
-      var ul = el('ul', 'result-notes');
+      var ul = el('ul', 'ro-notes');
       out.notes.forEach(function (n) { ul.appendChild(el('li', null, n)); });
       box.appendChild(ul);
     }
+    document.querySelectorAll('[data-needs-result]').forEach(function (b) { b.disabled = false; });
   }
-
   function calculate(source) {
     clearErrors();
     var r = C.run(id, rawValues());
     calculated = true;
     if (!r.ok) {
+      lastOutput = null;
       box.innerHTML = '';
-      box.classList.add('is-error');
-      box.appendChild(el('p', 'error', r.message));
+      box.appendChild(el('p', 'ro-error', r.message));
+      document.querySelectorAll('[data-needs-result]').forEach(function (b) { b.disabled = true; });
       if (r.field && field(r.field)) {
         field(r.field).setAttribute('aria-invalid', 'true');
         var err = document.getElementById('err-' + r.field);
@@ -92,53 +88,59 @@
       return;
     }
     render(r.output);
+    if ((source === 'submit' || source === 'example') && window.matchMedia && window.matchMedia('(max-width: 899px)').matches) {
+      var ro = box.closest('.readout'); if (ro && ro.scrollIntoView) ro.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
     emit('opscalc:calculate', { calculator: id, source: source });
   }
-
   function fill(raw) {
     calc.inputs.forEach(function (i) { if (raw[i.name] != null && field(i.name)) field(i.name).value = raw[i.name]; });
     updateVisibility();
   }
+  function shareUrl() {
+    var p = new URLSearchParams(), raw = rawValues();
+    Object.keys(raw).forEach(function (k) { if (raw[k] !== '' && !field(k).disabled) p.set(k, raw[k]); });
+    return location.origin + location.pathname + '?' + p.toString();
+  }
+  function copy(text, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, function () { window.prompt('Copy:', text); });
+    else window.prompt('Copy:', text);
+  }
 
   form.addEventListener('submit', function (e) { e.preventDefault(); calculate('submit'); });
-  form.addEventListener('change', function (e) {
-    if (e.target.tagName === 'SELECT') updateVisibility();
-    if (calculated) calculate('change');
-  });
+  form.addEventListener('change', function (e) { if (e.target.tagName === 'SELECT') updateVisibility(); if (calculated) calculate('change'); });
 
   var ex = document.getElementById('load-example');
   if (ex) ex.addEventListener('click', function () { fill(C.exampleRaw(id)); calculate('example'); });
   var ex2 = document.getElementById('load-example-2');
   if (ex2 && ex) ex2.addEventListener('click', function () {
     ex.click();
-    var t = document.getElementById('calc-title');
-    if (t && t.scrollIntoView) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var t = document.getElementById('calc-title'); if (t && t.scrollIntoView) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
-
   var reset = document.getElementById('reset');
   if (reset) reset.addEventListener('click', function () {
-    form.reset(); calculated = false; clearErrors(); updateVisibility();
-    box.classList.remove('is-error');
-    box.innerHTML = '<p class="hint">Enter your values and press Calculate.</p>';
+    form.reset(); calculated = false; lastOutput = null; clearErrors(); updateVisibility();
+    box.innerHTML = '<p class="ro-empty">Enter your values and press Calculate, or load the worked example.</p>';
+    document.querySelectorAll('[data-needs-result]').forEach(function (b) { b.disabled = true; });
+    var first = form.querySelector('input:not([disabled]),select'); if (first) first.focus();
+    say('Inputs cleared');
   });
-
+  var copyBtn = document.getElementById('copy-result');
+  if (copyBtn) copyBtn.addEventListener('click', function () {
+    if (!lastOutput) return;
+    var lines = [title];
+    lastOutput.results.forEach(function (r) { lines.push(r.label + ': ' + C.formatResult(r)); });
+    lines.push(shareUrl());
+    copy(lines.join('\n'), function () { say('Result copied'); });
+    emit('opscalc:copy', { calculator: id });
+  });
   var share = document.getElementById('share-link');
-  if (share) share.addEventListener('click', function () {
-    var params = new URLSearchParams();
-    var raw = rawValues();
-    Object.keys(raw).forEach(function (k) { if (raw[k] !== '' && !field(k).disabled) params.set(k, raw[k]); });
-    var url = location.origin + location.pathname + '?' + params.toString();
-    var done = function () { share.textContent = 'Link copied'; setTimeout(function () { share.textContent = 'Copy link with these inputs'; }, 2000); };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { window.prompt('Copy this link:', url); });
-    else window.prompt('Copy this link:', url);
-  });
+  if (share) share.addEventListener('click', function () { copy(shareUrl(), function () { say('Link copied'); }); });
 
-  // Prefill from a shared link (?name=value). Values are only read locally.
   try {
     var q = new URLSearchParams(location.search), any = false, pre = {};
     calc.inputs.forEach(function (i) { if (q.has(i.name)) { pre[i.name] = q.get(i.name).slice(0, 40); any = true; } });
     if (any) { fill(pre); calculate('link'); }
   } catch (e) { /* URLSearchParams unsupported */ }
-
   updateVisibility();
 })();
