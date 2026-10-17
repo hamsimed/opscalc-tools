@@ -1,5 +1,22 @@
 # Changelog
 
+## [4.0.0] — 2026-10-17 (branch `v4-design-growth`, not deployed)
+
+### Added
+- V4 design system ("instrument panel"): sticky navy header, header search combobox (keyboard, "/" shortcut), mobile menu, two-column calculator layout, sticky result readout with 0–100 % meters, Copy result / Copy link with inputs / Clear inputs, table of contents, related-tool cards, 4-column footer.
+- Homepage: hero with search and OEE example readout, topic cards, featured tools, filterable list (category chips + text filter synced to `?q=&cat=`, empty state).
+- 7 category landing pages `/categories/<id>` (guide content, CollectionPage + BreadcrumbList JSON-LD), included in sitemap.
+- 8 calculators: TEEP, Pump Power, Pump Affinity Laws, Compressed Air Leak Cost, CO₂ Emissions, NPV/IRR, Inventory Carrying Cost, Unit Cost (unit tests with hand-checked values).
+- "Common mistakes" and "Where it's used" sections on all 35 calculator pages; extra internal links.
+- `/assets/search-index.json`; `_redirects` for `/favicon.ico`.
+
+### Changed
+- Link teal darkened to #097068 for WCAG AA contrast.
+- Browser smoke test covers search, filters, mobile nav, combobox, category pages.
+
+### Unchanged
+- The 27 existing formulas (`calc-core.js` additions only).
+
 ## [3.0.0] — 2026-10-16 (branch `dev`, not deployed)
 
 ### Added
