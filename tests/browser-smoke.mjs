@@ -88,7 +88,8 @@ for (const [vpName, viewport] of [['desktop', { width: 1280, height: 900 }], ['m
     await page.fill('#home-search', 'mtbf');
     const vis = await page.locator('#tool-list li:not([hidden])').count();
     check(vis >= 1 && vis <= 3, `${vpName}: home search 'mtbf' shows ${vis} rows`);
-    check(await page.locator('#home-search-list [role=option]').count() >= 1, `${vpName}: combobox suggestions missing`);
+    const sugg = await page.waitForSelector('#home-search-list [role=option]', { timeout: 5000 }).then(() => true, () => false);
+    check(sugg, `${vpName}: combobox suggestions missing`);
     await page.fill('#home-search', '');
     await page.click('[data-cat-filter="energy"]');
     const en = await page.locator('#tool-list li:not([hidden])').count();
