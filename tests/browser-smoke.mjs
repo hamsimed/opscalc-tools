@@ -49,6 +49,10 @@ for (const [vpName, viewport] of [['desktop', { width: 1280, height: 900 }], ['m
     const primary = r.output.results.find((x) => x.primary) || r.output.results[0];
     check(shown === Core.formatResult(primary), `${vpName} ${id}: shown "${shown}" != expected "${Core.formatResult(primary)}"`);
 
+    if (id === 'oee') {
+      check(await page.locator('.oee-eq .oee-f').count() === 3 && await page.locator('.oee-f.is-weak').count() === 1, `${vpName} oee: A×P×Q breakdown missing`);
+      check(await page.locator('.lb-legend li').count() === 4, `${vpName} oee: loss bar legend missing`);
+    }
     check(await page.locator('#copy-result:not([disabled])').count() === 1, `${vpName} ${id}: copy button not enabled after result`);
     // no horizontal overflow
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

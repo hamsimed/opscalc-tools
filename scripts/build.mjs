@@ -136,6 +136,19 @@ ${r.output.notes.length ? `<p class="hint">${r.output.notes.map(esc).join(' ')}<
 <p><button type="button" class="btn btn-secondary" id="load-example-2">Load this example into the calculator</button></p>`;
 }
 
+
+const ICON_PATHS = {
+  production: '<path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4.5-5"/><path d="M4 20h16"/>',
+  quality: '<circle cx="12" cy="12" r="8.5"/><path d="M8.3 12.4l2.5 2.5 4.9-5.3"/>',
+  maintenance: '<path d="M14.6 5.2a4.3 4.3 0 0 0-5.2 5.6L4 16.2 7.8 20l5.4-5.4a4.3 4.3 0 0 0 5.6-5.2l-2.6 2.6-2.9-.7-.7-2.9z"/>',
+  energy: '<path d="M13.2 3 5.5 13.5h6L10.8 21l7.7-10.5h-6z"/>',
+  inventory: '<path d="M3.5 7.8 12 3.3l8.5 4.5v8.4L12 20.7l-8.5-4.5z"/><path d="M3.5 7.8 12 12.3l8.5-4.5M12 12.3v8.4"/>',
+  finance: '<path d="M4 20h16"/><path d="M5 15.5l4.2-4.2 3.2 3.2 6.3-6.3"/><path d="M14.5 8.2h4.2v4.2"/>',
+  workforce: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2.1"/>'
+};
+const TRUST_ICONS = ['<path d="M5 4h14v16H5z"/><path d="M8.5 9h7M8.5 13h7M8.5 17h4"/>', '<path d="M9 3h6M10 3v6.5L4.8 18.2A1.9 1.9 0 0 0 6.4 21h11.2a1.9 1.9 0 0 0 1.6-2.8L14 9.5V3"/><path d="M7.5 15h9"/>', '<circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/>', '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/>'];
+const svgIcon = (paths, cls = 'ico') => `<svg class="${cls}" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths}</svg>`;
+const catIcon = (id) => `<span class="ico-tile hue c-${id}">${svgIcon(ICON_PATHS[id])}</span>`;
 const SYMBOL = { oee: 'OEE', mtbf: 'MTBF', 'energy-cost': 'kWh', 'safety-stock': 'SS', npv: 'NPV', 'takt-time': 'TAKT' };
 const firstSentence = (s) => s.split('. ')[0].replace(/\.$/, '') + '.';
 const listHtml = (items, cls) => `<ul class="list-check${cls ? ' ' + cls : ''}">${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`;
@@ -208,7 +221,7 @@ ${p.applications ? `<h2 id="uses">Where it’s used</h2>${listHtml(p.application
 function toolRow(p) {
   const cat = catById[p.category];
   const kw = `${p.seoTitle} ${p.formulas.join(' ')}`;
-  return `<li data-cat="${p.category}" data-t="${esc(p.title)}" data-d="${esc(p.description)}" data-k="${esc(kw)}"><a class="tool-row" href="${calcPath(p.id)}"><strong>${esc(p.title)}</strong><span>${esc(firstSentence(p.description))}</span><em>${esc(cat.name)}</em></a></li>`;
+  return `<li data-cat="${p.category}" data-t="${esc(p.title)}" data-d="${esc(p.description)}" data-k="${esc(kw)}"><a class="tool-row" href="${calcPath(p.id)}">${catIcon(p.category)}<span class="tr-body"><strong>${esc(p.title)}</strong><span class="tr-desc">${esc(firstSentence(p.description))}</span><em class="hue c-${p.category}">${esc(cat.name)}</em></span></a></li>`;
 }
 
 function homePage() {
@@ -221,7 +234,7 @@ function homePage() {
 <h1>Engineering-grade calculators for operations</h1>
 <p class="hero-lead">${pages.length} free tools for production, maintenance, energy, inventory and finance decisions. Every result comes with its formula, units and a worked example you can check.</p>
 ${searchBox({ id: 'home-search', label: 'Search calculators', placeholder: 'Search: OEE, MTBF, NPV…', big: true })}
-<p class="hero-meta">Try: <a href="/calculators/oee">OEE</a>, <a href="/calculators/mtbf">MTBF</a>, <a href="/calculators/takt-time">takt time</a>, <a href="/calculators/safety-stock">safety stock</a>, <a href="/calculators/power-factor-correction">power factor</a>.</p>
+<p class="hero-meta"><span>Try</span> <a href="/calculators/oee">OEE</a> <a href="/calculators/mtbf">MTBF</a> <a href="/calculators/takt-time">Takt time</a> <a href="/calculators/safety-stock">Safety stock</a> <a href="/calculators/npv">NPV</a></p>
 </div>
 <aside class="readout-demo" aria-labelledby="demo-h">
 <h2 id="demo-h">Example result: packaging line OEE</h2>
@@ -237,13 +250,13 @@ ${['a', 'p', 'q'].map((k) => `<div class="rd-row"><span>${esc(g(k).label)}</span
 <div class="section-head"><h2 id="cat-h">Browse by topic</h2><p>Seven areas of plant and business performance.</p></div>
 <div class="cat-grid">${categories.map((c) => {
     const ex = pages.filter((p) => p.category === c.id).slice(0, 3).map((p) => p.title.replace(/ Calculator.*$/, '')).join(', ');
-    return `<a class="cat-card" href="${catPath(c.id)}"><span class="count">${counts[c.id]} calculators</span><h3>${esc(c.name)}</h3><p>${esc(c.blurb)}</p><span class="examples">${esc(ex)}</span></a>`;
-  }).join('')}</div>
+    return `<a class="cat-card hue c-${c.id}" href="${catPath(c.id)}"><span class="cc-top">${catIcon(c.id)}<span class="count">${counts[c.id]} tools</span></span><h3>${esc(c.name)}</h3><p>${esc(c.blurb)}</p><span class="examples">${esc(ex)}</span></a>`;
+  }).join('')}<a class="cat-card cat-all" href="#calculators"><span class="cc-top"><span class="ico-tile">${svgIcon('<path d="M4 6h16M4 12h16M4 18h10"/>')}</span><span class="count">${pages.length} tools</span></span><h3>All calculators</h3><p>See the full list, filter by topic or search by name.</p><span class="examples">Browse the list</span></a></div>
 </section>
 
 <section class="section" aria-labelledby="start-h">
 <div class="section-head"><h2 id="start-h">Start here</h2><p>Six core tools, one from each main area.</p></div>
-<div class="feat-grid">${featured.map((id) => { const p = byId[id]; return `<a class="feat-card" href="${calcPath(id)}"><span class="sym" aria-hidden="true">${SYMBOL[id]}</span><span><h3>${esc(p.title)}</h3><p>${esc(firstSentence(p.description))}</p></span></a>`; }).join('')}</div>
+<div class="feat-grid">${featured.map((id) => { const p = byId[id]; return `<a class="feat-card" href="${calcPath(id)}"><span class="sym hue c-${p.category}" aria-hidden="true">${SYMBOL[id]}</span><span><h3>${esc(p.title)}</h3><p>${esc(firstSentence(p.description))}</p></span></a>`; }).join('')}</div>
 </section>
 
 <section class="section" id="calculators" aria-labelledby="all-h">
@@ -257,10 +270,10 @@ ${['a', 'p', 'q'].map((k) => `<div class="rd-row"><span>${esc(g(k).label)}</span
 <section class="section" aria-labelledby="how-h">
 <h2 id="how-h">Why these calculators can be trusted</h2>
 <div class="split">
-<div class="note-card"><h3>Formulas you can check</h3><p>Each page shows the formula, a table of variables and units, and a worked example computed by the same engine as the calculator.</p></div>
-<div class="note-card"><h3>Tested before publication</h3><p>Every formula is covered by automated tests against hand-calculated reference values. Impossible inputs are rejected with a clear message.</p></div>
-<div class="note-card"><h3>Written by a practitioner</h3><p>Built by an industrial production manager. Pages explain how to interpret results, the common mistakes and where each method stops being valid.</p></div>
-<div class="note-card"><h3>Private by design</h3><p>Calculations run in your browser. The values you type are never sent to a server. <a href="/privacy-policy">Privacy policy</a>.</p></div>
+<div class="note-card">${svgIcon(TRUST_ICONS[0], 'ico note-ico')}<h3>Formulas you can check</h3><p>Each page shows the formula, a table of variables and units, and a worked example computed by the same engine as the calculator.</p></div>
+<div class="note-card">${svgIcon(TRUST_ICONS[1], 'ico note-ico')}<h3>Tested before publication</h3><p>Every formula is covered by automated tests against hand-calculated reference values. Impossible inputs are rejected with a clear message.</p></div>
+<div class="note-card">${svgIcon(TRUST_ICONS[2], 'ico note-ico')}<h3>Written by a practitioner</h3><p>Built by an industrial production manager. Pages explain how to interpret results, the common mistakes and where each method stops being valid.</p></div>
+<div class="note-card">${svgIcon(TRUST_ICONS[3], 'ico note-ico')}<h3>Private by design</h3><p>Calculations run in your browser. The values you type are never sent to a server. <a href="/privacy-policy">Privacy policy</a>.</p></div>
 </div>
 </section>
 </div>`;
@@ -316,11 +329,11 @@ const staticPages = {
 <p>Spotted an error or want a calculator added? Use the <a href="/contact">contact page</a>.</p>`),
   'contact.html': simplePage('/contact', 'Contact', 'How to contact OpsCalc Tools to report a calculation issue, suggest a calculator or make a privacy request.', `
 <p>We welcome corrections, suggestions for new calculators and privacy requests.</p>${contactBlock}`),
-  'privacy-policy.html': simplePage('/privacy-policy', 'Privacy Policy', 'How OpsCalc Tools handles data: calculator inputs stay in your browser; optional analytics only with consent.', `
+  'privacy-policy.html': simplePage('/privacy-policy', 'Privacy Policy', 'How OpsCalc Tools handles data: calculator inputs stay in your browser; cookieless page-view statistics; optional analytics only with consent.', `
 <p><strong>Last updated: ${site.lastReviewed}</strong></p>
 <h2>Calculator inputs</h2><p>All calculations run locally in your browser. The values you type are not transmitted to us or stored on any server. If you use “Copy link with these inputs”, the values are placed in the link you copy and are visible to anyone you share it with.</p>
 <h2>Hosting</h2><p>The site is hosted on Cloudflare Pages. Like any web host, Cloudflare processes technical connection data (such as IP address and browser type) to deliver pages and protect the service. See Cloudflare’s own privacy policy for details.</p>
-<h2>Analytics</h2><p>At present this site does not use analytics or advertising cookies. If we enable Google Analytics 4 in the future, it will run only after you give consent through a banner, with Google signals and ad personalisation disabled, and it will record only which calculators are used. Calculator values will never be sent. This policy will be updated before any such change.</p>
+<h2>Analytics</h2><p>We use Cloudflare Web Analytics to count page views and measure page speed. It does not use cookies, does not store data in your browser and does not identify individual visitors; it records the page visited, the referrer, the browser type, the country and load-time metrics. Calculator values are never sent. See Cloudflare’s privacy policy for details.</p><p>This site does not use advertising cookies. If we enable Google Analytics 4 in the future, it will run only after you give consent through a banner, with Google signals and ad personalisation disabled, and it will record only which calculators are used. Calculator values will never be sent. This policy will be updated before any such change.</p>
 <h2>Advertising</h2><p>This site does not currently show advertising. If advertising is introduced, this policy will be updated first to name the provider, describe its cookies and explain your choices, including consent where the law requires it.</p>
 <h2>Local storage</h2><p>If analytics is enabled, your consent choice will be stored in your browser’s local storage so the banner is not shown again.</p>
 <h2>Your rights and contact</h2><p>Depending on where you live, you may have rights to access, correct or delete personal data. Because we do not collect calculator data, there is usually nothing to retrieve. For any privacy question, use the <a href="/contact">contact page</a>.</p>`),

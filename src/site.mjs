@@ -5,6 +5,6 @@ export const site = {
   tagline: 'Free calculators for operations, maintenance, energy and inventory',
   // OWNER ACTION: set a monitored address before applying to AdSense. Left empty = not published.
   contactEmail: 'contact@saharienne.org',
-  lastReviewed: '2026-10-16',
+  lastReviewed: '2026-10-17',
   year: 2026
 };

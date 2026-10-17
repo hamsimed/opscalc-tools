@@ -133,3 +133,13 @@
     var v = Math.max(0, Math.min(100, Number(s.parentNode.dataset.pct) || 0)); s.style.width = v + '%';
   });
 })();
+
+/* Cloudflare Web Analytics (cookieless). Loaded only on the production host, so previews and local tests are not counted. */
+(function () {
+  if (location.hostname !== 'tools.saharienne.org') return;
+  var s = document.createElement('script');
+  s.defer = true;
+  s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+  s.setAttribute('data-cf-beacon', '{"token": "430c6b9fea2c4da4a2ca0789a7167aa0"}');
+  document.body.appendChild(s);
+})();

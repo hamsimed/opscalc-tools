@@ -38,11 +38,53 @@
       if (err) err.textContent = '';
     });
   }
+  // Gauges only for true shares of a whole (yield, availability, utilization…), not for rates or returns.
+  var NO_METER = { chg: 1, roi: 1, ann: 1, irr: 1, rate: 1, marginPct: 1, iRed: 1, lossRed: 1 };
   function meterFor(r) {
-    if (r.format !== 'percent' || r.text != null || !(r.value >= 0 && r.value <= 100)) return null;
+    if (r.format !== 'percent' || r.text != null || NO_METER[r.key] || !(r.value >= 0 && r.value <= 100)) return null;
     var m = el('div', 'meter'); m.setAttribute('aria-hidden', 'true');
-    var s = el('span'); s.style.width = r.value + '%'; m.appendChild(s);
+    var s = el('span'); s.style.width = '0%'; m.appendChild(s);
+    requestAnimationFrame(function () { s.style.width = r.value + '%'; });
     return m;
+  }
+  function byKey(out, k) { return out.results.filter(function (r) { return r.key === k; })[0]; }
+  function pctFmt(v) { return (Math.round(v * 10) / 10).toFixed(1) + '%'; }
+  // OEE: show OEE = A × P × Q and how planned time splits into good output and the three losses.
+  // Display only: values come from the engine's results, no recalculation of OEE itself.
+  function renderOeeBreakdown(out) {
+    var f = ['a', 'p', 'q'].map(function (k) { return byKey(out, k); });
+    if (f.some(function (r) { return !r || !(r.value >= 0 && r.value <= 100); })) return false;
+    var weakest = f.reduce(function (m, r) { return r.value < m.value ? r : m; });
+    var eq = el('ul', 'oee-eq'); eq.setAttribute('aria-label', 'OEE equals availability times performance times quality');
+    f.forEach(function (r, i) {
+      if (i) { var x = el('li', 'oee-x', '×'); x.setAttribute('aria-hidden', 'true'); eq.appendChild(x); }
+      var li = el('li', 'oee-f' + (r === weakest ? ' is-weak' : ''));
+      li.appendChild(el('span', 'l', r.label)); li.appendChild(el('span', 'v', C.formatResult(r)));
+      var m = meterFor(r); if (m) li.appendChild(m);
+      if (r === weakest) li.appendChild(el('span', 'tag', 'Largest loss'));
+      eq.appendChild(li);
+    });
+    box.appendChild(eq);
+    var A = f[0].value / 100, P = f[1].value / 100, Q = f[2].value / 100;
+    var seg = [
+      ['lb-good', 'Good output (OEE)', A * P * Q * 100],
+      ['lb-q', 'Quality loss', A * P * (1 - Q) * 100],
+      ['lb-p', 'Performance loss', A * (1 - P) * 100],
+      ['lb-a', 'Availability loss', (1 - A) * 100]
+    ];
+    box.appendChild(el('p', 'lb-title', 'Where planned production time goes'));
+    var bar = el('div', 'lossbar'); bar.setAttribute('role', 'img');
+    bar.setAttribute('aria-label', seg.map(function (s) { return s[1] + ' ' + pctFmt(s[2]); }).join(', '));
+    var legend = el('ul', 'lb-legend');
+    seg.forEach(function (s) {
+      var span = el('span', s[0]); span.style.width = '0%'; bar.appendChild(span);
+      requestAnimationFrame(function () { span.style.width = Math.max(0, s[2]) + '%'; });
+      var li = el('li'); var sw = el('i', s[0]); sw.setAttribute('aria-hidden', 'true');
+      li.appendChild(sw); li.appendChild(el('span', null, s[1])); li.appendChild(el('b', null, pctFmt(s[2])));
+      legend.appendChild(li);
+    });
+    box.appendChild(bar); box.appendChild(legend);
+    return true;
   }
   function render(out) {
     lastOutput = out;
@@ -50,8 +92,9 @@
     var primary = out.results.filter(function (r) { return r.primary; })[0] || out.results[0];
     box.appendChild(el('span', 'ro-primary-label', primary.label));
     box.appendChild(el('strong', 'ro-primary', C.formatResult(primary)));
-    var pm = meterFor(primary); if (pm) box.appendChild(pm);
-    var rest = out.results.filter(function (r) { return r !== primary; });
+    var special = id === 'oee' && renderOeeBreakdown(out);
+    var pm = !special && meterFor(primary); if (pm) box.appendChild(pm);
+    var rest = special ? [] : out.results.filter(function (r) { return r !== primary; });
     if (rest.length) {
       var dl = el('dl', 'ro-list');
       rest.forEach(function (r) {
