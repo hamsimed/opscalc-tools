@@ -44,9 +44,12 @@
     if (r.format !== 'percent' || r.text != null || NO_METER[r.key] || !(r.value >= 0 && r.value <= 100)) return null;
     var m = el('div', 'meter'); m.setAttribute('aria-hidden', 'true');
     var s = el('span'); s.style.width = '0%'; m.appendChild(s);
-    requestAnimationFrame(function () { s.style.width = r.value + '%'; });
+    later(function () { s.style.width = r.value + '%'; });
     return m;
   }
+  // Set a width on the next frame (so it animates) and again shortly after, because
+  // requestAnimationFrame does not run in background tabs.
+  function later(fn) { if (window.requestAnimationFrame) requestAnimationFrame(fn); setTimeout(fn, 60); }
   function byKey(out, k) { return out.results.filter(function (r) { return r.key === k; })[0]; }
   function pctFmt(v) { return (Math.round(v * 10) / 10).toFixed(1) + '%'; }
   // OEE: show OEE = A × P × Q and how planned time splits into good output and the three losses.
@@ -78,7 +81,7 @@
     var legend = el('ul', 'lb-legend');
     seg.forEach(function (s) {
       var span = el('span', s[0]); span.style.width = '0%'; bar.appendChild(span);
-      requestAnimationFrame(function () { span.style.width = Math.max(0, s[2]) + '%'; });
+      later(function () { span.style.width = Math.max(0, s[2]) + '%'; });
       var li = el('li'); var sw = el('i', s[0]); sw.setAttribute('aria-hidden', 'true');
       li.appendChild(sw); li.appendChild(el('span', null, s[1])); li.appendChild(el('b', null, pctFmt(s[2])));
       legend.appendChild(li);

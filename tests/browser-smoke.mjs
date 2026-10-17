@@ -52,6 +52,9 @@ for (const [vpName, viewport] of [['desktop', { width: 1280, height: 900 }], ['m
     if (id === 'oee') {
       check(await page.locator('.oee-eq .oee-f').count() === 3 && await page.locator('.oee-f.is-weak').count() === 1, `${vpName} oee: A×P×Q breakdown missing`);
       check(await page.locator('.lb-legend li').count() === 4, `${vpName} oee: loss bar legend missing`);
+      await page.waitForTimeout(150);
+      const w = await page.evaluate(() => [...document.querySelectorAll('.lossbar>span')].map((e) => parseFloat(e.style.width)));
+      check(Math.abs(w.reduce((a, b) => a + b, 0) - 100) < 0.5 && w[0] > 0, `${vpName} oee: loss bar widths ${w.join(',')}`);
     }
     check(await page.locator('#copy-result:not([disabled])').count() === 1, `${vpName} ${id}: copy button not enabled after result`);
     // no horizontal overflow
