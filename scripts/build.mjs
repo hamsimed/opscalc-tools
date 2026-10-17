@@ -10,6 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { site } from '../src/site.mjs';
 import { pages, categories } from '../src/content.mjs';
 import { categoryPages, featured } from '../src/content-v4.mjs';
+import { ICON_PATHS } from '../src/icons.mjs';
 
 const require = createRequire(import.meta.url);
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -48,7 +49,12 @@ ${ICON_SEARCH}<input id="${id}" class="search-input" type="search" autocomplete=
 </div>`;
 }
 
-function layout({ title, description, path, body, ld = [], scripts = [], noindex = false, home = false, active = '' }) {
+const OG = { w: 1200, h: 630 };
+const ogImage = (name) => url(`/assets/og/${name}.png`);
+const reviewedOn = (p) => p.reviewed || site.contentReviewed;
+const longDate = (iso) => new Date(iso + 'T00:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+function layout({ title, description, path, body, ld = [], scripts = [], noindex = false, home = false, active = '', image = 'default', imageAlt = '' }) {
   const navLink = (href, label, key) => `<a href="${href}"${active === key ? ' aria-current="page"' : ''}>${label}</a>`;
   return `<!doctype html>
 <html lang="en">
@@ -63,7 +69,12 @@ ${noindex ? '<meta name="robots" content="noindex">' : `<link rel="canonical" hr
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description)}">
 ${noindex ? '' : `<meta property="og:url" content="${url(path)}">`}
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="${ogImage(image)}">
+<meta property="og:image:width" content="${OG.w}">
+<meta property="og:image:height" content="${OG.h}">
+<meta property="og:image:alt" content="${esc(imageAlt || `${site.name}: engineering-grade calculators for operations`)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="${ogImage(image)}">
 <meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/style.css?v=${ASSET_V}">
@@ -142,20 +153,15 @@ ${r.output.notes.length ? `<p class="hint">${r.output.notes.map(esc).join(' ')}<
 }
 
 
-const ICON_PATHS = {
-  production: '<path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4.5-5"/><path d="M4 20h16"/>',
-  quality: '<circle cx="12" cy="12" r="8.5"/><path d="M8.3 12.4l2.5 2.5 4.9-5.3"/>',
-  maintenance: '<path d="M14.6 5.2a4.3 4.3 0 0 0-5.2 5.6L4 16.2 7.8 20l5.4-5.4a4.3 4.3 0 0 0 5.6-5.2l-2.6 2.6-2.9-.7-.7-2.9z"/>',
-  energy: '<path d="M13.2 3 5.5 13.5h6L10.8 21l7.7-10.5h-6z"/>',
-  inventory: '<path d="M3.5 7.8 12 3.3l8.5 4.5v8.4L12 20.7l-8.5-4.5z"/><path d="M3.5 7.8 12 12.3l8.5-4.5M12 12.3v8.4"/>',
-  finance: '<path d="M4 20h16"/><path d="M5 15.5l4.2-4.2 3.2 3.2 6.3-6.3"/><path d="M14.5 8.2h4.2v4.2"/>',
-  workforce: '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3.2 2.1"/>'
-};
 const TRUST_ICONS = ['<path d="M5 4h14v16H5z"/><path d="M8.5 9h7M8.5 13h7M8.5 17h4"/>', '<path d="M9 3h6M10 3v6.5L4.8 18.2A1.9 1.9 0 0 0 6.4 21h11.2a1.9 1.9 0 0 0 1.6-2.8L14 9.5V3"/><path d="M7.5 15h9"/>', '<circle cx="12" cy="8" r="3.8"/><path d="M4.5 20.5a7.5 7.5 0 0 1 15 0"/>', '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/>'];
 const svgIcon = (paths, cls = 'ico') => `<svg class="${cls}" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${paths}</svg>`;
 const catIcon = (id) => `<span class="ico-tile hue c-${id}">${svgIcon(ICON_PATHS[id])}</span>`;
 const SYMBOL = { oee: 'OEE', mtbf: 'MTBF', 'energy-cost': 'kWh', 'safety-stock': 'SS', npv: 'NPV', 'takt-time': 'TAKT' };
-const firstSentence = (s) => s.split('. ')[0].replace(/\.$/, '') + '.';
+// First sentence of a description; abbreviations such as "e.g." and "i.e." do not end a sentence.
+const firstSentence = (s) => {
+  const safe = s.replace(/\b(e\.g|i\.e|etc|vs|approx)\. /g, '$1\u0000 ');
+  return safe.split('. ')[0].replace(/\.$/, '').replace(/\u0000/g, '.') + '.';
+};
 const listHtml = (items, cls) => `<ul class="list-check${cls ? ' ' + cls : ''}">${items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>`;
 
 function calcPage(p) {
@@ -173,7 +179,7 @@ function calcPage(p) {
   if (p.applications) toc.push(['uses', 'Where it’s used']);
   toc.push(['faq', 'Questions'], ['related', 'Related calculators']);
   const ld = [
-    { '@context': 'https://schema.org', '@type': 'WebApplication', name: p.title, url: url(path), description: p.description, applicationCategory: 'BusinessApplication', operatingSystem: 'Any (web browser)', isAccessibleForFree: true, offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, publisher: { '@type': 'Organization', name: site.name, url: url('/') } },
+    { '@context': 'https://schema.org', '@type': 'WebApplication', name: p.title, url: url(path), description: p.description, applicationCategory: 'BusinessApplication', operatingSystem: 'Any (web browser)', isAccessibleForFree: true, dateModified: reviewedOn(p), image: ogImage(p.category), offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' }, publisher: { '@type': 'Organization', name: site.name, url: url('/') } },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: url('/') }, { '@type': 'ListItem', position: 2, name: cat.name, item: url(catPath(cat.id)) }, { '@type': 'ListItem', position: 3, name: p.title, item: url(path) }] }
   ];
   const body = `<div class="wrap">
@@ -181,6 +187,7 @@ function calcPage(p) {
 <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="${catPath(cat.id)}">${esc(cat.name)}</a></li><li aria-current="page">${esc(p.title)}</li></ol></nav>
 <h1>${esc(p.title)}</h1>
 <p class="lead">${esc(p.intro)}</p>
+<p class="reviewed">Last reviewed <time datetime="${reviewedOn(p)}">${longDate(reviewedOn(p))}</time></p>
 </div>
 <div class="calc-layout">
 <section class="panel" aria-labelledby="calc-title">
@@ -216,12 +223,15 @@ ${p.applications ? `<h2 id="uses">Where it’s used</h2>${listHtml(p.application
 <div class="faq">${p.faq.map((f) => `<details><summary>${esc(f.q)}</summary><p>${esc(f.a)}</p></details>`).join('')}</div>
 <section class="related"><h2 id="related">Related calculators</h2><div class="related-grid">${related}</div>
 <p class="muted">More in <a href="${catPath(cat.id)}">${esc(cat.name)}</a>.</p></section>
-<p class="meta">Formula and example reviewed ${site.lastReviewed}. Found an error? <a href="/contact">Tell us</a>.</p>
+<p class="meta">Formula and example reviewed ${longDate(reviewedOn(p))}. Found an error? <a href="/contact">Tell us</a>.</p>
 </article>
 </div>
 </div>`;
-  return layout({ title: p.seoTitle.length > 48 ? p.seoTitle : `${p.seoTitle} | ${site.name}`, description: p.description, path, body, ld, scripts: ['/assets/js/calc-core.js', '/assets/js/calc-ui.js'] });
+  return layout({ title: withBrand(p.seoTitle), description: p.description, path, body, ld, image: p.category, imageAlt: `${catById[p.category].name} calculators on ${site.name}`, scripts: ['/assets/js/calc-core.js', '/assets/js/calc-ui.js'] });
 }
+
+// Brand suffix only when the full title stays within ~60 characters (Google truncates longer titles).
+function withBrand(t) { const b = `${t} | ${site.name}`; return b.length <= 60 ? b : t; }
 
 function toolRow(p) {
   const cat = catById[p.category];
@@ -286,7 +296,7 @@ ${['a', 'p', 'q'].map((k) => `<div class="rd-row"><span>${esc(g(k).label)}</span
     { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: url('/') },
     { '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: pages.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: url(calcPath(p.id)), name: p.title })) }
   ];
-  return layout({ title: `Free Operations, Maintenance & Energy Calculators | ${site.name}`, description: `${pages.length} free calculators for OEE, takt time, MTBF, MTTR, energy cost, safety stock, EOQ, NPV and more. Formulas, worked examples and clear assumptions.`, path: '/', body, ld, home: true, active: 'calc' });
+  return layout({ title: `Free Operations & Energy Calculators | ${site.name}`, description: `${pages.length} free calculators for OEE, takt time, MTBF, MTTR, energy cost, safety stock, EOQ, NPV and more. Formulas, worked examples and clear assumptions.`, path: '/', body, ld, home: true, active: 'calc' });
 }
 
 function categoryPage(c) {
@@ -309,7 +319,7 @@ function categoryPage(c) {
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: cp.h1, url: url(path), description: cp.description, hasPart: items.map((p) => ({ '@type': 'WebApplication', name: p.title, url: url(calcPath(p.id)) })) },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: url('/') }, { '@type': 'ListItem', position: 2, name: c.name, item: url(path) }] }
   ];
-  return layout({ title: cp.seoTitle.length > 48 ? cp.seoTitle : `${cp.seoTitle} | ${site.name}`, description: cp.description, path, body, ld, active: 'topics' });
+  return layout({ title: withBrand(cp.seoTitle), description: cp.description, path, body, ld, active: 'topics', image: c.id, imageAlt: `${c.name} calculators on ${site.name}` });
 }
 
 function searchIndex() {

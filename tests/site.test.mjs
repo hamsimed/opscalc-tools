@@ -144,3 +144,54 @@ test('v4: category pages, search index and shared UI hooks', () => {
     assert.match(h, /id="uses"/, `${p.id}: applications`);
   }
 });
+
+test('SEO lot 1: titles, descriptions, share images, review dates', () => {
+  for (const f of htmlFiles) {
+    const h = read(f);
+    const title = m1(h, /<title>([^<]*)<\/title>/).replace(/&amp;/g, '&');
+    assert.ok(title.length <= 60, `${f}: title ${title.length} chars "${title}"`);
+    const img = m1(h, /<meta property="og:image" content="([^"]+)"/);
+    assert.ok(img && img.startsWith(site.origin + '/assets/og/'), `${f}: og:image`);
+    assert.ok(existsSync(join(ROOT, img.slice(site.origin.length + 1))), `${f}: og:image file missing ${img}`);
+    assert.equal(m1(h, /<meta name="twitter:image" content="([^"]+)"/), img, `${f}: twitter:image`);
+    assert.match(h, /<meta name="twitter:card" content="summary_large_image">/, f);
+    if (f.startsWith('calculators/')) {
+      const d = m1(h, /<meta name="description" content="([^"]*)"/).replace(/&amp;/g, '&');
+      assert.ok(d.length >= 120 && d.length <= 160, `${f}: description ${d.length} chars`);
+      const shown = m1(h, /<p class="reviewed">Last reviewed <time datetime="([\d-]+)">/);
+      const app = JSON.parse(m1(h, /<script type="application\/ld\+json">(\{"@context":"https:\/\/schema.org","@type":"WebApplication".*?)<\/script>/));
+      assert.ok(shown, `${f}: visible review date`);
+      assert.equal(app.dateModified, shown, `${f}: dateModified must equal the visible review date`);
+      assert.ok(shown <= new Date().toISOString().slice(0, 10), `${f}: review date in the future`);
+    }
+  }
+});
+
+test('SEO lot 1: structured data parses and breadcrumbs match the visible navigation', () => {
+  for (const f of htmlFiles) {
+    const h = read(f);
+    const blocks = [...h.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)].map((m) => JSON.parse(m[1]));
+    if (/^(index|calculators\/|categories\/)/.test(f)) assert.ok(blocks.length >= 1, `${f}: no JSON-LD`); // static pages carry none, by design
+    const canon = m1(h, /<link rel="canonical" href="([^"]+)"/);
+    assert.equal(canon, site.origin + pathOf(f), `${f}: canonical`);
+    for (const b of blocks) if (b.url) assert.ok(b.url.startsWith(site.origin), `${f}: ${b['@type']} url`);
+    const bc = blocks.find((b) => b['@type'] === 'BreadcrumbList');
+    const crumbs = [...(m1(h, /<nav class="crumbs"[^>]*>(.*?)<\/nav>/s) || '').matchAll(/<li[^>]*>(?:<a href="([^"]+)">)?([^<]+)/g)].map((m) => ({ href: m[1], name: m[2].replace(/&amp;/g, '&') }));
+    if (!bc) { assert.equal(crumbs.length, 0, `${f}: visible breadcrumb without BreadcrumbList`); continue; }
+    const items = bc.itemListElement;
+    assert.equal(items[items.length - 1].item, canon, `${f}: last breadcrumb item must be the canonical URL`);
+    if (f.startsWith('calculators/')) {
+      assert.equal(items.length, crumbs.length, `${f}: breadcrumb depth`);
+      items.forEach((it, i) => { assert.equal(it.name, crumbs[i].name, `${f}: crumb ${i} name`); if (crumbs[i].href) assert.equal(it.item, site.origin + crumbs[i].href, `${f}: crumb ${i} url`); });
+    }
+  }
+});
+
+test('SEO lot 1: industrial priority tools are linked from at least 7 pages; max 6 related per page', () => {
+  const priority = ['teep', 'compressed-air-leak-cost', 'belt-conveyor-capacity', 'pump-power', 'power-factor-correction', 'affinity-laws', 'specific-energy-consumption'];
+  for (const id of priority) {
+    const from = htmlFiles.filter((f) => f !== `calculators/${id}.html` && read(f).includes(`href="/calculators/${id}"`));
+    assert.ok(from.length >= 7, `${id}: linked from ${from.length} pages`);
+  }
+  for (const p of pages) assert.ok(p.related.length <= 6, p.id);
+});

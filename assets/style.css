@@ -360,3 +360,4 @@ table.data td{font-variant-numeric:tabular-nums}
   .cat-card .ico-tile{width:34px;height:34px}
   .cat-card .count{padding:2px 8px}
 }
+.reviewed{margin:var(--s2) 0 0;font-size:var(--fs-xs);color:var(--text-muted)}

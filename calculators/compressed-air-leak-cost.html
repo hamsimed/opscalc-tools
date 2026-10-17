@@ -4,24 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Compressed Air Leak Cost Calculator – Load/Unload Test</title>
-<meta name="description" content="Estimate the share of compressor capacity lost to leaks and its annual energy cost using the load/unload test method.">
+<meta name="description" content="Estimate the share of compressor capacity lost to air leaks, the wasted kWh and the annual energy cost, using the load/unload test with a worked example.">
 <link rel="canonical" href="https://tools.saharienne.org/calculators/compressed-air-leak-cost">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="OpsCalc Tools">
 <meta property="og:title" content="Compressed Air Leak Cost Calculator – Load/Unload Test">
-<meta property="og:description" content="Estimate the share of compressor capacity lost to leaks and its annual energy cost using the load/unload test method.">
+<meta property="og:description" content="Estimate the share of compressor capacity lost to air leaks, the wasted kWh and the annual energy cost, using the load/unload test with a worked example.">
 <meta property="og:url" content="https://tools.saharienne.org/calculators/compressed-air-leak-cost">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://tools.saharienne.org/assets/og/energy.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Energy &amp; Electrical calculators on OpsCalc Tools">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://tools.saharienne.org/assets/og/energy.png">
 <meta name="theme-color" content="#0B1F3A">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/assets/style.css?v=615fa1d344">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Compressed Air Leak Cost Calculator","url":"https://tools.saharienne.org/calculators/compressed-air-leak-cost","description":"Estimate the share of compressor capacity lost to leaks and its annual energy cost using the load/unload test method.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
+<link rel="stylesheet" href="/assets/style.css?v=146b678681">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Compressed Air Leak Cost Calculator","url":"https://tools.saharienne.org/calculators/compressed-air-leak-cost","description":"Estimate the share of compressor capacity lost to air leaks, the wasted kWh and the annual energy cost, using the load/unload test with a worked example.","applicationCategory":"BusinessApplication","operatingSystem":"Any (web browser)","isAccessibleForFree":true,"dateModified":"2026-10-17","image":"https://tools.saharienne.org/assets/og/energy.png","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"OpsCalc Tools","url":"https://tools.saharienne.org/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://tools.saharienne.org/"},{"@type":"ListItem","position":2,"name":"Energy & Electrical","item":"https://tools.saharienne.org/categories/energy"},{"@type":"ListItem","position":3,"name":"Compressed Air Leak Cost Calculator","item":"https://tools.saharienne.org/calculators/compressed-air-leak-cost"}]}</script>
-<script src="/assets/js/site-config.js?v=615fa1d344" defer></script>
-<script src="/assets/js/analytics.js?v=615fa1d344" defer></script>
-<script src="/assets/js/site.js?v=615fa1d344" defer></script>
-<script src="/assets/js/calc-core.js?v=615fa1d344" defer></script>
-<script src="/assets/js/calc-ui.js?v=615fa1d344" defer></script>
+<script src="/assets/js/site-config.js?v=146b678681" defer></script>
+<script src="/assets/js/analytics.js?v=146b678681" defer></script>
+<script src="/assets/js/site.js?v=146b678681" defer></script>
+<script src="/assets/js/calc-core.js?v=146b678681" defer></script>
+<script src="/assets/js/calc-ui.js?v=146b678681" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -41,6 +46,7 @@
 <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/categories/energy">Energy &amp; Electrical</a></li><li aria-current="page">Compressed Air Leak Cost Calculator</li></ol></nav>
 <h1>Compressed Air Leak Cost Calculator</h1>
 <p class="lead">Leaks often consume a significant share of a compressor’s output, and the energy is paid every hour the system is pressurised. The load/unload test is a simple way to measure leakage: with all production demand off, the time the compressor spends loaded reflects only the leaks.</p>
+<p class="reviewed">Last reviewed <time datetime="2026-10-17">17 October 2026</time></p>
 </div>
 <div class="calc-layout">
 <section class="panel" aria-labelledby="calc-title">
@@ -108,9 +114,9 @@
 <h2 id="uses">Where it’s used</h2><ul class="list-check"><li>Leak-management programmes and energy audits.</li><li>Justifying ultrasonic leak detection.</li><li>Setting a baseline before and after repair campaigns.</li></ul>
 <h2 id="faq">Questions</h2>
 <div class="faq"><details><summary>What leakage level is acceptable?</summary><p>There is no universal figure. Track your own baseline and the trend after repair campaigns; any reduction is directly saved energy.</p></details></div>
-<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/energy-cost"><strong>Energy Cost Calculator</strong><span>Estimate electricity use and cost for a machine or motor from rated power, load, efficiency, operating hours and tariff.</span></a><a class="rel-card" href="/calculators/specific-energy-consumption"><strong>Specific Energy Consumption Calculator</strong><span>Calculate specific energy consumption (SEC) in kWh per tonne or per unit, and compare it with a baseline to estimate energy saved or over-consumed.</span></a><a class="rel-card" href="/calculators/payback-period"><strong>Payback Period Calculator</strong><span>Calculate simple payback period in years and months from initial investment and annual net cash inflow, and check it against useful life.</span></a><a class="rel-card" href="/calculators/co2-emissions"><strong>Electricity CO₂ Emissions Calculator</strong><span>Convert electricity consumption into CO₂-equivalent emissions with your grid emission factor, and calculate emission intensity per tonne or unit of output.</span></a></div>
+<section class="related"><h2 id="related">Related calculators</h2><div class="related-grid"><a class="rel-card" href="/calculators/energy-cost"><strong>Energy Cost Calculator</strong><span>Estimate electricity use and cost for a machine or motor from rated power, load, efficiency, operating hours and tariff.</span></a><a class="rel-card" href="/calculators/specific-energy-consumption"><strong>Specific Energy Consumption Calculator</strong><span>Calculate specific energy consumption (SEC) in kWh per tonne or per unit, and compare it with a baseline to estimate energy saved or over-consumed.</span></a><a class="rel-card" href="/calculators/payback-period"><strong>Payback Period Calculator</strong><span>Calculate simple payback period in years and months from initial investment and annual net cash inflow, and check it against useful life.</span></a><a class="rel-card" href="/calculators/co2-emissions"><strong>Electricity CO₂ Emissions Calculator</strong><span>Convert electricity consumption into CO₂-equivalent emissions with your grid emission factor, and calculate emission intensity per tonne or unit of output.</span></a><a class="rel-card" href="/calculators/affinity-laws"><strong>Fan &amp; Pump Affinity Laws Calculator</strong><span>Estimate power, flow and pressure at a new speed using the fan and pump affinity laws, and the theoretical energy savings from a variable speed drive.</span></a><a class="rel-card" href="/calculators/pump-power"><strong>Pump Power Calculator</strong><span>Calculate pump hydraulic power, shaft power and electrical input from flow, head, density and efficiencies, with optional annual energy use.</span></a></div>
 <p class="muted">More in <a href="/categories/energy">Energy &amp; Electrical</a>.</p></section>
-<p class="meta">Formula and example reviewed 2026-10-17. Found an error? <a href="/contact">Tell us</a>.</p>
+<p class="meta">Formula and example reviewed 17 October 2026. Found an error? <a href="/contact">Tell us</a>.</p>
 </article>
 </div>
 </div>

@@ -79,7 +79,7 @@ export const pages = [
   {
     id: 'production-rate', category: 'production', title: 'Production Rate Calculator',
     seoTitle: 'Production Rate Calculator – Units per Hour vs Target',
-    description: 'Calculate production rate in units per hour, compare it with a target rate and see the shortfall or surplus in units.',
+    description: 'Calculate production rate in units per hour and per minute from output and operating time, compare it with a target rate and see the shortfall in units.',
     intro: 'Production rate is output divided by operating time. Add a target rate to see attainment and how many units you are short of (or above) the plan for the period.',
     formulas: ['Production rate = Units produced ÷ Operating time', 'Attainment = Production rate ÷ Target rate', 'Gap = Target rate × Operating time − Units produced'],
     vars: [['Units produced', 'Output in the period (good units, or total — state which)', 'units'], ['Operating time', 'Time the process was scheduled to run', 'h'], ['Target rate', 'Planned or standard rate', 'units/h']],
@@ -158,7 +158,7 @@ export const pages = [
   {
     id: 'mtbf', category: 'maintenance', title: 'MTBF Calculator',
     seoTitle: 'MTBF Calculator – Mean Time Between Failures',
-    description: 'Calculate mean time between failures (MTBF), failure rate and reliability over a mission time for repairable equipment.',
+    description: 'Calculate mean time between failures (MTBF) from operating time and failure count, plus failure rate and mission reliability for repairable equipment.',
     intro: 'Mean time between failures (MTBF) is the average operating time between failures of repairable equipment. The calculator also gives the failure rate and, with a mission time, the probability of running that long without failure under a constant-failure-rate assumption.',
     formulas: ['MTBF = Total operating time ÷ Number of failures', 'Failure rate λ = 1 ÷ MTBF', 'Reliability R(t) = e^(−t ÷ MTBF)'],
     vars: [['Total operating time', 'Running time of the equipment in the period, excluding repair and idle time', 'h'], ['Number of failures', 'Failures needing corrective action that stopped or degraded the function', 'count'], ['Mission time t', 'Duration for which you want the probability of no failure', 'h']],
@@ -174,7 +174,7 @@ export const pages = [
   {
     id: 'mttr', category: 'maintenance', title: 'MTTR Calculator',
     seoTitle: 'MTTR Calculator – Mean Time to Repair',
-    description: 'Calculate mean time to repair (MTTR) in hours and minutes, and inherent availability when MTBF is known.',
+    description: 'Calculate mean time to repair (MTTR) from total corrective maintenance time and number of repairs, in hours and minutes, plus inherent availability.',
     intro: 'Mean time to repair (MTTR) is the average time to restore equipment after a failure. Enter the total corrective maintenance time and the number of repairs. Add MTBF to see the resulting inherent availability.',
     formulas: ['MTTR = Total corrective maintenance time ÷ Number of repairs', 'Inherent availability = MTBF ÷ (MTBF + MTTR)'],
     vars: [['Corrective maintenance time', 'From stop to restart: detection, diagnosis, waiting for people and parts, repair, test', 'h'], ['Number of repairs', 'Corrective interventions in the same period', 'count']],
@@ -479,9 +479,22 @@ const extraLinks = {
   'oee': ['teep'], 'capacity-utilization': ['teep'], 'energy-cost': ['pump-power', 'co2-emissions'],
   'specific-energy-consumption': ['co2-emissions', 'compressed-air-leak-cost'], 'motor-efficiency-savings': ['affinity-laws'],
   'payback-period': ['npv'], 'roi': ['npv'], 'break-even': ['unit-cost'], 'eoq': ['inventory-carrying-cost'],
-  'inventory-turnover': ['inventory-carrying-cost'], 'first-pass-yield': ['unit-cost'], 'electrical-power': ['pump-power']
+  'inventory-turnover': ['inventory-carrying-cost'], 'first-pass-yield': ['unit-cost'], 'electrical-power': ['pump-power'],
+  // SEO lot 1 (Oct 2026): contextual links toward the industrial tools that were under-linked. Max 6 related per page.
+  'takt-time': ['teep'], 'cycle-time': ['capacity-utilization', 'working-hours'], 'production-rate': ['teep', 'belt-conveyor-capacity'],
+  'availability': ['teep', 'belt-conveyor-capacity'], 'downtime-cost': ['teep'],
+  'pump-power': ['specific-energy-consumption', 'power-factor-correction'], 'motor-efficiency-savings': ['compressed-air-leak-cost'],
+  'power-factor-correction': ['pump-power', 'affinity-laws', 'belt-conveyor-capacity'],
+  'compressed-air-leak-cost': ['affinity-laws', 'pump-power'], 'affinity-laws': ['compressed-air-leak-cost', 'power-factor-correction'],
+  'co2-emissions': ['affinity-laws', 'belt-conveyor-capacity'], 'unit-cost': ['dpmo']
 };
+// electrical-power gets two more after its first addition
+extraLinks['electrical-power'].push('compressed-air-leak-cost', 'affinity-laws');
+// belt conveyor: related set rewritten around throughput, energy and drive power (replaces the earlier list)
+const beltRelated = ['capacity-utilization', 'specific-energy-consumption', 'energy-cost', 'availability', 'power-factor-correction', 'production-rate'];
 for (const [id, add] of Object.entries(extraLinks)) {
   const p = pages.find((x) => x.id === id);
   for (const a of add) if (!p.related.includes(a)) p.related.push(a);
 }
+pages.find((x) => x.id === 'belt-conveyor-capacity').related = beltRelated;
+for (const p of pages) if (p.related.length > 6) throw new Error(`${p.id}: more than 6 related calculators`);

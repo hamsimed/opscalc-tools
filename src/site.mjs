@@ -6,5 +6,9 @@ export const site = {
   // OWNER ACTION: set a monitored address before applying to AdSense. Left empty = not published.
   contactEmail: 'contact@saharienne.org',
   lastReviewed: '2026-10-17',
+  // Date of the last real revision of calculator page content (shown on each page and in dateModified).
+  // 2026-10-17 = V4: "Common mistakes" and "Where it's used" added to all 35 pages, 8 new pages written.
+  // Change it only when page content is actually revised; a page can override it with its own `reviewed` field.
+  contentReviewed: '2026-10-17',
   year: 2026
 };

@@ -56,7 +56,7 @@ export const newPages = [
   {
     id: 'compressed-air-leak-cost', category: 'energy', title: 'Compressed Air Leak Cost Calculator',
     seoTitle: 'Compressed Air Leak Cost Calculator – Load/Unload Test',
-    description: 'Estimate the share of compressor capacity lost to leaks and its annual energy cost using the load/unload test method.',
+    description: 'Estimate the share of compressor capacity lost to air leaks, the wasted kWh and the annual energy cost, using the load/unload test with a worked example.',
     intro: 'Leaks often consume a significant share of a compressor’s output, and the energy is paid every hour the system is pressurised. The load/unload test is a simple way to measure leakage: with all production demand off, the time the compressor spends loaded reflects only the leaks.',
     formulas: ['Leakage = Load time ÷ (Load time + Unload time)', 'Energy lost = Compressor power × Leakage × Pressurised hours', 'Cost = Energy lost × Energy price'],
     vars: [['Load / unload time', 'Average durations over several cycles, with no production demand', 's'], ['Compressor power', 'Electrical input power at full load', 'kW']],
@@ -213,7 +213,7 @@ export const categoryPages = {
   },
   maintenance: {
     h1: 'Maintenance & reliability calculators',
-    seoTitle: 'Maintenance Calculators – MTBF, MTTR, Availability, Downtime',
+    seoTitle: 'Maintenance Calculators – MTBF, MTTR, Downtime Cost',
     description: 'Free maintenance and reliability calculators: MTBF, MTTR, equipment availability and the cost of unplanned downtime.',
     intro: '<p>Reliability work starts with three numbers: how often equipment fails (<a href="/calculators/mtbf">MTBF</a>), how long it takes to restore it (<a href="/calculators/mttr">MTTR</a>) and the resulting <a href="/calculators/availability">availability</a>. The <a href="/calculators/downtime-cost">downtime cost calculator</a> turns stops into money, which is what most improvement decisions need.</p>',
     guide: '<h2>Which calculator do I need?</h2><ul><li><strong>Are failures getting more frequent?</strong> MTBF over successive periods.</li><li><strong>Are repairs too slow?</strong> MTTR, broken down into response, diagnosis and repair.</li><li><strong>What availability can we promise?</strong> Availability from MTBF and MTTR.</li><li><strong>Is a spare or an upgrade worth it?</strong> Downtime cost, then payback or NPV.</li></ul>'
