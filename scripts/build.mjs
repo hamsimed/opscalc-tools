@@ -2,7 +2,8 @@
 // Static site generator for OpsCalc Tools. No dependencies.
 // Output is written to the repository root so Cloudflare Pages settings stay unchanged
 // (framework: none, build command: none, output directory: /).
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -13,7 +14,11 @@ import { categoryPages, featured } from '../src/content-v4.mjs';
 const require = createRequire(import.meta.url);
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const Core = require('../assets/js/calc-core.js');
-const ASSET_V = site.lastReviewed.replace(/-/g, '');
+// Cache-busting version = hash of the shared assets, so any change (even the same day) gets a new URL.
+const ASSET_V = createHash('sha256')
+  .update(['assets/style.css', 'assets/js/calc-core.js', 'assets/js/calc-ui.js', 'assets/js/site.js', 'assets/js/analytics.js', 'assets/js/site-config.js']
+    .map((f) => readFileSync(join(ROOT, f), 'utf8')).join('\n'))
+  .digest('hex').slice(0, 10);
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const url = (path) => site.origin + path;
